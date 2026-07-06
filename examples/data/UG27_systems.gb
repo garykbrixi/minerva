@@ -1,0 +1,1834 @@
+LOCUS       Alistipes-putredinis-DSM-17216-MAF-2_1_-_UG27_BLAST_hit_-_UG27_system        4886 bp    DNA     linear   UNA 07-JAN-2026
+DEFINITION  contig_1, whole genome shotgun sequence.
+ACCESSION   geneious|urn:local:
+VERSION     geneious|urn:local:.:3e-k42e722:0
+KEYWORDS    .
+SOURCE      . (None)
+  ORGANISM  .
+FEATURES             Location/Qualifiers
+     source          complement(<1..>4886)
+                     /mol_type="genomic DNA"
+     misc_feature    <1..>4886
+                     /note="Geneious type: to_extract"
+                     /standard_name="To_PCR"
+     misc_feature    <1..>4886
+                     /note="Geneious type: phage_arm"
+                     /standard_name="phage_arm"
+     misc_feature    <1..4886
+                     /note="Geneious type: to_extract"
+                     /standard_name="To_PCR_2"
+     misc_feature    1..276
+                     /note="Geneious type: cluster_38"
+                     /standard_name="cluster_38"
+     misc_feature    1..4886
+                     /note="Geneious type: system"
+                     /standard_name="UG27_system"
+     CDS             1..276
+                     /note="RefSeq:WP_004328618.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001655AAE"
+                     /note="UniRef:UniRef100_B0MZK1"
+                     /note="UniRef:UniRef50_B0MZK1"
+                     /note="UniRef:UniRef90_B0MZK1"
+                     /note="PFAM:PF12957.10"
+                     /product="hypothetical protein"
+                     /locus_tag="MDNHKG_01900"
+                     /protein_id="gnl|Bakta|MDNHKG_01900"
+                     /translation="MAEIIKTDGTRQPVQPANGTDFKLEEMQAIVGGDIELVFLNDTE
+                     IMVVNEEGKVHGLKHNPTATRIFKENHPSLSDYIVGDVLVCKEEQIK"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_004328618.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            1..276
+                     /locus_tag="MDNHKG_01900"
+                     /standard_name="gene"
+     misc_feature    285..1550
+                     /note="Geneious type: BLAST Hit"
+                     /standard_name="UG27_BLAST_hit"
+     misc_feature    285..1550
+                     /note="Geneious type: cluster_1"
+                     /standard_name="cluster_1"
+     primer_bind     285..308
+                     /standard_name="DL119"
+     primer_bind     285..308
+                     /standard_name="DL094"
+     primer_bind     285..308
+                     /standard_name="DL154"
+     CDS             285..1550
+                     /note="RefSeq:WP_040293218.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI00058DC767"
+                     /note="UniRef:UniRef100_B0MZK0"
+                     /note="UniRef:UniRef50_K9E4Y2"
+                     /note="UniRef:UniRef90_B0MZK0"
+                     /product="Reverse transcriptase domain-containing protein"
+                     /locus_tag="MDNHKG_01895"
+                     /protein_id="gnl|Bakta|MDNHKG_01895"
+                     /translation="MAEKILQMFFDIERWTKAIEKGVGKDIRKDQLIRLTDEHTRLAM
+                     AEAMMLGKYEISPPHTAQIPKDNGEFRTVYVNEPMDRVILSIANDLLFDLMPEMLHET
+                     CKSYQTGIGCGRVVTEVSHQIVNAAKNGVLGWKSDLSKYFDSVPIQFIDEAFDKVEAK
+                     YGHSALIDVLRKYYHSDLYFDEDNCLKRKYQSLKQGCAVASWLADVLLYDLDEELSQM
+                     NGYYVRYSDDMLFIGADYEKAMKLLRKRLSEKSMQLNPKKVEYLTADHWFKFLGFSIK
+                     GKMISLSSSRIKTFQKEIERRTIRNRNTTLTKAVNSVNRYLYKGNGEFSWATQILPVC
+                     NVRKDLDELNMFAMDCLRAVATGKRKVGGLGYVRNKSDGCIVRGRGRNVKANRSKTGG
+                     NIPGYLTIGCMRNALLTSRAVYNTLVASL"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_040293218.1"
+                     /standard_name="Reverse transcriptase domain-containing
+                     protein CDS"
+     gene            285..1550
+                     /locus_tag="MDNHKG_01895"
+                     /standard_name="gene"
+     primer_bind     complement(933..961)
+                     /standard_name="DL178"
+     primer_bind     complement(941..961)
+                     /standard_name="DL133"
+     misc_feature    957..968
+                     /note="Geneious type: motif"
+                     /standard_name="YSDD"
+     primer_bind     968..986
+                     /standard_name="DL177"
+     primer_bind     968..984
+                     /standard_name="DL132"
+     primer_bind     complement(1529..1550)
+                     /standard_name="DL095"
+     misc_feature    1573..1722
+                     /note="Geneious type: UG27_ncRNA"
+                     /standard_name="DL_manual_UG27_ncRNA"
+     ncRNA           1573..1722
+                     /standard_name="DL_manual_UG27_ncRNA"
+     misc_feature    1574..1723
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           1574..1723
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    1744..1900
+                     /note="Geneious type: UG27_ncRNA"
+                     /standard_name="DL_manual_UG27_ncRNA"
+     ncRNA           1744..1900
+                     /standard_name="DL_manual_UG27_ncRNA"
+     misc_feature    1746..1900
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           1746..1900
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    1921..2072
+                     /note="Geneious type: UG27_ncRNA"
+                     /standard_name="DL_manual_UG27_ncRNA"
+     ncRNA           1921..2072
+                     /standard_name="DL_manual_UG27_ncRNA"
+     misc_feature    1923..2072
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           1923..2072
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2095..2246
+                     /note="Geneious type: UG27_ncRNA"
+                     /standard_name="DL_manual_UG27_ncRNA"
+     ncRNA           2095..2246
+                     /standard_name="DL_manual_UG27_ncRNA"
+     misc_feature    2097..2246
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2097..2246
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2261..2416
+                     /note="Geneious type: UG27_ncRNA"
+                     /standard_name="DL_manual_UG27_ncRNA"
+     ncRNA           2261..2416
+                     /standard_name="DL_manual_UG27_ncRNA"
+     misc_feature    2264..2415
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2264..2415
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2437..2586
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2437..2584
+                     /note="Geneious type: UG27_ncRNA"
+                     /standard_name="DL_manual_UG27_ncRNA"
+     ncRNA           2437..2586
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2437..2584
+                     /standard_name="DL_manual_UG27_ncRNA"
+     misc_feature    2594..2732
+                     /note="Geneious type: UG27_ncRNA"
+                     /standard_name="DL_manual_UG27_ncRNA"
+     ncRNA           2594..2732
+                     /standard_name="DL_manual_UG27_ncRNA"
+     misc_feature    2606..2735
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2606..2735
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     CDS             2765..2992
+                     /note="RefSeq:WP_004328615.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001655EB1"
+                     /note="UniRef:UniRef100_B0MZJ8"
+                     /note="UniRef:UniRef50_B0MZJ8"
+                     /note="UniRef:UniRef90_B0MZJ8"
+                     /product="hypothetical protein"
+                     /locus_tag="MDNHKG_01890"
+                     /protein_id="gnl|Bakta|MDNHKG_01890"
+                     /translation="MNVKDIEIGNWYHISGDIDNGTKDGRPYTSHDEVTRRIKRVTDT
+                     HIICECDRKFLINDNLKLSIPAFRRTDITNS"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_004328615.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            2765..2992
+                     /locus_tag="MDNHKG_01890"
+                     /standard_name="gene"
+     misc_feature    2998..3468
+                     /note="Geneious type: cluster_2"
+                     /standard_name="cluster_2"
+     CDS             2998..3468
+                     /note="RefSeq:WP_004328614.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001655905"
+                     /note="UniRef:UniRef100_B0MZJ7"
+                     /note="UniRef:UniRef50_K9E6C4"
+                     /note="UniRef:UniRef90_B0MZJ7"
+                     /product="hypothetical protein"
+                     /locus_tag="MDNHKG_01885"
+                     /protein_id="gnl|Bakta|MDNHKG_01885"
+                     /translation="MDNIYQETVSAVENGARFKVDFQMRSLKVDGKYVIRNSSYEGVL
+                     GVPHCSEEEFFSKVEELYRRYKHSIPSERSESTSRRYFMALPERELSDDDMLYGERRD
+                     KSQIELELFILSQLLGGFKWNPEKFGRWFWQSKEDKDLVILRQWVEPNNNQSTI"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_004328614.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            2998..3468
+                     /locus_tag="MDNHKG_01885"
+                     /standard_name="gene"
+     primer_bind     2998..3024
+                     /standard_name="DL179"
+     primer_bind     complement(3435..3468)
+                     /standard_name="DL180"
+     misc_feature    3471..4514
+                     /note="Geneious type: cluster_3"
+                     /standard_name="cluster_3"
+     CDS             3471..4514
+                     /note="RefSeq:WP_004328613.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001655BA9"
+                     /note="UniRef:UniRef100_B0MZJ6"
+                     /note="UniRef:UniRef50_A0A4S2AJN7"
+                     /note="UniRef:UniRef90_A0A6L3KET1"
+                     /product="Ubiquitin carboxyl-hydrolase"
+                     /locus_tag="MDNHKG_01880"
+                     /protein_id="gnl|Bakta|MDNHKG_01880"
+                     /translation="MKKKQETNVTCPTCGTELAIAGKKVTIAENPAASIKQAQLPKTA
+                     HERIEALRSVGVDVSCLFAMQGANGGDYVASNKNGKLSILDDNDPIFDYILEKGTVPN
+                     RRLFRRWVMAQMFHMLSYKDYGAWNPVGVTEMIHRLGYEYQWKMLLDELRAQQKMERN
+                     DPENFADRNRWFNVKVATAMAEDYIEQLKAHVEGLPVKRCKGIPYKRFGSHNIFVQDL
+                     NSKLYSPLRLAAYHIEAAKNATQLYNAVTKFNDKRFKMKHATPQSKAWVDAYKGAGAF
+                     YTMQNLIRFHNCTAIDDSGRRLDKYQSLAFLSAKAEEYKNGNGWRLLAVLKKMLDDNG
+                     IDIKKKMAQWRRK"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_004328613.1"
+                     /standard_name="Ubiquitin carboxyl-hydrolase CDS"
+     gene            3471..4514
+                     /locus_tag="MDNHKG_01880"
+                     /standard_name="gene"
+     primer_bind     3471..3500
+                     /standard_name="DL188"
+     primer_bind     complement(4496..4514)
+                     /standard_name="DL189"
+     misc_feature    4537..4676
+                     /note="Geneious type: UG27_ncRNA"
+                     /standard_name="DL_manual_UG27_ncRNA"
+     ncRNA           4537..4676
+                     /standard_name="DL_manual_UG27_ncRNA"
+     misc_feature    4538..4675
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           4538..4675
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    4704..4886
+                     /note="Geneious type: cluster_62"
+                     /standard_name="cluster_62"
+     CDS             4704..4886
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001655BE7"
+                     /note="UniRef:UniRef100_B0MZJ5"
+                     /note="UniRef:UniRef50_B0MZJ5"
+                     /note="UniRef:UniRef90_B0MZJ5"
+                     /product="hypothetical protein"
+                     /locus_tag="MDNHKG_01875"
+                     /protein_id="gnl|Bakta|MDNHKG_01875"
+                     /translation="MNKKQLRRRAYLLYKLRKKGIRCLTRQFTIFYPYGKDPVTMAEI
+                     VHLRKEFHFSVQFEIA"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA
+                     sequence:UniRef:UniRef100_B0MZJ5"
+                     /standard_name="hypothetical protein CDS"
+     gene            4704..4886
+                     /locus_tag="MDNHKG_01875"
+                     /standard_name="gene"
+     primer_bind     complement(4862..4885)
+                     /standard_name="DL123"
+     primer_bind     complement(4864..4886)
+                     /standard_name="DL107"
+     primer_bind     complement(4864..4886)
+                     /standard_name="DL103"
+     primer_bind     complement(4864..4886)
+                     /standard_name="DL085"
+     CDS             4883..>4886
+                     /note="SO:0001217"
+                     /note="UniParc:UPI00016558A4"
+                     /note="UniRef:UniRef100_B0MZJ4"
+                     /note="UniRef:UniRef50_B0MZJ4"
+                     /note="UniRef:UniRef90_B0MZJ4"
+                     /product="hypothetical protein"
+                     /locus_tag="MDNHKG_01870"
+                     /protein_id="gnl|Bakta|MDNHKG_01870"
+                     /translation="M"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA
+                     sequence:UniRef:UniRef100_B0MZJ4"
+                     /standard_name="hypothetical protein CDS"
+     gene            4883..>4886
+                     /locus_tag="MDNHKG_01870"
+                     /standard_name="gene"
+ORIGIN      
+        1 atggctgaaa ttattaaaac cgatgggacg cgccaaccgg tgcaacctgc caatggaacc
+       61 gactttaagc tggaggaaat gcaggcaata gtcggaggag acatcgaact cgtgtttctg
+      121 aatgacacgg aaatcatggt cgtgaatgag gaaggaaagg tgcatggtct taaacacaac
+      181 ccaacggcta cacgcatttt caaagagaat catccgagct tgtccgacta cattgtcggg
+      241 gatgtactcg tatgcaagga ggaacaaata aaatgagtaa taatatggca gaaaagattc
+      301 tgcaaatgtt tttcgacatc gagcgatgga cgaaagcaat cgagaaaggt gtgggcaaag
+      361 acatccggaa agaccagctc atccggctga ccgacgaaca tacccggctg gcaatggctg
+      421 aagccatgat gctgggaaag tatgaaatct ctccgcccca tacggctcaa atccccaaag
+      481 acaacggcga gttccgcaca gtgtatgtaa acgagccgat ggaccgtgtg atactcagta
+      541 tcgccaacga cctcctgttt gacttgatgc ctgaaatgct ccacgagacc tgcaagtcct
+      601 accagacagg aataggttgc ggccgagtgg ttaccgaggt cagtcatcag atcgtgaacg
+      661 ctgcaaagaa cggagttttg ggctggaaat ccgacctctc caaatatttc gacagcgtac
+      721 cgattcaatt catcgatgag gcattcgata aggtagaagc caagtacggc cattccgctt
+      781 taatcgacgt gctgcggaaa tactatcatt ccgacctgta tttcgacgag gataactgcc
+      841 tcaaaaggaa ataccaatcg ctcaaacaag ggtgtgccgt cgcaagctgg ctggcagatg
+      901 tgctcctgta tgacctcgat gaagaactct cgcagatgaa tggctactat gtacgctatt
+      961 ctgacgatat gcttttcatc ggcgccgact acgaaaaggc gatgaaattg ctccggaagc
+     1021 gactgtctga gaaatccatg cagctcaatc cgaaaaaggt ggaatatttg accgctgacc
+     1081 actggttcaa attcctcggg ttcagcatta agggcaaaat gatttctctc tcgtccagcc
+     1141 gtatcaaaac cttccaaaag gaaatcgaac gacgaacgat tcgcaaccgg aatacgacgc
+     1201 tgacaaaggc agtcaattcc gtgaaccgct atttgtacaa gggcaacggc gagttcagtt
+     1261 gggcgacaca gattcttccc gtatgtaacg tgcggaaaga ccttgacgaa ctgaatatgt
+     1321 ttgccatgga ttgtttgcgg gcagtcgcaa ccggtaaacg caaagtcgga ggtctgggat
+     1381 atgtcagaaa caagtctgac ggatgtattg tccgggggcg tgggcgtaat gtgaaagcga
+     1441 accgttccaa aaccggaggc aacatccccg gctatctgac gattggttgc atgaggaatg
+     1501 ccctgctgac aagtcgggct gtgtacaaca cgctggtagc atcattatag gatataccga
+     1561 acacacggta aatggatgaa gaggcaaaat tcaatgttac aggatggcag accagaacgc
+     1621 atagatcttc gccggtctaa caaccggcga ggatcggtga gttctggttc ctcctgtaat
+     1681 atatcgaagt cgtaaagaaa tgtgtcgcct gcctgacatc cgatgaactg aaacacatca
+     1741 gcagaagttc gaggaatgga tttgagattc ccgcgtgtaa cccagctcta tcgagagtct
+     1801 tgaaggtgat cggaccatca ccttcagact cctcaagagc tgggctctcg cgggcaacat
+     1861 catgcaagta aagaaatgtg tctgtcatta tgagaacttc ccctttagca cgaaagcgcg
+     1921 gtgattcaag gaatatgatt caacatgccg agtttcgata cagcccgtcc ggcgccgtcg
+     1981 tatccctaac gtcatacgac ggcgaccatc cggcttccga aactggcgta catcaaaaca
+     2041 ataaagcaat gtgccgatat tcagagaatc atgagaagct gagtacacag ctacaaaagt
+     2101 cgagatcgga atttcagttg tgcagctctt gaacttgcgg ccagagcttc cctccatccg
+     2161 agtggatgga ggagaatccc aggccagcag aacagagcag cgaacatcag gaaaataaag
+     2221 gaatgtaccg tccgaatgag attttttcag cacggaaaac tgcggttcag gggacaagaa
+     2281 tcagcgtgcc gcaagcaatg aagtcccggc aatgacgtcg ttattcacta tcaggaacac
+     2341 gacgtcgctg cccggacttc aaatcgcggc gcacatcgac ctattagagc aacgtgccgc
+     2401 aatcctaaga acggcaaaac ttagcacaaa gtgaaaaggt caaggtcagg agtttaatgg
+     2461 tgcagctaat aacatcaagg accgtagtcc aaggcatctg attagatgcc tgtggacaag
+     2521 gtccgtagct gaatagctgc tcatatcgaa ctgataaagc aatgtgccgg cctgattgag
+     2581 acttacgggc aacgcagctc gattttgcac gaggaatcga atttaacata cagtattcta
+     2641 cctggatcct gaccaggcga ttacctggtt ctggatccag gacctactgt atttatcaga
+     2701 gctataaagc catgcgtcag cgattcgagt gcatttaatg acaaacaatt taaccagata
+     2761 aaaaatgaac gtaaaagaca ttgaaatcgg aaactggtat catatatcgg gagatataga
+     2821 taacggaacc aaggacgggc ggccatatac ctcccacgat gaagttacac ggagaatcaa
+     2881 gcgggtaacg gacacccaca tcatttgcga gtgcgacagg aaattcctga ttaacgacaa
+     2941 cctgaagctg agcattcccg ccttcaggag aacggacata accaattcgt agaagctatg
+     3001 gacaatatct atcaggaaac agtcagtgcc gtagaaaacg gggcgcgttt caaggttgat
+     3061 ttccaaatgc ggagcctcaa agtggacggc aagtacgtca tccggaacag ctcatatgaa
+     3121 ggcgttctcg gagtgccgca ttgcagtgaa gaggagttct tctcgaaagt ggaagagctg
+     3181 taccgtcgtt acaagcactc gattccgtcg gaacgcagcg agagtacatc gcgccgctat
+     3241 ttcatggcat taccggaaag agaattgagt gatgacgaca tgctctatgg agagcggcgc
+     3301 gacaaatcac aaatcgagct ggaactattc atcctcagcc aactgctcgg cggcttcaaa
+     3361 tggaatcccg agaagttcgg ccggtggttc tggcagagca aagaagacaa ggacctggta
+     3421 atactcagac aatgggtaga gccgaataat aatcaatcaa ctatttaatc atgaagaaaa
+     3481 aacaagagac gaatgttacg tgcccgacat gcgggacgga acttgccatc gcaggcaaaa
+     3541 aagttaccat cgcagaaaac cctgcggcat caatcaaaca ggcacaactg cccaagacgg
+     3601 cgcacgaacg catcgaggca ctccgcagtg tcggcgtgga cgtgagctgt ctgtttgcca
+     3661 tgcagggagc caacggcggt gattatgtcg cctcgaacaa gaacggcaaa ctgtcgattc
+     3721 tggacgacaa cgacccgatt ttcgattaca tcctcgaaaa gggaaccgta cccaaccgcc
+     3781 gtctgttccg ccgctgggtt atggctcaga tgttccacat gctctcctac aaggactacg
+     3841 gcgcttggaa tccggtcggc gtgacggaga tgatccaccg tctgggctat gagtaccagt
+     3901 ggaagatgct gctcgacgaa ctgcgtgccc aacagaagat ggagcgaaac gaccccgaga
+     3961 acttcgcgga caggaaccgc tggttcaacg tcaaggtcgc tacggctatg gcggaagatt
+     4021 acatcgaaca actgaaagcg catgtcgagg gcctgcctgt caagagatgc aagggcattc
+     4081 cttacaagcg tttcggcagc cacaacatct tcgtgcagga cctgaactcc aaactctaca
+     4141 gcccgctgcg gcttgcggcc taccatatcg aagcggctaa aaatgccacc cagctttaca
+     4201 atgccgtgac gaagttcaac gacaagcggt tcaagatgaa gcacgccacg ccccaaagca
+     4261 aggcgtgggt ggatgcctac aaaggtgccg gcgcgttcta caccatgcaa aacctcatcc
+     4321 gctttcacaa ctgtacggcc atcgacgaca gcgggcgacg gctggacaaa taccagtcgc
+     4381 tcgcattcct ctcggccaag gccgaagagt ataagaacgg caatggttgg cgcctgcttg
+     4441 ccgtattgaa aaagatgctc gacgacaacg gcatcgacat caaaaagaag atggcccagt
+     4501 ggcgtaggaa gtaagccgtc atcgcctggc aggcttgatg tgatggaccg aaaactttca
+     4561 gttcgtcttc cttgacagga tcctgaggcg ctggctacac gccgtgcttc aggatccttc
+     4621 cggacgacca tacatcgaac ggataaagtc atgccccaca tcggtagtcg catcgttatg
+     4681 tatcctctaa aaatgtaacg acaatgaata agaaacaact cagacgcagg gcgtacctgc
+     4741 tgtacaaact gcgaaagaaa ggcatccggt gcctgacacg ccagttcaca atcttctatc
+     4801 catacgggaa agaccctgta acaatggcgg aaattgttca cctccgaaaa gaattccact
+     4861 tctcggtaca atttgaaatc gcatga
+//
+LOCUS       Bacteroides-coprophilus-DSM-18228-MAF-2_1_-_UG27_BLAST_hit_-_UG27_system        4724 bp    DNA     linear   UNA 07-JAN-2026
+DEFINITION  contig_1, whole genome shotgun sequence.
+ACCESSION   geneious|urn:local:
+VERSION     geneious|urn:local:.:3e-k42e722:1
+KEYWORDS    .
+SOURCE      . (None)
+  ORGANISM  .
+FEATURES             Location/Qualifiers
+     source          complement(<1..>4724)
+                     /mol_type="genomic DNA"
+     misc_feature    <1..>4724
+                     /note="Geneious type: phage_arm"
+                     /standard_name="phage_arm"
+     misc_feature    <1..>4724
+                     /note="Geneious type: to_extract"
+                     /standard_name="To_PCR"
+     misc_feature    <1..4724
+                     /note="Geneious type: to_extract"
+                     /standard_name="To_PCR_2"
+     misc_feature    1..639
+                     /note="Geneious type: cluster_78"
+                     /standard_name="cluster_78"
+     misc_feature    1..4724
+                     /note="Geneious type: system"
+                     /standard_name="UG27_system"
+     CDS             1..639
+                     /note="RefSeq:WP_009316558.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI000240F6EF"
+                     /note="UniRef:UniRef100_A0A1Q6IS26"
+                     /note="UniRef:UniRef50_I8Y5K9"
+                     /note="UniRef:UniRef90_I8Y5K9"
+                     /product="hypothetical protein"
+                     /locus_tag="BCCKNC_05760"
+                     /protein_id="gnl|Bakta|BCCKNC_05760"
+                     /translation="MNKQQTTPVTDTFKGMLLMSMGVPVGNIRPYRLKSAPSCLGGFE
+                     RMSVAAARASGMDIPETEKENDEVYICRLGPAVFHKWMPVWMFETAFEPVPEQRRGDR
+                     IRTLTEEMNNHHVAEKALNEKCYALSVELLSECGGSLDDNGEQSSTYLHVVDRDPVEL
+                     VITNASLRKDGKIFIMGYSYYTGEEYEQECDVESGMDILNFILSQKSFECYE"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_009316558.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            1..639
+                     /locus_tag="BCCKNC_05760"
+                     /standard_name="gene"
+     misc_feature    632..1894
+                     /note="Geneious type: BLAST Hit"
+                     /standard_name="UG27_BLAST_hit"
+     misc_feature    632..1894
+                     /note="Geneious type: cluster_1"
+                     /standard_name="cluster_1"
+     primer_bind     632..658
+                     /standard_name="DL096"
+     primer_bind     632..658
+                     /standard_name="DL120"
+     primer_bind     632..658
+                     /standard_name="DL155"
+     CDS             632..1894
+                     /note="RefSeq:WP_008143026.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI000197AF46"
+                     /note="UniRef:UniRef100_A0A3E4HF69"
+                     /note="UniRef:UniRef50_K9E4Y2"
+                     /note="UniRef:UniRef90_K0XQH0"
+                     /product="Reverse transcriptase domain-containing protein"
+                     /locus_tag="BCCKNC_05755"
+                     /protein_id="gnl|Bakta|BCCKNC_05755"
+                     /translation="MNEDKILQMFFDIGQWTKAIEKGVLKDIRKDQLIRLTDEHTRMA
+                     MAYAMRRGKYEISPPHTAQIPKDNGEFRTVYVNEPMDRVVLGIANDLLFELMPEMLHS
+                     SCKSYQTGIGCGKVVTEVSHRMTETGNSGCLGWKSDLSKYFDSVPIRFIDEAFDKVEA
+                     KHGQSALIDVLRKYYHSDLYFDEDNRLQSKYQSLKQGCAVASWLADVLLYDLDRELSQ
+                     MNGYYVRYSDDMLFIGKDYEKAMDTLQKRLEDKSMKLNPKKVEYLAADVWFKFLGFSI
+                     KGGMVSLSSSRIKTFQHEIERRTIRCRDTTLAKAVDAVNRYLYKGEFSWAIQVLPVCN
+                     VKSDLNELNKFVMDCFRAIQTGRCKIGGLGYVRTKPDGCIVRGRGRNVKANRDKTDRD
+                     IPGYLTVGCMRNALLTSRAVYNTLVASL"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_008143026.1"
+                     /standard_name="Reverse transcriptase domain-containing
+                     protein CDS"
+     gene            632..1894
+                     /locus_tag="BCCKNC_05755"
+                     /standard_name="gene"
+     primer_bind     complement(1293..1311)
+                     /standard_name="DL135"
+     misc_feature    1307..1318
+                     /note="Geneious type: motif"
+                     /standard_name="YSDD"
+     primer_bind     1318..1337
+                     /standard_name="DL134"
+     primer_bind     complement(1877..1894)
+                     /standard_name="DL097"
+     misc_feature    1925..2068
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           1925..2068
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2092..2240
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2092..2240
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2267..2421
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2267..2421
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2445..2593
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2445..2593
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2619..2750
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2619..2750
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2772..3251
+                     /note="Geneious type: cluster_2"
+                     /standard_name="cluster_2"
+     primer_bind     2772..2796
+                     /standard_name="DL181"
+     CDS             2772..3251
+                     /note="RefSeq:WP_004293642.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI000197AF48"
+                     /note="UniRef:UniRef100_A0A6N2VYY1"
+                     /note="UniRef:UniRef50_K9E6C4"
+                     /note="UniRef:UniRef90_I8Y7W4"
+                     /product="hypothetical protein"
+                     /locus_tag="BCCKNC_05750"
+                     /protein_id="gnl|Bakta|BCCKNC_05750"
+                     /translation="MEDIYRETVTAIENGANFRIDFQSRSLKVNGRHMIRNGRYDGAP
+                     WLPEYGCGDFFTDVEELYRRYKHSIPSERSQSKSRRYFMALPESDLEDGDMLYGQHRD
+                     TAQFELEFYILCRIIGGFTWNPETMGKWFWQSEKDKDLVILRKWVEPGSNQLLTNSQ"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_004293642.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            2772..3251
+                     /locus_tag="BCCKNC_05750"
+                     /standard_name="gene"
+     primer_bind     complement(3218..3251)
+                     /standard_name="DL182"
+     misc_feature    3248..4336
+                     /note="Geneious type: cluster_3"
+                     /standard_name="cluster_3"
+     CDS             3248..4336
+                     /note="RefSeq:WP_008143029.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI000197AF49"
+                     /note="UniRef:UniRef100_A0A1Q6IRY5"
+                     /note="UniRef:UniRef50_A0A4S2AJN7"
+                     /note="UniRef:UniRef90_A0A1Q6IRY5"
+                     /product="ubiquitin carboxyl-hydrolase"
+                     /locus_tag="BCCKNC_05745"
+                     /protein_id="gnl|Bakta|BCCKNC_05745"
+                     /translation="MSRKKQETKVLCPGCGTEFAIADKEFAATGTVIGKNSDLGTVYP
+                     VVAGHNSPAGLPKGARERIEALRGAGVDVSCLFAMQGAEGGEYIASNKDGKLTILDDN
+                     DPIFGSIMAQGTVPNNRLFRRWVMAQMFHMMSYTHYREKEPAGVTEMIHRKGYDYQWK
+                     MLLNELHAQMKMEHKDITGFAERNRWFNRDVVLAIASDYVNALKKHVGNLETRKCKGV
+                     PYKRIHGRNIFVEDLQSKLYYPLSIAITHIRHALDATQLYNAVRQFNDRRIRLPWGTP
+                     QSKAWMDAYKGAGAFFTMQNLIRFHGCTAVNDRGRRLDKYQSLAFLSAKAEEYKNGEG
+                     WRLLAVLKKMLADNNINIKKKMAAWRKK"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_008143029.1"
+                     /standard_name="ubiquitin carboxyl-hydrolase CDS"
+     gene            3248..4336
+                     /locus_tag="BCCKNC_05745"
+                     /standard_name="gene"
+     primer_bind     3248..3275
+                     /standard_name="DL190"
+     primer_bind     complement(4317..4336)
+                     /standard_name="DL192"
+     misc_feature    4371..4503
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           4371..4503
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    4539..4724
+                     /note="Geneious type: cluster_62"
+                     /standard_name="cluster_62"
+     CDS             4539..4724
+                     /note="RefSeq:WP_008143031.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI000197AF4A"
+                     /note="UniRef:UniRef100_A0A414YNH8"
+                     /note="UniRef:UniRef50_A0A318NG37"
+                     /note="UniRef:UniRef90_A0A4Q5IP04"
+                     /product="hypothetical protein"
+                     /locus_tag="BCCKNC_05740"
+                     /protein_id="gnl|Bakta|BCCKNC_05740"
+                     /translation="MSKKQLRRRAYLLYRLRKQGIRCLTRCRTIFYPYGEDPKSVPQI
+                     CSLISEFHFHVQFEIPA"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_008143031.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            4539..4724
+                     /locus_tag="BCCKNC_05740"
+                     /standard_name="gene"
+     primer_bind     complement(4703..4724)
+                     /standard_name="DL087"
+     primer_bind     complement(4703..4724)
+                     /standard_name="DL105"
+     primer_bind     complement(4703..4724)
+                     /standard_name="DL109"
+     primer_bind     complement(4706..4724)
+                     /standard_name="DL158"
+     primer_bind     complement(4706..4723)
+                     /standard_name="DL124"
+ORIGIN      
+        1 atgaacaaac agcaaaccac tcccgttacc gacactttta aggggatgct acttatgtca
+       61 atgggtgtcc ctgtaggaaa catccgtccc taccgtttga agtcggcacc ttcctgcctc
+      121 ggcggtttcg agcgcatgag cgtagcggca gcacgagcct cgggaatgga tatcccggag
+      181 acggagaaag agaacgatga agtttacata tgccgcttgg gacccgccgt cttccataaa
+      241 tggatgcctg tctggatgtt cgaaaccgct ttcgaaccgg ttcccgagca gagacgcggt
+      301 gaccgcatcc gaacacttac ggaagagatg aacaaccatc acgtggcgga gaaagccctg
+      361 aatgaaaaat gttacgccct gtccgtggag ctgctttccg agtgtggcgg cagccttgat
+      421 gacaacggtg aacaatcctc gacctatctc catgttgtgg accgtgaccc cgtggaactg
+      481 gtcatcacga acgcgtcgct ccggaaagac gggaaaatct tcatcatggg ttacagttac
+      541 tacacgggcg aggagtacga gcaggaatgt gacgtagaat ccggcatgga catactgaat
+      601 tttatccttt cccaaaaaag ttttgagtgc tatgaatgaa gacaagatat tgcaaatgtt
+      661 cttcgacata ggccagtgga cgaaggccat tgagaaaggc gtgctgaaag acattaggaa
+      721 agaccaactt attcggctga ccgacgagca tacccgtatg gcgatggcct atgccatgcg
+      781 ccggggaaag tacgagattt cccctcccca cacggcgcag atacccaagg acaacggtga
+      841 gttccgcaca gtgtacgtaa acgagccgat ggaccgcgta gtactgggta tcgccaacga
+      901 cctgctcttc gagttgatgc cggagatgct gcactcttcg tgcaagtcct accagaccgg
+      961 tatagggtgc ggcaaggtag ttacggaagt cagccaccgg atgacagaaa ccggcaatag
+     1021 cggctgtctg ggctggaagt ccgacctttc caaatacttc gacagtgttc cgatacggtt
+     1081 catcgacgag gcgttcgaca aggtggaggc caaacacggc cagtctgccc tgatagacgt
+     1141 acttaggaaa tattaccact cggacctcta tttcgatgaa gataaccggt tgcaaagcaa
+     1201 gtatcaatcc ttgaaacagg gttgtgctgt ggctagctgg ctggcggatg tactgctcta
+     1261 cgacctagac agggaactgt cacaaatgaa cggctactac gtccggtatt ccgacgatat
+     1321 gctttttatc ggcaaggatt atgaaaaagc gatggacaca ctccaaaaac gcctggaaga
+     1381 taaatccatg aagctaaatc ccaagaaagt ggaatacctg gcagccgatg tctggttcaa
+     1441 gttcttagga ttcagtatca agggcggcat ggtctcgctc tcgtcatcac gcatcaagac
+     1501 cttccagcac gagatcgagc ggcggacaat ccgctgccgg gacacgacac tggcaaaagc
+     1561 cgtggacgcc gtgaaccgtt acctgtacaa gggcgagttc agctgggcga tacaggtatt
+     1621 gccggtctgt aatgtgaaga gtgacctcaa cgagctgaac aagttcgtga tggactgctt
+     1681 tagagccatt cagacgggca ggtgcaagat cggcggtctg ggatatgtcc gaaccaaacc
+     1741 ggatggctgc atcgtccggg gacggggacg caacgtgaag gccaaccgcg ataaaacaga
+     1801 ccgggacata ccgggttacc tgactgtcgg ctgcatgcgt aacgcccttc tgaccagccg
+     1861 ggcggtgtac aacacgctgg tggcatcgct ataagttacg ccgggcacac ggcagaacgg
+     1921 gtggacgggc aggctattca acgttacagg cttataacca gaatccatat cgagattaac
+     1981 cggtctaaca cccggttaat cccatctcga ttctggctgc gcctgtaatg tatcgggaaa
+     2041 ttaaagtcat gtgccgtctg tcccgcaccc gttaccggag cacaccggga aagttcaagg
+     2101 aataggtttg ggcatcccgc gtaccaacgt cttctttccg agtctgaagg cggctgaccg
+     2161 tcgccttcgg actccgcaga agacccatac gcgggataca tcggaagcat aaagccatgt
+     2221 gccggtatta tgagaacttt cagtcttttc cagcacggga acgtgcggtt cgggggaatg
+     2281 gattcagcct gctgtccccg ataagcccgt ctcgcgccgt cgtatcccta acgttatacg
+     2341 acgatacgac ggcgccattc cggcttccgc cacagcagac atcggacctg taaaggaacg
+     2401 tgccggcatt ccgggaaccg caaaaagaac agcacagggc aaagggggca aggccgggat
+     2461 ttcaacagag ccgcaattca cacggctgga gcctgtgtca tctcctgcta acacgacaga
+     2521 tgacacaggt tccagctgta ctcgcggccc gtatcaggtt tttaaaggga tgtgccgtcc
+     2581 ggatgagtcc cctgaacaga aggtagcgcg accgcatatg cacgagggac ccaaattcaa
+     2641 gatacagtat tcaagcttgg tcctgagcca ggcaactacc tggttcagga ccgaagtcct
+     2701 actgtattta tcaggactat aaagatacgc gctaggggtt tgagtgccat taattgtaaa
+     2761 caggtgagaa aatggaagat atttaccgag aaaccgtcac cgccatagag aacggcgcaa
+     2821 atttccggat tgatttccag tccagaagtt taaaagtaaa cgggagacac atgatacgga
+     2881 acggcaggta tgatggcgct ccgtggttgc cggagtacgg ctgcggggat tttttcacgg
+     2941 atgtggagga gctgtaccgc cgctataaac attcgatacc atcggagcgc agccagagca
+     3001 agtcccgccg gtatttcatg gcattgcccg aaagtgacct cgaggacggg gacatgctgt
+     3061 acgggcaaca ccgggatacc gcgcaattcg agctggaatt ctatatcctc tgccggatta
+     3121 taggcgggtt cacatggaat cccgaaacga tgggcaaatg gttctggcaa agcgaaaaag
+     3181 acaaggacct ggtgatactc agaaaatggg tggaacccgg aagtaatcaa ctattaacaa
+     3241 attcacaatg agcagaaaga aacaagaaac aaaagtcctg tgccccggat gcggcacgga
+     3301 attcgccatc gcggacaagg aatttgccgc cacgggcacc gttatcggca agaattcgga
+     3361 tttgggcacc gtctatccgg tggtggccgg ccataattct cccgccggac ttcccaaagg
+     3421 ggcgcgggag cgtatcgagg cactccgcgg tgccggtgtg gacgtgagct gcctgttcgc
+     3481 catgcaggga gccgagggcg gcgagtatat cgcctccaac aaagacggga aacttaccat
+     3541 cctggatgac aacgacccga tattcggcag catcatggca cagggtaccg ttcccaacaa
+     3601 ccgactcttc cgccggtggg tcatggcaca aatgttccat atgatgtcat acacgcatta
+     3661 ccgtgaaaaa gagccggcag gggtgaccga gatgattcac cggaaaggct atgattacca
+     3721 gtggaaaatg ctcttgaacg agctgcacgc ccagatgaag atggaacaca aggacatcac
+     3781 gggttttgcc gagagaaacc gctggttcaa ccgtgatgtg gttttggcca tcgcgagcga
+     3841 ctatgtcaac gcgctgaaaa aacacgtggg caacctggaa acaagaaaat gcaagggagt
+     3901 tccctacaag cgtatacacg gccgtaatat tttcgtggag gacctgcaat ccaaactgta
+     3961 ctacccgctt tccatcgcga taacccacat caggcacgcg ttggacgcca cacagcttta
+     4021 caacgcggtc agacagttca atgaccgtcg tatccggctg ccatggggca ctcctcaaag
+     4081 caaggcatgg atggatgcct ataagggagc cggggcgttc tttaccatgc agaacctgat
+     4141 tcgtttccac ggttgcacgg ctgtcaatga ccggggtcgg cgtctggaca agtaccagtc
+     4201 actggcgttc ctgtcagcca aggcggaaga gtataaaaac ggagaaggct ggcggttgct
+     4261 ggcagtcctg aaaaaaatgc tggcggacaa caatatcaac atcaaaaaga agatggcggc
+     4321 atggcgtaag aaataggccg tcatctccat ccgcccggta ggcggcacgg tgtggcgggt
+     4381 cagaataaat tagtactccc tccattgaaa tgatgctcat ccctgttaac acaagatgag
+     4441 catctttcaa tggaggcatt acatcgaaaa cgtaaagaga tgcccctgtt tgacgaccac
+     4501 accgctattc taatcaaaac gacataatcc tttatacgat gagcaagaaa caactacgac
+     4561 gcagggccta cctgctgtac cggttacgaa aacagggtat ccgatgcctg acacgttgcc
+     4621 ggaccatctt ctacccttac ggggaggatc ctaaatcagt accgcagatc tgcagcctga
+     4681 taagcgaatt ccatttccat gtccagtttg aaatacccgc ctga
+//
+LOCUS       Bacteroides-sp-2-1-16-MAF-2_1_-_UG27_BLAST_hit_-_UG27_system        5921 bp    DNA     linear   UNA 07-JAN-2026
+DEFINITION  contig_1, whole genome shotgun sequence.
+ACCESSION   geneious|urn:local:
+VERSION     geneious|urn:local:.:3e-k42e722:2
+KEYWORDS    .
+SOURCE      . (None)
+  ORGANISM  .
+FEATURES             Location/Qualifiers
+     source          <1..>5921
+                     /mol_type="genomic DNA"
+     misc_feature    <1..>5921
+                     /note="Geneious type: to_extract"
+                     /standard_name="To_PCR"
+     misc_feature    <1..4816
+                     /note="Geneious type: to_extract"
+                     /standard_name="To_PCR_2"
+     misc_feature    <1..38
+                     /note="Geneious type: cluster_24"
+                     /standard_name="cluster_24"
+     CDS             <1..38
+                     /note="RefSeq:WP_008768602.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001BD9517"
+                     /note="UniRef:UniRef100_A0A515IKC0"
+                     /note="UniRef:UniRef50_A0A515IKC0"
+                     /note="UniRef:UniRef90_A0A515IKC0"
+                     /product="hypothetical protein"
+                     /locus_tag="MHBJAE_13005"
+                     /protein_id="gnl|Bakta|MHBJAE_13005"
+                     /translation="ENIKIIQSRIH"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_008768602.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            <1..38
+                     /locus_tag="MHBJAE_13005"
+                     /standard_name="gene"
+     misc_feature    1..5921
+                     /note="Geneious type: system"
+                     /standard_name="UG27_system"
+     CDS             1..612
+                     /note="RefSeq:WP_008768603.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001BD9518"
+                     /note="UniRef:UniRef100_A0A515IKJ6"
+                     /note="UniRef:UniRef50_A0A3L7ZA88"
+                     /note="UniRef:UniRef90_A0A515IKJ6"
+                     /product="hypothetical protein"
+                     /locus_tag="MHBJAE_13010"
+                     /protein_id="gnl|Bakta|MHBJAE_13010"
+                     /translation="MKTSKSFNQEYIEKAKTLIHEILEDKKEYDDWTQICFSMQNAVQ
+                     AAANIWGISSDEQINKMRSFITEMVFTELSNLKQFDIVFKKKGAQVERSLDTLYCSKC
+                     GSSDVEKRVWVNPNTREIRCNDSIEVTDCWCGICEEHVELCTLSELWEMFGDIPVNND
+                     DEIEEDFLNFPAGTLKIDVWHWFDERCPNNLHDDLMYFKNDAV"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_008768603.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            1..612
+                     /locus_tag="MHBJAE_13010"
+                     /standard_name="gene"
+     misc_feature    602..925
+                     /note="Geneious type: cluster_4"
+                     /standard_name="cluster_4"
+     CDS             602..925
+                     /note="RefSeq:WP_008768604.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001BD9519"
+                     /note="UniRef:UniRef100_A0A515IKC3"
+                     /note="UniRef:UniRef50_A0A3L8AFP4"
+                     /note="UniRef:UniRef90_A0A3L8AFP4"
+                     /product="hypothetical protein"
+                     /locus_tag="MHBJAE_13015"
+                     /protein_id="gnl|Bakta|MHBJAE_13015"
+                     /translation="MPYKSEKTRIAGTQYDRRIKLTPDQKEYIKWLREKQLISYSKLA
+                     KIFGVSKRLIQFICCPDKYLKNKESLKQRKAEGRYKPTKAEWAATIREHRRYKEQLKK
+                     KGDIK"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_008768604.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            602..925
+                     /locus_tag="MHBJAE_13015"
+                     /standard_name="gene"
+     misc_feature    922..2190
+                     /note="Geneious type: BLAST Hit"
+                     /standard_name="UG27_BLAST_hit"
+     misc_feature    922..2190
+                     /note="Geneious type: cluster_1"
+                     /standard_name="cluster_1"
+     primer_bind     922..948
+                     /standard_name="DL098"
+     primer_bind     922..948
+                     /standard_name="DL121"
+     primer_bind     922..948
+                     /standard_name="DL156"
+     CDS             922..2190
+                     /note="RefSeq:WP_008768605.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001BD951A"
+                     /note="UniRef:UniRef100_A0A515IKF1"
+                     /note="UniRef:UniRef50_K9E4Y2"
+                     /note="UniRef:UniRef90_D7K098"
+                     /product="Reverse transcriptase domain-containing protein"
+                     /locus_tag="MHBJAE_13020"
+                     /protein_id="gnl|Bakta|MHBJAE_13020"
+                     /translation="MKDKILTMFFDINRWTKAIEKGVLKDIRKSELIKLTEEPTRIRM
+                     AEAMLNGKYQITPPHIAQIPKDNGEFRTVYVNEPIDRIILNIANDLLFDLMPEMIHPA
+                     CKSYQVGIGCGKVVLEVSHTIVDMKSDGYVGWKSDLSKYFDTVPIRFIDAAFDKVEAK
+                     YGHSVLIDVLRKYYHCGLYFDENNELHEKYQSLKQGCAVASWLANVLLYSLDDELSQL
+                     NGFYVRYSDDMLFVGPDYEKAMTILQKRLAEKSMNLNPKKVEYLTMDKWFKFLGFSIK
+                     GSMISFSPNRLKTFQKEIESRTIRKRGITLKKAVDSVNRYLYKGNGEYSWATQTLPVC
+                     NVRVDINELNKFVMDCLRAVETGKHKVGGLGYVKDKPDGCVVRSIGRNVKANRNKSKS
+                     KEIEGYLTIGCMQNAILTRRAAYNTLVAIL"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_008768605.1"
+                     /standard_name="Reverse transcriptase domain-containing
+                     protein CDS"
+     gene            922..2190
+                     /locus_tag="MHBJAE_13020"
+                     /standard_name="gene"
+     primer_bind     complement(1575..1598)
+                     /standard_name="DL137"
+     misc_feature    1594..1605
+                     /note="Geneious type: motif"
+                     /standard_name="YSDD"
+     primer_bind     1605..1622
+                     /standard_name="DL136"
+     primer_bind     complement(2163..2190)
+                     /standard_name="DL099"
+     misc_feature    2216..2373
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2216..2373
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2395..2549
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2395..2549
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2576..2712
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2576..2712
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2731..2863
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2731..2863
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2890..3040
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2890..3040
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    3065..3198
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           3065..3198
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     regulatory      3091..3156
+                     /note="Geneious type: terminator"
+                     /standard_name="ARNOLD_terminator"
+     misc_feature    3215..3673
+                     /note="Geneious type: cluster_2"
+                     /standard_name="cluster_2"
+     CDS             3215..3673
+                     /note="RefSeq:WP_008768606.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001BD951B"
+                     /note="UniRef:UniRef100_A0A415KTG6"
+                     /note="UniRef:UniRef50_K9E6C4"
+                     /note="UniRef:UniRef90_D7K097"
+                     /product="hypothetical protein"
+                     /locus_tag="MHBJAE_13025"
+                     /protein_id="gnl|Bakta|MHBJAE_13025"
+                     /translation="MKNIYQESIQAVENGTKFKVDFKTRSFKLNGQYIIQNSQYEGDL
+                     GVELCASLDEFLSNVEHLYTRYKHSIPSTMSECKSRKYFKALSDKDLEDEDMLFGVGR
+                     DIAQVELELYILCQIILGIGWDANKMGKWFWQSNKDRDLVILKNWVTVEK"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_008768606.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            3215..3673
+                     /locus_tag="MHBJAE_13025"
+                     /standard_name="gene"
+     primer_bind     3215..3252
+                     /standard_name="DL184"
+     primer_bind     complement(3644..3673)
+                     /standard_name="DL185"
+     misc_feature    3708..4697
+                     /note="Geneious type: cluster_3"
+                     /standard_name="cluster_3"
+     CDS             3708..4697
+                     /note="RefSeq:WP_008768607.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001BD951C"
+                     /note="UniRef:UniRef100_A0A6A2JRZ1"
+                     /note="UniRef:UniRef50_A0A4S2AJN7"
+                     /note="UniRef:UniRef90_A0A4S2AJN7"
+                     /product="ubiquitin carboxyl-hydrolase"
+                     /locus_tag="MHBJAE_13030"
+                     /protein_id="gnl|Bakta|MHBJAE_13030"
+                     /translation="MKQLKFECPECGTEFTLTANQTKAKERIEALKKAGVDVSELFAM
+                     QSADGLEFIASKRDGVISILEEDDPIFQAIIIQGTIPNRQLFRRWVMAQMFRIIYITT
+                     NTHGAYKPIGVSEVIRNMGYEYQWKMLNNELYAQHKMMQNGDVDNFRDRNRWFNKRVV
+                     LDMAKDYIEKLKKRFEKLKLRKCKGVPYKRINGQNIFVDDFDKKVIKPLLFAVHKIQH
+                     AENTYELWHSVQEFNKRRIKMHWGTPQNAAWLDAYKGAGAFFTMQNMIRFHNCVIIDD
+                     NGKTLSKNASLAFLNKKAKLYENREGWRLIGMLKKTLDDNNIDVVAKMKEWRK"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_008768607.1"
+                     /standard_name="ubiquitin carboxyl-hydrolase CDS"
+     gene            3708..4697
+                     /locus_tag="MHBJAE_13030"
+                     /standard_name="gene"
+     primer_bind     3708..3739
+                     /standard_name="DL193"
+     primer_bind     complement(4668..4697)
+                     /standard_name="DL194"
+     misc_feature    4711..4756
+                     /note="Geneious type: hairpin"
+                     /standard_name="DL_hairpin"
+     CDS             4776..5921
+                     /note="RefSeq:WP_230595711.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0002E989F1"
+                     /note="UniRef:UniRef100_A0A515IKC4"
+                     /note="UniRef:UniRef50_R6G9A2"
+                     /note="UniRef:UniRef90_D7K095"
+                     /product="hypothetical protein"
+                     /locus_tag="MHBJAE_13035"
+                     /protein_id="gnl|Bakta|MHBJAE_13035"
+                     /translation="MRNDIIFKRSVQFRDQNKNSWTVDFEVYKEESTRINRETLQKFK
+                     QSFSVSVCGAGGMSAGQCYDHINPRTEGQKKLLEFWNKYHLGGMSGGTVRQDEYLNGE
+                     QYVNDYNYFVELFKTYNEHYREQFDDISFQILVKNFNISDAAIIQVRNVLYEKMRNNP
+                     IQYILGLSNKYFHTSSDYNVKCFFLAIKGLYVDNGYKYGNGWLYSPLPDNIEEIINNI
+                     CDLVEEEETALTEELEAVFDMGKEGFIATKEIIQQVMDLRECDEDEAKRFVALGVHLG
+                     CTFGDLNDTFEECSYGEQLYCANGIDYYIGTEDELTNIANDIVYKDDEYAYLWRESVA
+                     AQRTTDSLSDWLDSIINEDGWCSVLNHWDGRYEEYKIAGEYICVCRS"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_230595711.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            4776..5921
+                     /locus_tag="MHBJAE_13035"
+                     /standard_name="gene"
+     primer_bind     complement(4796..4816)
+                     /standard_name="DL111"
+     primer_bind     complement(4796..4816)
+                     /standard_name="DL115"
+     primer_bind     complement(4796..4816)
+                     /standard_name="DL089"
+     primer_bind     complement(4800..4816)
+                     /standard_name="DL159"
+     primer_bind     complement(5893..5920)
+                     /standard_name="DL125"
+ORIGIN      
+        1 atgaaaacat caaaatcatt caatcaagaa tacattgaga aagcgaaaac gctaatccat
+       61 gagatcctcg aagataaaaa agagtacgat gactggactc aaatctgttt ttccatgcaa
+      121 aatgcagtac aagctgcggc taatatatgg ggaatatcat cagatgaaca gattaataaa
+      181 atgagatcct ttattacaga aatggttttt acagaacttt caaatctcaa acagtttgac
+      241 atagtgttta aaaagaaggg ggcacaagta gaaaggtcat tagacacatt gtattgctca
+      301 aaatgtggaa gcagtgatgt tgaaaagagg gtatgggtaa atccgaatac acgtgaaatc
+      361 agatgcaatg attcaattga ggtgacagat tgctggtgtg gcatttgtga agagcatgta
+      421 gaattatgca ccctttcaga attatgggaa atgtttggag acattccggt caataacgat
+      481 gatgagattg aagaagactt tctcaacttc ccggccggaa ccttaaagat tgatgtctgg
+      541 cattggtttg atgaacgatg tcctaacaat ttacacgatg atttaatgta ttttaaaaac
+      601 gatgccgtat aaatcagaaa agactcgtat cgctggaacc caatatgata gacgaataaa
+      661 gctcactcca gaccaaaaag aatatataaa atggttgaga gaaaagcaat taatcagtta
+      721 ctctaaactt gctaaaatat ttggagtgag caagcgtctt attcaattta tttgttgccc
+      781 agacaaatat ttgaaaaata aagagagttt aaaacaacgt aaagcagaag ggcgatacaa
+      841 acctacaaaa gcagaatggg cagcaacaat tcgtgagcac aggagatata aggaacaact
+      901 caaaaagaaa ggagatataa aatgaaagat aagattctta caatgttctt cgacattaat
+      961 agatggacaa aagcaattga gaaaggcgtt ctgaaggata ttcggaagag cgaacttatc
+     1021 aaactgacag aagaaccaac cagaattcgc atggcagaag ctatgttgaa tggtaaatat
+     1081 caaataacac caccacatat tgcacaaatc ccgaaggata acggagagtt tcgtactgta
+     1141 tatgtcaatg aacctattga ccgtataatc ctaaacatcg cgaacgattt gttatttgat
+     1201 ttaatgccag agatgattca tcctgcttgt aaatcttatc aggtcggtat tggttgcggt
+     1261 aaagtggttc tggaagtaag tcacacaatt gttgacatga aaagtgatgg ttatgtgggc
+     1321 tggaaatctg atttaagtaa atatttcgac actgttccta tccggtttat tgacgcagct
+     1381 tttgataagg tagaagctaa gtatggtcac tctgtgttaa ttgatgtatt aagaaaatac
+     1441 tatcattgcg gattgtattt cgatgagaac aacgaactgc atgaaaaata tcaatcactt
+     1501 aaacaaggat gcgcagtagc aagctggtta gccaacgtgt tgctatatag cctggatgat
+     1561 gaactgtccc aattgaatgg gttttacgta aggtattcgg atgatatgtt gttcgttggt
+     1621 ccggactatg aaaaggctat gaccatttta caaaagagat tggccgaaaa atcaatgaat
+     1681 ttgaatccca agaaagtaga gtacctgact atggacaagt ggtttaaatt tctaggtttc
+     1741 agcattaagg gaagtatgat ttctttctct cccaatcgtc ttaaaacctt ccagaaagaa
+     1801 atagaatcaa gaaccatcag aaaacgtggt attacgttga agaaggctgt ggattcggtt
+     1861 aaccgatatt tatataaagg caatggagaa tatagttggg cgactcagac ccttccagta
+     1921 tgtaatgttc gggttgatat taatgaattg aataaattcg taatggattg ccttagagcc
+     1981 gttgaaactg ggaaacataa agttggtggc cttggctatg ttaaggataa gccggatggt
+     2041 tgtgttgtta gaagtattgg tcggaacgta aaggctaatc gaaataaatc taagagtaaa
+     2101 gaaattgaag gttatttgac aataggttgt atgcagaatg ctattttgac cagaagagca
+     2161 gcgtacaata ctttagtggc aatattgtaa ctacaatctg aacacacagt aaatgaatcc
+     2221 gaggaacaag tgtttaatat ccagattata tattaggtgc cccgattcta tccttgaagg
+     2281 attacatcct tcagtatcta ctccgggcac catataatca tctggattat atcaatgaag
+     2341 ataaagagat gtgccaattg ttatgaggat ttttatcaag tagcacagca ggcaagttca
+     2401 agaagatatt ttcatattct aaatttgaat gattgatcat ttcaccggag gttacaaggc
+     2461 tatatagcct ttcacctcag gttctacgat caagtcatat ttagaattat cataaaaata
+     2521 aagtaatgtg ccgattattt gagaacttgt aaaataaatg aaatacatca aaagttatcc
+     2581 aaggaataca tttgtttact gttccggtga gcagcttcct ggacctatga gtcgataact
+     2641 catctgctcc aggaatatcc aaccggaata catctattgg gtaaagtaat gtatcagtat
+     2701 tatgaggata actatttagc acagaaatgt aattcaagaa atatcattta tatagctggt
+     2761 tatatatcag gaaggaccga gtactaattg tcctggtccg ttcctgatca caccagctct
+     2821 aaatcgaata agtatagaaa tgtgccaata ttttgagaat tacaacttat tacttaacac
+     2881 aaagtttaca gtctgggatt tagtaattta acatactgga caagatatga tgcccgcgtg
+     2941 atgacggtca tcctatgtat gacctaggat tacgcgggca ttacttgata cagtatatat
+     3001 cataaacata tagacatgtg tcacgctaaa tgggggctgt tttataagta acacaacttt
+     3061 catttataca agaaccttgc gtttaacaac tatccgacaa ttacgccggc atctacggtt
+     3121 ttataaacct ttattccggc gtattctgga tgttaatatc aggcttttaa agaaatgtgt
+     3181 caaaggtttg agtataaaat caaaagtaaa cattatgaaa aatatttatc aagaatcaat
+     3241 acaggctgta gagaacggaa ccaagtttaa agtagatttt aaaacacgaa gtttcaaact
+     3301 taatggccaa tatattatac agaattcgca gtatgaggga gacttaggtg tggaattatg
+     3361 cgcttctctt gatgagtttc tgtctaatgt agagcattta tatactcgat ataaacattc
+     3421 tattccatca acaatgagtg aatgtaaaag ccgaaaatac tttaaggctt tgtctgataa
+     3481 agatttggag gatgaagaca tgttgtttgg agttggtcga gatatagcac aagtcgaatt
+     3541 ggaattatac attctctgtc aaataatatt gggtataggt tgggatgcta ataaaatggg
+     3601 taaatggttt tggcaaagca acaaagatag agatttagta attctcaaaa actgggttac
+     3661 agtagagaaa taaataatca gactaaaaat taaattatta ataagttatg aaacagttaa
+     3721 aatttgaatg tcctgagtgt ggtaccgagt ttacgcttac agctaatcaa accaaagcta
+     3781 aggagcgtat tgaagctcta aagaaagctg gtgttgatgt tagtgagctt tttgcaatgc
+     3841 aaagtgcaga tggtttggag tttatagcct caaaaagaga tggtgtcatt agtatcttgg
+     3901 aagaagatga tccaatcttc caggccatta taattcaagg cacaattcct aatcggcaat
+     3961 tattcagacg ttgggtaatg gcacagatgt tccgcataat ttatataact accaataccc
+     4021 acggtgctta taagccgatt ggagtttcag aggtgattcg taatatggga tatgaatatc
+     4081 agtggaagat gctaaataac gagttgtacg cccagcacaa aatgatgcag aatggtgatg
+     4141 tcgataattt cagagatcga aatcgctggt tcaacaaaag agtggtatta gatatggcaa
+     4201 aagactatat cgagaaactc aaaaagagat ttgagaagtt gaaattgaga aaatgtaaag
+     4261 gggtaccgta taaacgtatc aacggccaaa acattttcgt tgatgatttt gataaaaaag
+     4321 taatcaagcc attgttgttt gcagtacata aaatacaaca tgccgaaaac acttatgaac
+     4381 tttggcattc ggtgcaggag ttcaataaaa ggcgtatcaa aatgcattgg ggtactcctc
+     4441 aaaatgcagc atggctagat gcttacaaag gagctggagc gttctttaca atgcagaaca
+     4501 tgattcgttt tcataattgc gttatcattg atgacaatgg aaaaacatta agtaaaaacg
+     4561 cgtcccttgc ttttttgaat aagaaggcaa agttgtacga gaatagagaa ggttggcgtt
+     4621 tgattggtat gttgaagaaa acgctggatg acaacaacat tgatgtggtt gctaaaatga
+     4681 aggaatggcg taaataactt aatcaaggca gttttcataa accagtttag gtacatttcc
+     4741 tctggtttat gaaaataaaa ttagaaagat tgattatgag aaacgatata atattcaaac
+     4801 gttccgtcca atttcgggac caaaataaaa acagttggac tgtagatttt gaggtttata
+     4861 aagaagaatc tactcgtata aaccgtgaaa cattgcaaaa atttaaacaa agtttcagcg
+     4921 tttcggtatg tggggctggt ggtatgagtg ctgggcaatg ctacgatcat ataaatcctc
+     4981 gtacagaagg acaaaagaaa cttttggaat tttggaacaa atatcatcta ggtggtatgt
+     5041 ctggcggtac agttcgtcaa gatgaatatt taaacggtga gcaatatgtt aacgattaca
+     5101 attactttgt ggagttgttt aaaacatata atgagcatta ccgtgaacag tttgatgata
+     5161 tttcttttca gattcttgtt aagaatttta atattagtga cgcggctata atacaggtga
+     5221 gaaatgtgct ttatgagaaa atgaggaata atcccattca atatatcctt ggattgtcaa
+     5281 acaaatactt ccatacatct tcagactaca acgtaaaatg tttctttctt gctataaaag
+     5341 gcttatatgt agataatgga tataaatatg gtaatggctg gttatacagt ccgcttccag
+     5401 ataatattga agagatcata aataatattt gtgaccttgt tgaagaagaa gaaactgcgt
+     5461 taacagaaga actggaagcg gtttttgaca tgggtaaaga agggtttatt gccacaaaag
+     5521 aaatcatcca gcaagtaatg gatttacgtg aatgtgacga agatgaagcc aaacgctttg
+     5581 ttgcattggg agtacatttg ggatgtacat tcggtgattt gaatgataca tttgaagaat
+     5641 gttcctatgg tgaacaacta tactgtgcaa atggtattga ttattatatt ggcacggaag
+     5701 atgaactgac caatatagct aatgatatag tatataaaga tgatgaatat gcgtatttat
+     5761 ggcgtgaatc tgtggcggct caaagaacta ctgattcatt gagtgattgg ttggattcaa
+     5821 tcataaatga ggatggttgg tgctctgtgc taaatcattg ggatggacgc tatgaggaat
+     5881 ataaaattgc cggagaatat atttgtgttt gtaggtcata a
+//
+LOCUS       Bacteroides-sp-9-1-42FAA-MAF-2_1_-_UG27_BLAST_hit_-_UG27_system        4716 bp    DNA     linear   UNA 07-JAN-2026
+DEFINITION  contig_1, whole genome shotgun sequence.
+ACCESSION   geneious|urn:local:
+VERSION     geneious|urn:local:.:3e-k42e722:3
+KEYWORDS    .
+SOURCE      . (None)
+  ORGANISM  .
+FEATURES             Location/Qualifiers
+     source          <1..>4716
+                     /mol_type="genomic DNA"
+     misc_feature    <1..>4716
+                     /note="Geneious type: phage_arm"
+                     /standard_name="phage_arm"
+     misc_feature    <1..>4716
+                     /note="Geneious type: to_extract"
+                     /standard_name="To_PCR"
+     misc_feature    <1..4716
+                     /note="Geneious type: to_extract"
+                     /standard_name="To_PCR_2"
+     misc_feature    1..639
+                     /note="Geneious type: cluster_78"
+                     /standard_name="cluster_78"
+     misc_feature    1..4716
+                     /note="Geneious type: system"
+                     /standard_name="UG27_system"
+     CDS             1..639
+                     /note="RefSeq:WP_004303954.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0002132954"
+                     /note="UniRef:UniRef100_A0A4Q5INY8"
+                     /note="UniRef:UniRef50_I8Y5K9"
+                     /note="UniRef:UniRef90_I8Y5K9"
+                     /product="hypothetical protein"
+                     /locus_tag="NCJBIN_04195"
+                     /protein_id="gnl|Bakta|NCJBIN_04195"
+                     /translation="MNKQQTTPVTDTFKGMLLMSMGVPVGNIRPYRLKSAPSCLGGFE
+                     RMSVAAARASGMDIPETEKENDEVYICRLGPAVFHKWMPVWMFETAFEPVPEQRRGDR
+                     IRTLTEEMNNHHVAEKALNEKCYALSVKLLSECGGSLDDNGEQSSTYLHVVDRDPVEL
+                     VITNASLRKDGKIFIMGYSYYTGEEYEQECDVESGMDILNFILSQKSFECHE"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_004303954.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            1..639
+                     /locus_tag="NCJBIN_04195"
+                     /standard_name="gene"
+     misc_feature    632..1894
+                     /note="Geneious type: BLAST Hit"
+                     /standard_name="UG27_BLAST_hit"
+     misc_feature    632..1894
+                     /note="Geneious type: cluster_1"
+                     /standard_name="cluster_1"
+     primer_bind     632..658
+                     /standard_name="DL120"
+     primer_bind     632..658
+                     /standard_name="DL096"
+     primer_bind     632..658
+                     /standard_name="DL155"
+     CDS             632..1894
+                     /note="RefSeq:WP_004303952.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001A264BE"
+                     /note="UniRef:UniRef100_A0A6N2VYW1"
+                     /note="UniRef:UniRef50_K9E4Y2"
+                     /note="UniRef:UniRef90_K0XQH0"
+                     /product="Reverse transcriptase domain-containing protein"
+                     /locus_tag="NCJBIN_04200"
+                     /protein_id="gnl|Bakta|NCJBIN_04200"
+                     /translation="MNEDKILQMFFDIGRWTKAIEKGVLKDIRKDQLIRLTDEHTRMA
+                     MAYAMRRGKYEISPPHTAQIPKDNGEFRTVYVNEPMDRVVLGIANDLLFELMPEMLHS
+                     SCKSYQTGIGCGKVVTEVSHRMTETGNSGCLGWKSDLSKYFDSVPIRFIDEAFDKVEA
+                     KHGQSALIDVLRKYYHSDLYFDEDNRLQSKYQSLKQGCAVASWLADVLLYDLDRELSQ
+                     MNGYYVRYSDDMLFIGKDYEKAMDTLQKRLEDKSMKLNPKKVEYLAADVWFKFLGFSI
+                     KGGMVSLSSSRIKTFQHEIERRTIRCRDTTLAKAVDAVNRYLYKGEFSWAIQVLPVCN
+                     VKSDLNELNKFVMDCFRAVQTGRCKIGGLGYVRTKPDGCIVRGRGRNVKANRDKTDRD
+                     IPGYLTVGCMRNALLTSRAVYNTLVASL"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_004303952.1"
+                     /standard_name="Reverse transcriptase domain-containing
+                     protein CDS"
+     gene            632..1894
+                     /locus_tag="NCJBIN_04200"
+                     /standard_name="gene"
+     primer_bind     complement(1293..1311)
+                     /standard_name="DL135"
+     misc_feature    1307..1318
+                     /note="Geneious type: motif"
+                     /standard_name="YSDD"
+     primer_bind     1318..1337
+                     /standard_name="DL134"
+     primer_bind     complement(1877..1894)
+                     /standard_name="DL097"
+     misc_feature    1925..2068
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           1925..2068
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2092..2240
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2092..2240
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     CDS             2217..2714
+                     /note="RefSeq:WP_004303950.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001A264BD"
+                     /note="UniRef:UniRef100_A0A6N2VW60"
+                     /note="UniRef:UniRef50_A0A3E4G0M1"
+                     /note="UniRef:UniRef90_A0A3E4G0M1"
+                     /product="hypothetical protein"
+                     /locus_tag="NCJBIN_04205"
+                     /protein_id="gnl|Bakta|NCJBIN_04205"
+                     /translation="MCRYYENFQSFPARERAVRGNGFSLLSPISPSRAVVSLTLYDGA
+                     IPASATADIGPVKERAGIPGTAKRTAQGKGGKAGISTEPQFTRLEPVLSPANTTDDTG
+                     SSCTRGPYQVFKGMCRPDESPEQKVARPHMHEGPKFKIQYSSLVLSQATTWFRTEVLL
+                     YLSGL"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_004303950.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            2217..2714
+                     /locus_tag="NCJBIN_04205"
+                     /standard_name="gene"
+     misc_feature    2267..2413
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2267..2413
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2437..2585
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2437..2585
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2611..2742
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2611..2742
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    2764..3243
+                     /note="Geneious type: cluster_2"
+                     /standard_name="cluster_2"
+     CDS             2764..3243
+                     /note="RefSeq:WP_004293642.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI000197AF48"
+                     /note="UniRef:UniRef100_A0A6N2VYY1"
+                     /note="UniRef:UniRef50_K9E6C4"
+                     /note="UniRef:UniRef90_I8Y7W4"
+                     /product="hypothetical protein"
+                     /locus_tag="NCJBIN_04210"
+                     /protein_id="gnl|Bakta|NCJBIN_04210"
+                     /translation="MEDIYRETVTAIENGANFRIDFQSRSLKVNGRHMIRNGRYDGAP
+                     WLPEYGCGDFFTDVEELYRRYKHSIPSERSQSKSRRYFMALPESDLEDGDMLYGQHRD
+                     TAQFELEFYILCRIIGGFTWNPETMGKWFWQSEKDKDLVILRKWVEPGSNQLLTNSQ"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_004293642.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            2764..3243
+                     /locus_tag="NCJBIN_04210"
+                     /standard_name="gene"
+     primer_bind     2764..2788
+                     /standard_name="DL181"
+     primer_bind     complement(3209..3243)
+                     /standard_name="DL183"
+     misc_feature    3240..4328
+                     /note="Geneious type: cluster_3"
+                     /standard_name="cluster_3"
+     CDS             3240..4328
+                     /note="RefSeq:WP_004293643.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001A264BC"
+                     /note="UniRef:UniRef100_A0A6N2VW86"
+                     /note="UniRef:UniRef50_A0A4S2AJN7"
+                     /note="UniRef:UniRef90_A0A1Q6IRY5"
+                     /product="ubiquitin carboxyl-hydrolase"
+                     /locus_tag="NCJBIN_04215"
+                     /protein_id="gnl|Bakta|NCJBIN_04215"
+                     /translation="MSRKKQETKVLCPGCGTEFAIADKEFAATGTVIGKNSDLGTVYP
+                     VVAGHNSPAGLPKGARERIEALRGAGVDVSCLFAMQGAEGGEYIASNKDGKLTILDDN
+                     DPIFGSIMAQGTVPNNRLFRRWVMAQMFHMMSYTHYREKEPAGVTEMIHRKGYDYQWK
+                     MLLNELHAQMKMEHKDITGFAERNRWFNRDVVLAIASDYVNALKKHVGNLETRKCKGV
+                     PYKRIHGRNIFVEDLQSKLYYPLSIAITHIRHALDATQLYNAVRQFNDRRIRLPWGTP
+                     QSKAWMDAYKGAGAFFTMQNLIRFHGCTAVNDRGRRLDKYQSLTFLSAKAEEYKNGEG
+                     WRLLAVLKKMLADNNINIKKKMAAWRKK"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_004293643.1"
+                     /standard_name="ubiquitin carboxyl-hydrolase CDS"
+     gene            3240..4328
+                     /locus_tag="NCJBIN_04215"
+                     /standard_name="gene"
+     primer_bind     3240..3270
+                     /standard_name="DL191"
+     primer_bind     complement(4309..4328)
+                     /standard_name="DL192"
+     misc_feature    4363..4495
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           4363..4495
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     CDS             4531..4716
+                     /standard_name="DL_CDS"
+     misc_feature    4691..>4716
+                     /note="Geneious type: cluster_51"
+                     /standard_name="cluster_51"
+     CDS             4691..>4716
+                     /note="RefSeq:WP_004293644.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI0001A264BB"
+                     /note="UniRef:UniRef100_A0A6N2VZB0"
+                     /note="UniRef:UniRef50_F0R5K6"
+                     /note="UniRef:UniRef90_A0A414YNI6"
+                     /product="hypothetical protein"
+                     /locus_tag="NCJBIN_04220"
+                     /protein_id="gnl|Bakta|NCJBIN_04220"
+                     /translation="MSSLKYPP"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_004293644.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            4691..>4716
+                     /locus_tag="NCJBIN_04220"
+                     /standard_name="gene"
+     primer_bind     complement(4695..4716)
+                     /standard_name="DL105"
+     primer_bind     complement(4695..4716)
+                     /standard_name="DL109"
+     primer_bind     complement(4695..4716)
+                     /standard_name="DL087"
+     primer_bind     complement(4698..4716)
+                     /standard_name="DL158"
+     primer_bind     complement(4698..4715)
+                     /standard_name="DL124"
+ORIGIN      
+        1 atgaacaaac agcaaaccac tcccgttacc gacactttta aggggatgct acttatgtca
+       61 atgggtgtcc ctgtaggaaa catccgtccc taccgtttga agtcggcacc ttcctgcctc
+      121 ggcggtttcg agcgcatgag cgtagcggca gcacgagcct cgggaatgga tatcccggag
+      181 acggagaaag agaacgatga agtttacata tgccgcttgg gacccgccgt cttccataaa
+      241 tggatgcctg tctggatgtt cgaaaccgct ttcgaaccgg ttcccgagca gagacgcggt
+      301 gaccgcatcc gaacacttac ggaagagatg aacaaccatc acgtggcgga gaaagccctg
+      361 aatgaaaaat gttacgccct gtccgtgaag ctgctttccg agtgtggcgg cagccttgat
+      421 gacaacggtg aacaatcctc gacctatctc catgttgtgg accgtgaccc cgtggaactg
+      481 gtcatcacga acgcgtcgct ccggaaagac gggaaaatct tcatcatggg ttacagttac
+      541 tacacgggcg aggagtacga gcaggaatgt gacgtagaat ccggcatgga catactgaat
+      601 tttatccttt cccaaaaaag ttttgagtgc catgaatgaa gacaagatat tgcaaatgtt
+      661 cttcgacata ggccggtgga cgaaggccat tgagaaaggc gtgctgaaag acattaggaa
+      721 agaccaactt attcggctga ccgacgagca tacccgtatg gcgatggcct atgccatgcg
+      781 ccggggaaag tacgagattt cccctcccca cacggcgcag atacccaagg acaacggtga
+      841 gttccgcaca gtgtacgtaa acgagccgat ggaccgcgta gtactgggta tcgccaacga
+      901 cctgctcttc gagttgatgc cggagatgct gcactcttcg tgcaagtcct accagaccgg
+      961 tatagggtgc ggcaaggtag ttacggaagt cagccaccgg atgacagaaa ccggcaatag
+     1021 cggctgtctg ggctggaagt ccgacctttc caaatacttc gacagtgttc cgatacggtt
+     1081 catcgacgag gcgttcgaca aggtggaggc caaacacggc cagtctgccc tgatagacgt
+     1141 acttaggaaa tattaccact cggacctcta tttcgatgaa gataaccggt tgcaaagcaa
+     1201 gtatcaatcc ttgaaacagg gttgtgctgt ggctagctgg ctggcggatg tactgctcta
+     1261 cgacctagac agggaactgt cacaaatgaa cggctactac gtccggtatt ccgacgatat
+     1321 gctttttatc ggcaaggatt atgaaaaagc gatggacaca ctccaaaaac gcctggaaga
+     1381 taaatccatg aagctaaatc ccaagaaagt ggaatacctg gcagccgatg tctggttcaa
+     1441 gttcttagga ttcagtatca agggcggcat ggtctcgctc tcgtcatcac gcatcaagac
+     1501 cttccagcac gagatcgagc ggcggacaat ccgctgccgg gacacgacac tggcaaaagc
+     1561 cgtggacgcc gtgaaccgtt acctgtacaa gggcgagttc agctgggcga tacaggtatt
+     1621 gccggtctgt aatgtgaaga gtgacctcaa cgagctgaac aagttcgtga tggactgctt
+     1681 tagagccgtt cagacgggca ggtgcaagat cggcggtctg ggatatgtcc gaaccaaacc
+     1741 ggatggctgc atcgtccggg gacggggacg caacgtgaag gccaaccgcg ataaaacaga
+     1801 ccgggacata ccgggttacc tgactgtcgg ctgcatgcgt aacgcccttc tgaccagccg
+     1861 ggcggtgtac aacacgctgg tggcatcgct ataagttacg ccgggcacac ggcagaacgg
+     1921 gtggacgggc aggctattca acgttacagg cttataacca gaatccatat cgagattaac
+     1981 cggtctaaca cccggttaat cccatctcga ttctggctgc gcctgtaatg tatcgggaaa
+     2041 ttaaagtcat gtgccgtctg tcccgtaccc gttaccggag cacaccggga aagttcaagg
+     2101 aataggtttg ggcatcccgc gtaccaacgt cttctttccg agtctgaagg cggctgaccg
+     2161 tcgccttcgg actccgcaga agacccatac gcgggataca tcggaagcat aaagccatgt
+     2221 gccggtatta tgagaacttt cagtcttttc cagcacggga acgtgcggtt cgggggaatg
+     2281 gattcagcct gctgtccccg ataagcccgt ctcgcgccgt cgtatcccta acgttatacg
+     2341 acggcgccat tccggcttcc gccacagcag acatcggacc tgtaaaggaa cgtgccggca
+     2401 ttccgggaac cgcaaaaaga acagcacagg gcaaaggggg caaggccggg atttcaacag
+     2461 agccgcaatt cacacggctg gagcctgtgt tatctcctgc taacacgaca gatgacacag
+     2521 gttccagctg tactcgcggc ccgtatcagg tttttaaagg gatgtgccgt ccggatgagt
+     2581 cccctgaaca gaaggtagcg cgaccgcata tgcacgaggg acccaaattc aagatacagt
+     2641 attcaagctt ggtcctgagc caggcaacta cctggttcag gaccgaagtc ctactgtatt
+     2701 tatcaggact ataaagatac gcgccagggg tttgagtgcc attaattgta aacaggtgag
+     2761 aaaatggaag atatttaccg agaaaccgtc accgccatag agaacggcgc aaatttccgg
+     2821 attgatttcc agtccagaag tttaaaagta aacgggagac acatgatacg gaacggcagg
+     2881 tatgatggcg ctccgtggtt gccggagtac ggctgcgggg attttttcac ggatgtggag
+     2941 gagctgtacc gccgctataa acattcgata ccatcggagc gcagccagag caagtcccgc
+     3001 cggtatttca tggcattgcc cgaaagtgac ctcgaggacg gggacatgct gtacgggcaa
+     3061 caccgggata ccgcgcaatt cgagctggaa ttctatatcc tctgccggat tataggcggg
+     3121 ttcacatgga atcccgaaac gatgggcaaa tggttctggc aaagcgaaaa agacaaggac
+     3181 ctggtgatac tcagaaaatg ggtggaaccc ggaagtaatc aattattaac aaattcacaa
+     3241 tgagtagaaa gaaacaagaa acaaaagtcc tgtgccccgg atgcggcacg gaattcgcca
+     3301 tcgcggacaa ggaatttgcc gccacgggca ccgttatcgg caagaattcg gatttgggca
+     3361 ccgtctatcc ggtggtggcc ggccataatt ctcctgccgg acttcccaaa ggggcgcggg
+     3421 agcgtatcga ggcactccgc ggtgccggtg tggacgtgag ctgcctgttc gccatgcagg
+     3481 gagccgaggg cggcgagtat atcgcctcca acaaagacgg gaaacttacc atcctggatg
+     3541 acaacgaccc gatattcggc agcatcatgg cacagggtac cgttcccaac aaccgactct
+     3601 tccgccggtg ggtcatggca caaatgttcc atatgatgtc atacacgcat taccgtgaaa
+     3661 aagagccggc aggggtgacc gagatgattc accggaaagg ctatgattac cagtggaaaa
+     3721 tgctcttgaa cgagctgcac gcccagatga agatggaaca caaggacatc acgggttttg
+     3781 ccgagagaaa ccgctggttc aaccgtgatg tggttttggc catcgcgagc gactatgtca
+     3841 acgcgctgaa aaaacacgtg ggcaacctgg aaacaagaaa atgcaaggga gttccctaca
+     3901 agcgtataca cggccgtaat attttcgtgg aggacctgca atccaaactg tactacccgc
+     3961 tttccatcgc gataacccac atcaggcacg cgttggacgc cacacagctt tacaacgcgg
+     4021 tcagacagtt caatgaccgt cgtatccggc tgccatgggg cactcctcaa agcaaggcat
+     4081 ggatggatgc ctataaggga gccggggcgt tctttaccat gcagaacctg attcgtttcc
+     4141 acggttgcac ggctgtcaat gaccggggtc ggcgtctgga caagtaccag tcactgacgt
+     4201 tcctgtcagc caaggcggaa gagtataaaa acggagaagg ctggcggttg ctggcagtcc
+     4261 tgaaaaaaat gctggcggac aacaatatca acatcaaaaa gaagatggcg gcatggcgta
+     4321 agaaataggc cgtcatcacc atccgcccgg taggcggcgc ggtgtggcgg gtcagaataa
+     4381 attagtactc cctccattga aatgatgctc atccctgtta acacaagatg agcatctttc
+     4441 aatggaggca ttacatcgaa aacgtaaaga gatgcccctg tttgacgacc acaccgctat
+     4501 tctaatcaaa acgacataat cctttatacg atgagcaaga aacaactacg acgcagggcc
+     4561 tacctgctgt accggttacg aaaacagggt atccgatgcc tgacacgttg ccggaccatc
+     4621 ttctaccttt acggggagga tcctaaatca gtaccgcaga tttgcagcct gataagcgaa
+     4681 ttccatttcc atgtccagtt tgaaataccc gcctga
+//
+LOCUS       Blautia-hansenii-DSM-20583-MAF-2_1_-_UG27_BLAST_hit_-_UG27_system        5887 bp    DNA     linear   UNA 07-JAN-2026
+DEFINITION  contig_1, whole genome shotgun sequence.
+ACCESSION   geneious|urn:local:
+VERSION     geneious|urn:local:.:3e-k42e722:4
+KEYWORDS    .
+SOURCE      . (None)
+  ORGANISM  .
+FEATURES             Location/Qualifiers
+     source          complement(<1..>5887)
+                     /mol_type="genomic DNA"
+     misc_feature    <1..>5887
+                     /note="Geneious type: to_extract"
+                     /standard_name="TO_PCR"
+     CDS             <1..4
+                     /note="RefSeq:WP_003020511.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI00018C03BF"
+                     /note="UniRef:UniRef100_C9L7P6"
+                     /note="UniRef:UniRef50_C9L7P6"
+                     /note="UniRef:UniRef90_C9L7P6"
+                     /product="hypothetical protein"
+                     /locus_tag="KPMKPI_09590"
+                     /protein_id="gnl|Bakta|KPMKPI_09590"
+                     /translation
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_003020511.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            <1..4
+                     /locus_tag="KPMKPI_09590"
+                     /standard_name="gene"
+     misc_feature    1..5887
+                     /note="Geneious type: system"
+                     /standard_name="UG27_system"
+     misc_feature    1..5887
+                     /note="Geneious type: to_extract"
+                     /standard_name="TO_PCR_2"
+     primer_bind     1..25
+                     /standard_name="DL090"
+     primer_bind     1..25
+                     /standard_name="DL112"
+     primer_bind     1..25
+                     /standard_name="DL116"
+     CDS             1..258
+                     /note="RefSeq:WP_003020513.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI00018C03BE"
+                     /note="UniRef:UniRef100_C9L7P7"
+                     /note="UniRef:UniRef50_C9L7P7"
+                     /note="UniRef:UniRef90_C9L7P7"
+                     /product="hypothetical protein"
+                     /locus_tag="KPMKPI_09585"
+                     /protein_id="gnl|Bakta|KPMKPI_09585"
+                     /translation="MKQSQVVAEYDYYTLEQAREILYPEFIAKRQMKNRYKRKKLIKQ
+                     KCIGFGLSLCSIIAILCGDGAFILPLLLSFYIMLTNKIIII"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_003020513.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            1..258
+                     /locus_tag="KPMKPI_09585"
+                     /standard_name="gene"
+     regulatory      202..235
+                     /note="Geneious type: promoter"
+                     /standard_name="bprom_promoter"
+     misc_feature    202..207
+                     /note="Geneious type: motif"
+                     /standard_name="-35"
+     misc_feature    220..228
+                     /note="Geneious type: motif"
+                     /standard_name="-10"
+     misc_feature    285..399
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           285..399
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    423..533
+                     /note="Geneious type: UG27_ncRNA"
+                     /standard_name="DL_UG27_ncRNA"
+     ncRNA           423..533
+                     /standard_name="DL_UG27_ncRNA"
+     misc_feature    545..652
+                     /note="Geneious type: UG27_ncRNA"
+                     /standard_name="DL_UG27_ncRNA"
+     ncRNA           545..652
+                     /standard_name="DL_UG27_ncRNA"
+     CDS             690..1532
+                     /note="RefSeq:WP_003020515.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI00018C03BD"
+                     /note="UniRef:UniRef100_C9L7P8"
+                     /note="UniRef:UniRef50_C9L7P8"
+                     /note="UniRef:UniRef90_C9L7P8"
+                     /product="DUF5688 domain-containing protein"
+                     /locus_tag="KPMKPI_09580"
+                     /protein_id="gnl|Bakta|KPMKPI_09580"
+                     /translation="MTREDIIRELEVKGFNVEMKDTVKNGVICKGILVHDEKDVNPLI
+                     YTEQMIQEADKRKKTLEEVVDEFIKVYENSKDCMKMEIQRRRWIRYLMNRDWVMKHLS
+                     IAIQKSSDENLVKHDLDNFTGMEAYLLLMENGKEDESYSMKIETCHLKQWNISEEEAW
+                     KIAYKHICEETHIVGMSQMMSELIGAPVEEEEDDMMYVISNSDKMKGASAILNEKALK
+                     EFAQKKGVARLYVLPSSVHEMIIIPDNGEFDLSVLSEMVSEVNNTEVKPEEQLPSRAY
+                     LLEF"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_003020515.1"
+                     /standard_name="DUF5688 domain-containing protein CDS"
+     gene            690..1532
+                     /locus_tag="KPMKPI_09580"
+                     /standard_name="gene"
+     misc_feature    1558..2040
+                     /note="Geneious type: cluster_2"
+                     /standard_name="cluster_2"
+     CDS             1558..2040
+                     /note="RefSeq:WP_003020519.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI00018C03BC"
+                     /note="UniRef:UniRef100_C9L7P9"
+                     /note="UniRef:UniRef50_C9L7P9"
+                     /note="UniRef:UniRef90_C9L7P9"
+                     /product="hypothetical protein"
+                     /locus_tag="KPMKPI_09575"
+                     /protein_id="gnl|Bakta|KPMKPI_09575"
+                     /translation="MTSVFKKLLNAAKNGSYKISLQDKTLVINGREVIKNGIYSSENI
+                     LIEPSDLDGYFYEGNEIEEIKSEPWNCVRMLYELYKYSIPDKKWDDRKSVFKALPIEL
+                     ISEEDMVLNHPRYMACAVLEGYILLAGLQGWLKWEREDHWYWVNKYDRECIVLKQWVI
+                     "
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_003020519.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            1558..2040
+                     /locus_tag="KPMKPI_09575"
+                     /standard_name="gene"
+     primer_bind     1559..1592
+                     /standard_name="DL186"
+     primer_bind     1559..1588
+                     /standard_name="DL127"
+     primer_bind     1559..1588
+                     /standard_name="DL157"
+     regulatory      1688..1727
+                     /note="Geneious type: terminator"
+                     /standard_name="ARNOLD_terminator"
+     primer_bind     complement(2006..2040)
+                     /standard_name="DL187"
+     misc_feature    2087..2932
+                     /note="Geneious type: cluster_3"
+                     /standard_name="cluster_3"
+     primer_bind     2087..2119
+                     /standard_name="DL195"
+     CDS             2087..2932
+                     /note="RefSeq:WP_003020521.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI00018C03BB"
+                     /note="UniRef:UniRef100_C9L7Q0"
+                     /note="UniRef:UniRef50_C9L7Q0"
+                     /note="UniRef:UniRef90_C9L7Q0"
+                     /product="hypothetical protein"
+                     /locus_tag="KPMKPI_09570"
+                     /protein_id="gnl|Bakta|KPMKPI_09570"
+                     /translation="MKTSLSEMIKQLEEQGIDTSKFSINIDGKDLNEFLDLAKRNVEQ
+                     GTVEHKTFRRWVLAQTWKMLTELVYDPNDRRFDAGWERYMRLKYDYKYQFTVLMDELK
+                     VLDKMKKRNSASEEYTIRKLFFTQDVVLKTCNHALASFRKNIAYFRGYFSDTVNRILE
+                     EAERTYSLMISRKRNDYHSMYVLLDSFIKTGILNHINNRERKCQEWKDAYKAAGAYYS
+                     LQNMILYHDCMLPLCAKKESYFELNRITTRYSRIGELWRLHALMLETIDYNDFDLVKS
+                     ICKRK"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_003020521.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            2087..2932
+                     /locus_tag="KPMKPI_09570"
+                     /standard_name="gene"
+     primer_bind     complement(2894..2932)
+                     /standard_name="DL196"
+     misc_feature    2960..3100
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           2960..3100
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    3125..3231
+                     /note="Geneious type: UG27_ncRNA"
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     ncRNA           3125..3231
+                     /product="cmsearch hit against UG27_ncRNA_MW_v3"
+                     /standard_name="cmsearch hit against UG27_ncRNA_MW_v3 (-)"
+     misc_feature    3247..4527
+                     /note="Geneious type: BLAST Hit"
+                     /standard_name="UG27_BLAST_hit"
+     misc_feature    3247..4527
+                     /note="Geneious type: cluster_1"
+                     /standard_name="cluster_1"
+     primer_bind     3247..3273
+                     /standard_name="DL122"
+     primer_bind     3247..3273
+                     /standard_name="DL100"
+     CDS             3247..4527
+                     /note="COG:COG3344"
+                     /note="COG:X"
+                     /note="RefSeq:WP_003020523.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI00018C03BA"
+                     /note="UniRef:UniRef100_C9L7Q1"
+                     /note="UniRef:UniRef50_K9E4Y2"
+                     /note="UniRef:UniRef90_C9L7Q1"
+                     /product="Retron-type reverse transcriptase"
+                     /locus_tag="KPMKPI_09565"
+                     /protein_id="gnl|Bakta|KPMKPI_09565"
+                     /translation="MKVSKLLKMMFEFDRWQELINHATEKGIRLDVLHEYCFEEKREK
+                     LFADILSNQYNIFPPHIARIPKDKPGEFREVYVNEALDRIVLTLINDCLCDLFKDMVH
+                     PNCKSYQKGTSTQKVVLEVSQKIVSLNKQGIIGYKSDFSKYFDTVNIEVIDNIFDVLE
+                     KRLGFKKDTEPVINLLRRYYHQDLYFNLQGKLEARYQGLKQGCAVASFLANACLYELD
+                     EYMANKYEIYYRYSDDTVVIDNHVENVITDMNNIISKYGVTLNPKKVEPLYSDKWFKF
+                     LGFLIKGNQITLSGTRVKKFQKEVEKRSIKRRKCSSKQAKNAITKFLYEGEFNWATSC
+                     LSIINVEKDINELNGFIMDCIRACETGKKKIGGLGSVTNLPDKTILRGTGRNVKSNKA
+                     KTGYIEKYISVGCLAKDVKLAQPVFETVVRNMWR"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_003020523.1"
+                     /gene="ykfC"
+                     /standard_name="ykfC CDS"
+     gene            3247..4527
+                     /locus_tag="KPMKPI_09565"
+                     /gene="ykfC"
+                     /standard_name="ykfC gene"
+     primer_bind     complement(3898..3936)
+                     /standard_name="DL139"
+     misc_feature    3937..3948
+                     /note="Geneious type: motif"
+                     /standard_name="YSDD"
+     primer_bind     3948..3973
+                     /standard_name="DL138"
+     primer_bind     complement(4501..4527)
+                     /standard_name="DL197"
+     primer_bind     complement(4507..4527)
+                     /standard_name="DL101"
+     CDS             4532..5887
+                     /note="RefSeq:WP_003020525.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI00018C03B9"
+                     /note="UniRef:UniRef100_C9L7Q2"
+                     /note="UniRef:UniRef50_C9L7Q2"
+                     /note="UniRef:UniRef90_C9L7Q2"
+                     /product="hypothetical protein"
+                     /locus_tag="KPMKPI_09560"
+                     /protein_id="gnl|Bakta|KPMKPI_09560"
+                     /translation="MSNYWEYRDVKVLIAERLMTMDGWKVYGYHPDNSDAMIDYFDPA
+                     YWDGIAEKNGYVLCVDVFGASEAKEIREYNYNGTAINMSIQAKIEKLEQMTVERGASE
+                     QEEESAKKMIENLRQKAAKETETEKYTVVGMMPGHMAHPPRMNWHIEKDGVYIAKGNG
+                     LLKFHGIDSYYKYRQYMEDLSDYRKLSKEKYKEKFMFEHRDSYKPERLNDAFEYHYKE
+                     ISEKAKLCQQFDALINKFDTTCGGLLGSGDGYIYEEKTVTEYKKEMKPFETETGVLKE
+                     GQCFILKTRFNYGHNKGQVFRIHETEYNGQKNYHAYKLNGKCTKECTGRANSSNSWNC
+                     FNEKFFKWIEEGFISWCEIREVKTPYEVKKVVKTKISNAKNNEESNNKRRYTYDISED
+                     VDTRDGSKIWLVKVKEKLSKEEYVNVNHWMKELGGYYSKFKHAFLFKENPEAKLNMEA
+                     A"
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_003020525.1"
+                     /standard_name="hypothetical protein CDS"
+     gene            4532..5887
+                     /locus_tag="KPMKPI_09560"
+                     /standard_name="gene"
+     primer_bind     complement(5861..5887)
+                     /standard_name="DL117"
+     primer_bind     complement(5861..5887)
+                     /standard_name="DL091"
+     primer_bind     complement(5861..5887)
+                     /standard_name="DL113"
+     primer_bind     complement(5866..5887)
+                     /standard_name="DL160"
+     primer_bind     complement(5866..5886)
+                     /standard_name="DL126"
+     CDS             5887
+                     /note="RefSeq:WP_003020527.1"
+                     /note="SO:0001217"
+                     /note="UniParc:UPI00018C03B8"
+                     /note="UniRef:UniRef100_C9L7Q3"
+                     /note="UniRef:UniRef50_C9L7Q3"
+                     /note="UniRef:UniRef90_C9L7Q3"
+                     /product="Gene product 88"
+                     /locus_tag="KPMKPI_09555"
+                     /protein_id="gnl|Bakta|KPMKPI_09555"
+                     /translation
+                     /codon_start=1
+                     /transl_table=11
+                     /inference="ab initio prediction:Prodigal:2.6"
+                     /inference="similar to AA sequence:RefSeq:WP_003020527.1"
+                     /standard_name="Gene product 88 CDS"
+     gene            5887
+                     /locus_tag="KPMKPI_09555"
+                     /standard_name="gene"
+ORIGIN      
+        1 atgaaacaat cacaagttgt ggcagaatat gactactaca cattagaaca ggcaagagaa
+       61 atattgtatc cagaatttat agcgaaaagg caaatgaaaa acagatataa aaggaaaaaa
+      121 cttatcaagc aaaaatgtat aggatttggt ttatctttat gctctatcat tgcaatatta
+      181 tgtggtgatg gagcttttat tttaccatta ttgttaagtt tttatattat gcttacaaat
+      241 aaaatcatca ttatttaata taaagggaag gcacattccg tatatagcaa agctgttgta
+      301 tttaccattc atgatccgga ggcatatcac ccattcatgc ctccggatca tgaattacat
+      361 caattccata aagaaatgtg ttgtaacaga actgctatat caatcgttgg cacaagcgaa
+      421 atgataagta aactgaatga tttaatttca tgtcaggata gaagcaccac tgcttctacc
+      481 ctgcatacaa atatcaatag aattaagaaa tgtgttgttg cagaacactt atctaataat
+      541 ctaatagtaa gcctattata ttttaactta tcctacagca aggcgtatca atacgcctaa
+      601 gcagtagcat agcatcacta caatatagaa atgtgtcgag ataggactac tacaaaaaac
+      661 aaatataaaa agtaaagggg aaaagaagca tgacaagaga agatatcatt agagagttag
+      721 aagtaaaggg atttaatgtg gaaatgaaag atactgtaaa aaatggagta atatgtaaag
+      781 gcattttagt acatgatgaa aaagacgtaa atccgttaat atatacagaa cagatgatac
+      841 aagaggcaga taaacgtaaa aagacactag aagaagtagt agatgaattt attaaggtgt
+      901 acgaaaatag caaggactgt atgaaaatgg aaattcaaag aaggagatgg atacgctatt
+      961 taatgaatcg tgactgggta atgaaacatt taagtattgc aattcaaaaa tcttcagatg
+     1021 aaaatttagt aaaacatgat ttagataatt ttacaggaat ggaggcatac ttgttactaa
+     1081 tggaaaatgg aaaagaagat gaaagttatt ctatgaaaat tgaaacttgt catttaaaac
+     1141 aatggaatat tagtgaggaa gaagcatgga aaatagctta taagcatatc tgcgaagaaa
+     1201 ctcatattgt tggaatgtct cagatgatga gtgaattaat cggagcacca gtagaagagg
+     1261 aagaagacga tatgatgtat gtgatttcca attctgacaa aatgaaaggt gcaagtgcga
+     1321 ttttgaatga aaaagcattg aaagaatttg cacagaagaa aggtgtcgct agactttatg
+     1381 ttttaccttc atctgtacat gagatgatta tcataccgga taacggagaa tttgatttat
+     1441 ccgttttaag tgagatggta tcagaagtaa acaatacaga agtaaaacca gaagaacagc
+     1501 ttccaagtcg tgcatacttg ttagaatttt aatcaatata cgaagggaga aattaaagtg
+     1561 acaagtgttt ttaaaaaatt gttaaatgca gccaaaaacg gaagttataa aatttccctg
+     1621 caagataaaa ctctggtcat taacggaaga gaagtaatta aaaatggaat atattccagt
+     1681 gaaaatattc ttattgagcc atccgatttg gatggttatt tttatgaagg aaatgagata
+     1741 gaagaaatta aaagcgaacc gtggaattgt gttcgtatgc tttatgaatt atataagtat
+     1801 tctattccag ataagaaatg ggatgataga aaaagtgtat tcaaagcttt accaatcgag
+     1861 ctaatctcag aggaagatat ggtactaaat catccaagat atatggcttg tgcagtttta
+     1921 gaaggttaca tcctgttagc aggtcttcaa ggctggttga aatgggaaag ggaagaccat
+     1981 tggtattggg taaataaata cgatagagaa tgtattgtat tgaaacagtg ggttatttaa
+     2041 ataggtagta atttaaattt atatataata aaaggagaat gaaattatga aaacatcttt
+     2101 aagcgaaatg attaaacagt tggaagagca gggtattgat acaagtaaat ttagtattaa
+     2161 tattgatgga aaggatttga atgaattctt agacttagca aagagaaatg tagagcaggg
+     2221 cacagtggaa cataaaacat ttagaagatg ggtgctcgct caaacttgga aaatgcttac
+     2281 agagttagta tacgatccaa atgacagaag atttgacgca ggatgggaaa gatacatgag
+     2341 acttaaatat gattataaat atcagtttac tgtgcttatg gacgaactga aagtgttgga
+     2401 taagatgaaa aagagaaaca gcgcatctga agaatataca atcagaaaat tgttttttac
+     2461 ccaagatgtt gttttgaaaa catgtaatca tgcattagca agttttagaa agaatattgc
+     2521 ttattttaga ggatatttta gtgatacagt aaatagaatt ttagaagaag cagaaagaac
+     2581 atattctctg atgatatctc gcaagcgtaa tgattatcat tctatgtatg tattgttaga
+     2641 tagctttatt aagacgggga ttttaaatca tatcaataat agagagagaa agtgtcagga
+     2701 atggaaagat gcttataaag ctgctggtgc atattatagc ttacagaaca tgattttgta
+     2761 tcatgattgc atgttgccat tgtgcgctaa aaaagaaagc tattttgaat taaatagaat
+     2821 aactacaaga tattcacgca taggagaatt atggagatta catgcactga tgcttgaaac
+     2881 tattgattat aatgattttg acttagtaaa gtctatttgt aagcgaaaat aagatacaac
+     2941 cctagagcaa gggaattgat aatagatgtt gtatttttat tatttacaac ccggtatttc
+     3001 catcgcctcc ttagctagcc catgctagag aggagatgct tcatccctgg ttgtaataca
+     3061 tcataaatat aaagaaatgc tccatacaac ataaattatc aaactctctg tgcagagagt
+     3121 aaggcaaatg gaatatatga tttaatagtc tcgctgcttc tgtcagccaa ctgaagctgc
+     3181 agcgatgcta aatcaaaaaa ataaagtaat gcaccagata tttagtttgt cggaaaggaa
+     3241 aatggtatga aagtaagcaa attattaaaa atgatgtttg aatttgacag atggcaggaa
+     3301 ttaattaacc atgcaacgga aaagggaata cgtttagatg tattgcatga gtattgtttt
+     3361 gaagagaaaa gagaaaaatt gtttgctgat attttaagca atcaatacaa catttttcct
+     3421 cctcatatag cacgaattcc aaaagataag ccgggagaat ttagagaagt atacgtaaat
+     3481 gaagctttag atagaattgt acttacttta ataaatgact gtctttgtga tttgtttaaa
+     3541 gatatggtac atccaaattg taaatcatat caaaaaggca catcaacaca aaaagtagta
+     3601 ttggaagtgt ctcagaaaat tgtaagtctt aataaacaag gaattattgg ttataaatca
+     3661 gatttttcta aatattttga cacagtaaat attgaagtca ttgataatat atttgacgta
+     3721 ttggaaaaaa gattaggatt taaaaaagat acagaacctg ttattaatct tcttagaaga
+     3781 tattatcatc aagatttata tttcaacctg caaggtaaac ttgaagcaag gtatcaaggg
+     3841 ttgaagcaag gatgtgctgt agcatctttt ttagctaacg cttgcttata tgaacttgat
+     3901 gaatatatgg caaataaata tgaaatttat tatagatata gtgatgatac agttgtcatt
+     3961 gataatcatg ttgaaaatgt tattacagac atgaacaaca ttataagtaa atatggagtc
+     4021 actttaaatc ctaagaaagt agaacctttg tattctgata aatggtttaa attcttagga
+     4081 tttttgatta agggaaatca aataactcta agtggaacaa gagtgaaaaa atttcaaaag
+     4141 gaagttgaaa aaagaagcat taaaagacga aaatgttcta gcaaacaagc aaaaaatgca
+     4201 attacaaaat tcctttacga aggagaattt aactgggcta catcatgttt aagtattata
+     4261 aatgtagaaa aagatatcaa tgaattaaat ggttttatta tggattgtat tcgagcttgc
+     4321 gaaacaggga aaaagaaaat tggcggatta ggaagtgtaa ctaatcttcc tgataaaaca
+     4381 attcttagag gtacaggaag aaatgtaaaa agcaataagg caaaaacagg ttatattgaa
+     4441 aaatatatat ctgttggatg tttagctaaa gacgtaaagc tggctcaacc agtatttgaa
+     4501 actgttgtaa ggaatatgtg gaggtaagaa tatgagcaat tattgggaat atagagatgt
+     4561 aaaagtatta attgcagaaa gactcatgac aatggacgga tggaaagtat atggttatca
+     4621 tccagacaat agtgatgcta tgatagatta ctttgatcca gcttattggg atggaattgc
+     4681 agaaaagaat gggtatgttc tttgtgtaga tgtattcggt gcttctgaag caaaggaaat
+     4741 cagagaatat aattataatg gtactgcaat taatatgtct atccaagcta aaattgaaaa
+     4801 actagaacaa atgactgttg aaagaggagc gagtgaacag gaagaagaat ctgctaagaa
+     4861 aatgattgaa aatcttcgcc aaaaggctgc aaaagaaact gaaacggaaa aatatacagt
+     4921 tgttggtatg atgccgggac acatggcaca tccacctaga atgaactggc atattgaaaa
+     4981 agatggcgta tatattgcaa aaggaaatgg attattaaaa tttcatggaa ttgatagtta
+     5041 ttataaatat cgtcaatata tggaagattt atcagactat agaaagctga gtaaagaaaa
+     5101 atataaagaa aaatttatgt ttgaacatag agattcttat aagcctgaaa gacttaacga
+     5161 tgcttttgaa tatcactata aagaaatctc agaaaaggca aagctttgcc aacagtttga
+     5221 tgctcttata aataaatttg ataccacttg cggtggactg cttggaagtg gagatggtta
+     5281 tatttatgaa gaaaaaactg taaccgagta caaaaaggaa atgaaacctt ttgaaacaga
+     5341 aacaggagtt ttaaaagaag gacaatgttt tattctgaaa actagattta actatggtca
+     5401 taacaaggga caagtattca ggatacatga gacagaatac aatggacaga aaaactatca
+     5461 tgcatataag ctaaatggta aatgcacaaa agaatgcaca ggtagagcaa attcttctaa
+     5521 ctcttggaat tgttttaatg aaaaattctt taaatggatt gaagaaggat ttatttcttg
+     5581 gtgcgaaata agagaagtta aaacccctta cgaggtgaaa aaggtagtga aaacaaagat
+     5641 tagtaacgct aaaaataatg aggagtcaaa taataaaaga agatatacat atgatatttc
+     5701 cgaagatgtg gatacaagag atggaagtaa aatctggttg gtaaaagtga aagagaaact
+     5761 gtctaaggaa gaatatgtca atgtcaatca ctggatgaaa gaattaggtg gttattatag
+     5821 caaatttaaa cacgcctttt tgtttaaaga aaatccggaa gcaaagttaa atatggaggc
+     5881 tgcataa
+//

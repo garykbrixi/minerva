@@ -1,0 +1,40 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local dev artifacts
+.venv/
+.env
+*.log
+output/
+logs/
+
+# Large / private artifacts — never publish
+# sharing_minerva_gdrive/: 2.5GB model weights + tokenizer staged for GDrive
+sharing_minerva_gdrive/
+# .agents/: Slurm training runs, checkpoints, logs
+.agents/
+# tests/internal/: equivalency/speed tests bound to private checkpoints
+tests/internal/
+# scripts/internal/: release tooling with private cluster paths + codenames
+scripts/internal/
+# hf_model_card/: model card maintained on the HF Hub, kept here for internal use only
+hf_model_card/
+# stray notebook-export PDFs (e.g. heads.pdf), but keep tracked asset PDFs (logos)
+*.pdf
+!assets/*.pdf
+
+# Model weights & checkpoints
+*.safetensors
+*.ckpt
+*.pt
+*.pth

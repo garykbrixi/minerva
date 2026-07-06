@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "minerva"
+version = "0.1.0"
+description = "Minerva: genomic language models for coevolutionary mining"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "torch>=2.1.0,<3",
+  "transformers>=4.41.0,<6",
+  "numpy>=1.23,<3",
+  "biopython>=1.80,<2",
+  "pyrodigal>=3.0,<4",
+  "huggingface_hub>=0.23.0,<2",
+  "safetensors>=0.4.0,<1",
+  "matplotlib>=3.7,<4",
+  "plotly>=5.0,<7",
+  "datasets>=2.16,<5",
+  "accelerate>=0.26,<2",
+  "peft>=0.10.0,<1",
+]
+
+[project.optional-dependencies]
+flash = [
+  "flash-attn>=2.5.8",
+]
+dev = [
+  "pytest>=7,<10",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["minerva*"]
+
+[tool.setuptools.package-data]
+"minerva" = ["py.typed"]
