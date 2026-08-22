@@ -1,15 +1,5 @@
 """
 Reusable MLM-finetuning logic for the Minerva model.
-
-This module contains the shared building blocks used by both the CLI
-finetuning script (`scripts/finetune.py`) and Colab/notebook workflows:
-dataclass argument containers, dataset loading/tokenization helpers, and a
-custom HuggingFace ``Trainer`` subclass implementing the Minerva MLM loss.
-
-It intentionally avoids importing the Minerva model or flash-attn at module
-import time so it can be imported cheaply (e.g. inside a notebook) without
-pulling in heavy/optional dependencies. Model-specific config typing on
-``load_model_from_lightning_ckpt`` is deferred to call time.
 """
 
 import torch
@@ -20,6 +10,7 @@ from datasets import Dataset, DatasetDict, load_dataset
 from transformers import Trainer
 
 from .data import extract_and_tokenize_gb
+from .modeling_minerva import MinervaForMaskedLM
 from .sequence_utils import chunk_sequence_with_stride
 
 
@@ -35,10 +26,6 @@ def load_model_from_lightning_ckpt(
     Handles the key mapping from Lightning's state_dict format to Minerva's format.
     """
     import sys
-
-    # Imported lazily so this module doesn't require the (heavy) model / flash-attn
-    # at import time.
-    from .modeling_minerva import MinervaForMaskedLM
 
     # Add legacy module path if needed (for unpickling old checkpoints)
     if legacy_module_path and legacy_module_path not in sys.path:
