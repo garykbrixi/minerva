@@ -320,8 +320,28 @@ def extract_and_tokenize_gb(
         # Extract all CDS features with full translation
         for feature in record.features:
             if feature.type == "CDS":
-                start = int(feature.location.start)
-                end = int(feature.location.end)
+                # A CDS that wraps the origin of a circular record is stored as a
+                # join(); Biopython then reports start=0 / end=len(record), which
+                # would make the feature claim the whole genome. Anchor it on its
+                # largest block and keep the remaining blocks as "wrap_blocks" so
+                # they are excluded from the intergenic sequence but not emitted
+                # as nucleotides.
+                blocks = sorted(
+                    (int(part.start), int(part.end)) for part in feature.location.parts
+                )
+                spans_origin = (
+                    len(blocks) > 1
+                    and blocks[0][0] == 0
+                    and blocks[-1][1] == len(sequence)
+                )
+                if spans_origin:
+                    anchor = max(blocks, key=lambda b: b[1] - b[0])
+                    wrap_blocks = [b for b in blocks if b != anchor]
+                    start, end = anchor
+                else:
+                    wrap_blocks = []
+                    start = int(feature.location.start)
+                    end = int(feature.location.end)
                 strand = feature.location.strand
                 orientation = True if strand == 1 else False
 
@@ -359,7 +379,8 @@ def extract_and_tokenize_gb(
                     "orientation": orientation,
                     "seq": protein_seq,
                     "gene_name": gene_name,
-                    "product": product
+                    "product": product,
+                    "wrap_blocks": wrap_blocks
                 })
 
             # Extract other feature types if requested
@@ -415,6 +436,29 @@ def extract_and_tokenize_gb(
         final_tokens = []
         intergenic_regions = []  # Track intergenic regions
 
+        # Coding blocks of origin-spanning CDS that lie outside [start, end);
+        # they are already carried by the protein token, so they must not be
+        # re-emitted as intergenic nucleotides.
+        wrap_blocks = sorted(b for f in features for b in f["wrap_blocks"])
+
+        def emit_piece(piece_start, piece_end):
+            if piece_end <= piece_start:
+                return
+            igs_seq = sequence[piece_start:piece_end].lower()
+            if igs_seq.strip():  # Only add if not empty
+                final_tokens.append(f"<+>{igs_seq}")
+                intergenic_regions.append({"start": piece_start, "end": piece_end})
+
+        def emit_intergenic(igs_start, igs_end):
+            """Emit [igs_start, igs_end) minus any wrap block, in order."""
+            cursor = igs_start
+            for block_start, block_end in wrap_blocks:
+                if block_end <= cursor or block_start >= igs_end:
+                    continue
+                emit_piece(cursor, min(block_start, igs_end))
+                cursor = max(cursor, block_end)
+            emit_piece(cursor, igs_end)
+
         # Handle the case of no CDS features
         if not features:
             if len(sequence) > 0:
@@ -424,10 +468,7 @@ def extract_and_tokenize_gb(
         else:
             # Handle the region before the first CDS
             if features[0]["start"] > 0:
-                igs_seq = sequence[0:features[0]["start"]].lower()
-                if igs_seq.strip():  # Only add if not empty
-                    final_tokens.append(f"<+>{igs_seq}")
-                    intergenic_regions.append({"start": 0, "end": features[0]["start"]})
+                emit_intergenic(0, features[0]["start"])
 
             # Track the "high water mark" - furthest end we've seen
             # This handles overlapping genes correctly
@@ -444,20 +485,11 @@ def extract_and_tokenize_gb(
 
                 # Add intergenic region after this CDS if not the last one
                 if i < len(features) - 1:
-                    igs_start = coverage_end
-                    igs_end = features[i+1]["start"]
-                    if igs_end > igs_start:
-                        igs_seq = sequence[igs_start:igs_end].lower()
-                        if igs_seq.strip():  # Only add if not empty
-                            final_tokens.append(f"<+>{igs_seq}")
-                            intergenic_regions.append({"start": igs_start, "end": igs_end})
+                    emit_intergenic(coverage_end, features[i+1]["start"])
 
             # Handle the region after the last CDS
             if coverage_end < len(sequence):
-                igs_seq = sequence[coverage_end:].lower()
-                if igs_seq.strip():  # Only add if not empty
-                    final_tokens.append(f"<+>{igs_seq}")
-                    intergenic_regions.append({"start": coverage_end, "end": len(sequence)})
+                emit_intergenic(coverage_end, len(sequence))
 
         tokenized_sequence = "".join([token for token in final_tokens if token.strip()])
 
