@@ -47,7 +47,7 @@ def main(fasta_path: str | None = None) -> None:
             print(f"  start={c['start']:>6}  end={c['end']:>6}  strand={c['strand']:+d}")
 
         # 2. Build Minerva's mixed protein + DNA token string.
-        #    Pass max_tokens=<context> (4096 for gbrixi/minerva, 8192 for the
+        #    Pass max_tokens=<context> (4096 for gbrixi/minerva-1, 8192 for the
         #    8k model) to cap the output at a gene boundary so it fits the model
         #    context. Omit it to get the whole sequence.
         out = build_minerva_input(sequence, max_tokens=4096)
@@ -66,9 +66,9 @@ def main(fasta_path: str | None = None) -> None:
         #    from transformers import AutoModelForMaskedLM, AutoTokenizer
         #    import torch
         #    model = AutoModelForMaskedLM.from_pretrained(
-        #        "gbrixi/minerva", trust_remote_code=True, torch_dtype=torch.bfloat16,
+        #        "gbrixi/minerva-1", trust_remote_code=True, torch_dtype=torch.bfloat16,
         #    ).cuda().eval()
-        #    tokenizer = AutoTokenizer.from_pretrained("gbrixi/minerva")
+        #    tokenizer = AutoTokenizer.from_pretrained("gbrixi/minerva-1")
         #    tokens = tokenizer(token_string, return_tensors="pt").to(model.device)
         #    with torch.no_grad():
         #        outputs = model(**tokens, output_interactions=True)

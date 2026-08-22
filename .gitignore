@@ -33,6 +33,9 @@ hf_model_card/
 *.pdf
 !assets/*.pdf
 
+# rna_vis_review/: locally generated RNA-structure figures for eyeballing output
+rna_vis_review/
+
 # Model weights & checkpoints
 *.safetensors
 *.ckpt
