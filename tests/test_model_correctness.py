@@ -20,7 +20,7 @@ Two paths are tested, each with its own golden reference:
 Model resolution order:
   1. ``$MINERVA_MODEL_PATH`` (local dir or hub id), if set
   2. ``sharing_minerva_gdrive/`` (local dev checkpoint), if present
-  3. ``gbrixi/minerva`` on the Hugging Face Hub
+  3. ``gbrixi/minerva-1`` on the Hugging Face Hub
 
 If none can be loaded (offline, no local weights) the tests are skipped.
 
@@ -67,7 +67,7 @@ def _candidate_model_paths() -> list[str]:
     local = REPO_ROOT / "sharing_minerva_gdrive"
     if local.is_dir():
         paths.append(str(local))
-    paths.append("gbrixi/minerva")  # Hugging Face Hub fallback
+    paths.append("gbrixi/minerva-1")  # Hugging Face Hub fallback
     return paths
 
 

@@ -1,6 +1,11 @@
 
 <h1><img src="assets/minerva_owl.png" alt="" height="46" valign="middle"> Minerva</h1>
 
+[![tests](https://github.com/garykbrixi/minerva/actions/workflows/tests.yml/badge.svg)](https://github.com/garykbrixi/minerva/actions/workflows/tests.yml)
+[![python](https://img.shields.io/badge/python-3.11%2B-blue)](https://github.com/garykbrixi/minerva)
+[![model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Minerva--1-yellow)](https://huggingface.co/gbrixi/minerva-1)
+[![license](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
+
 **Coevolutionary discovery using genome language models**
 
 Minerva predicts coevolution using genome language models. Powered by Minerva-1, it delivers database-scale, alignment-free, interaction-specific predictions across prokaryotic genomes. Through adaptation on homologous loci, Minerva can discover additional interactions.
@@ -24,8 +29,8 @@ Checkpoints are hosted on Hugging Face:
 
 | Model       | Context | Hugging Face repo                                   |
 | ----------- | ------- | --------------------------------------------------- |
-| Minerva-1   | 4096    | [`gbrixi/minerva`](https://huggingface.co/gbrixi/minerva)         |
-| Minerva-1-8k   | 8192    | [`gbrixi/minerva-8k`](https://huggingface.co/gbrixi/minerva-8k)   |
+| Minerva-1   | 4096    | [`gbrixi/minerva-1`](https://huggingface.co/gbrixi/minerva-1)         |
+| Minerva-1-8k   | 8192    | [`gbrixi/minerva-1-8k`](https://huggingface.co/gbrixi/minerva-1-8k)   |
 
 All checkpoints include three interaction heads and Jacobian fingerprint types:
 
@@ -36,13 +41,14 @@ All checkpoints include three interaction heads and Jacobian fingerprint types:
 ### Quick start
 
 ```python
-from transformers import AutoModelForMaskedLM, AutoTokenizer
+from transformers import AutoTokenizer
+from minerva import MinervaForMaskedLM
 import torch
 
-model = AutoModelForMaskedLM.from_pretrained(
-    "gbrixi/minerva", trust_remote_code=True, torch_dtype=torch.bfloat16,
+model = MinervaForMaskedLM.from_pretrained(
+    "gbrixi/minerva-1", torch_dtype=torch.bfloat16,
 ).cuda().eval()
-tokenizer = AutoTokenizer.from_pretrained("gbrixi/minerva")
+tokenizer = AutoTokenizer.from_pretrained("gbrixi/minerva-1")
 
 tokens = tokenizer(
     "<+>cgcggggtggagcagcctggtagctcgtcgggctcataacccgaagatcgtcggttcaaatccggcccccgcaacca",
@@ -57,7 +63,8 @@ protein = outputs.interactions["protein"]            # [batch, L, L]
 repeat = outputs.interactions["repeat"]              # [batch, L, L]
 ```
 
-> `trust_remote_code=True` is required for the **model** because Minerva uses a custom architecture.
+> Importing the class directly needs no `trust_remote_code`. Without the package
+> installed, use `AutoModelForMaskedLM.from_pretrained(repo, trust_remote_code=True)`.
 
 ### Forward pass with interactions
 
@@ -130,6 +137,32 @@ from minerva.visualization import plot_fingerprints
 plot_fingerprints(fp, title="Minerva multimodal fingerprint")
 ```
 
+### RNA secondary structure
+
+The `base_pairing` head returns a dense contact map which can be converted to an RNA structure using `minerva.rna_structure`:
+
+```python
+from minerva.rna_structure import call_structure, call_structures
+
+token_list = tokenizer.convert_ids_to_tokens(tokens["input_ids"][0].tolist())
+s = call_structure(outputs.interactions["base_pairing"], tokens=token_list)
+
+s.dot_bracket        # '(((((((..((((........)))).(((((.......)))))...'
+s.to_vienna("t.fa")  # read by RNAfold, forna, VARNA, R2R
+s.to_ct("t.ct")      # connect table, keeps pseudoknots
+s.plot()             # matplotlib Figure
+```
+
+Each intergenic region of a mixed locus is a separate molecule, so
+`call_structures` returns one structure per region:
+
+```python
+structures = call_structures(outputs.interactions["base_pairing"], token_list)
+```
+
+An interactive viewer is in
+[`examples/notebooks/rna_structure_colab.ipynb`](examples/notebooks/rna_structure_colab.ipynb).
+
 ## Preparing inputs
 
 Minerva reads a **mixed protein + DNA** sequence: coding regions are upper-case
@@ -146,14 +179,13 @@ with:
 
 | You have | Use | What happens |
 | --- | --- | --- |
-| **Annotated GenBank** (CDS features) | `minerva.data.extract_and_tokenize_gb(path)` | CDS features are translated to amino acids, intergenic DNA is kept lower-case, strand markers inserted. One sequence per LOCUS. |
-| **Unannotated sequence** (FASTA / raw DNA) | `minerva.gene_calling.build_minerva_input(seq)` | Genes are called with **Pyrodigal**, then packaged into the mixed-token format. |
-| **Raw genome + external CDS calls** | `minerva.sequence_utils.build_prodigal_mixed_sequence(seq, cds)` | Your own `[{start, end, strand}]` calls (from Prodigal, MGnify, IMG, …) are packaged, and genome↔token coordinate maps are returned. |
+| **Annotated GenBank** (CDS features) | `minerva.data.extract_and_tokenize_gb(path)` | CDS translated, intergenic kept as DNA, strand markers inserted. One sequence per LOCUS. |
+| **Unannotated sequence** (FASTA / raw DNA) | `minerva.gene_calling.build_minerva_input(seq)` | Genes called with **Pyrodigal**, then packaged. |
+| **Raw genome + external CDS calls** | `minerva.sequence_utils.build_prodigal_mixed_sequence(seq, cds)` | Your own `[{start, end, strand}]` calls packaged, with genome↔token maps. |
 
 ### From unannotated sequence (gene calling)
 
-If you only have a FASTA file or a raw nucleotide string, let Minerva call the
-genes for you (Pyrodigal is a core dependency, so nothing extra to install):
+If you only have a FASTA file or a raw nucleotide string, we use [Pyrodigal](https://github.com/althonos/pyrodigal) to automatically call genes:
 
 ```python
 from minerva.gene_calling import build_minerva_input, fasta_to_minerva_inputs
@@ -166,48 +198,34 @@ token_string = out["token_string"]
 inputs = fasta_to_minerva_inputs("contigs.fasta")
 ```
 
-Single-genome training is used for sequences ≥ 20 kb; shorter contigs fall back
-to Pyrodigal's metagenomic mode automatically. Pass `meta=True` for
-metagenomic assemblies. The returned dict also carries `token_to_genome` /
-`genome_to_token` maps for projecting model outputs back to genome coordinates.
+Pyrodigal needs ≥ 20 kb to estimate gene-scoring statistics from a sequence;
+shorter contigs use its pre-trained profiles, which `meta=True` forces
+for metagenomic assemblies. A CDS token is one amino acid and an intergenic
+token one base, so `token_to_genome` / `genome_to_token` map token index to
+genome position.
 
 ### Context length & capping
 
-Minerva's context is **4096 tokens** (`gbrixi/minerva`) or **8192**
-(`gbrixi/minerva-8k`). Because the tokenizer is character-level, one token is
-one amino acid, one nucleotide, or one strand marker — so coding regions are
-~3× denser than raw DNA. As a rule of thumb, a typical (~88 % coding)
-bacterial genome packs to **~10 kb per 4096 tokens** (~20 kb for the 8k model),
-i.e. roughly 10–12 genes (20–24 for the 8k model). A whole chromosome LOCUS is
-far larger than the context and will not fit in a single forward pass.
+Minerva's context is 4096 (`gbrixi/minerva-1`) or 8192 tokens
+(`gbrixi/minerva-1-8k`). One token is one amino acid, one nucleotide, or one
+strand marker, so a typical (~88 % coding) bacterial genome packs to ~10 kb per
+4096 tokens (~20 kb for the 8k model).
 
-To cap a sequence at the model context, pass `max_tokens` to the builders. This
-truncates **at a gene boundary** (never mid-marker), keeps the 5′/left end, and
-keeps the returned coordinate maps consistent — unlike the tokenizer's
-`truncation=True`, which would slice mid-protein:
+Pass `max_tokens` to the builders to cap a sequence. It truncates at a gene
+boundary, keeps the 5′ end, and keeps the coordinate maps consistent.
 
 ```python
-out = build_minerva_input(sequence, max_tokens=4096)   # <= 4096 tokens, gene-aligned
-assert len(tokenizer(out["token_string"])["input_ids"]) <= 4096
+out = build_minerva_input(sequence, max_tokens=4096)   # <= 4096 tokens
 ```
 
-`max_tokens` is available on `build_minerva_input`, `fasta_to_minerva_inputs`,
-and `build_prodigal_mixed_sequence`. It *truncates* (keeps the left window and
-drops the rest). To run a model over an **entire** long genome, tile it instead
-with `minerva.sequence_utils.chunk_sequence_with_stride(token_string, chunk_size,
-stride)` — the overlapping-window primitive used for genome scanning at
-inference — and use the returned `token_to_genome` map to place each window's
-outputs back on the genome. (Overlap is for scanning, not training.)
+To cover a whole genome, tile it instead with
+`minerva.sequence_utils.chunk_sequence_with_stride`.
 
 ### Translation tables
 
-CDS are translated with **NCBI genetic-code table 11** (bacterial / archaeal /
-plant plastid) by default. A CDS feature's own `/transl_table` qualifier in a
-GenBank file always takes precedence, so files mixing genetic codes (e.g. a
-table-4 *Mycoplasma* gene) translate correctly. Override the default with the
-`translation_table=` argument on `extract_and_tokenize_gb`,
-`build_minerva_input`, and `build_prodigal_mixed_sequence`, or `--translation_table`
-on `scripts/finetune.py`.
+CDS translate with NCBI table 11 by default, but a GenBank feature's own
+`/transl_table` takes precedence. Override with `translation_table=` on the
+builders or `--translation_table` on `scripts/finetune.py`.
 
 See [`examples/`](examples/) for runnable, end-to-end walkthroughs.
 
@@ -221,8 +239,8 @@ It supports full finetuning and LoRA, and ingests GenBank files directly.
 accelerate launch --num_processes=8 scripts/finetune.py \
     --output_dir ./output \
     --genbank_file genome.gb \
-    --tokenizer_name gbrixi/minerva \
-    --model_name_or_path gbrixi/minerva \
+    --tokenizer_name gbrixi/minerva-1 \
+    --model_name_or_path gbrixi/minerva-1 \
     --use_lora --lora_r 1 --lora_alpha 2 \
     --learning_rate 1e-4 --bf16
 
@@ -230,8 +248,8 @@ accelerate launch --num_processes=8 scripts/finetune.py \
 accelerate launch --num_processes=8 scripts/finetune.py \
     --output_dir ./output \
     --genbank_file genome.gb \
-    --tokenizer_name gbrixi/minerva \
-    --model_name_or_path gbrixi/minerva \
+    --tokenizer_name gbrixi/minerva-1 \
+    --model_name_or_path gbrixi/minerva-1 \
     --per_device_train_batch_size 4 \
     --bf16
 ```
@@ -240,20 +258,15 @@ LoRA checkpoints load with PEFT:
 
 ```python
 from peft import PeftModel
-from transformers import AutoModelForMaskedLM
+from minerva import MinervaForMaskedLM
 
-base = AutoModelForMaskedLM.from_pretrained("gbrixi/minerva", trust_remote_code=True)
+base = MinervaForMaskedLM.from_pretrained("gbrixi/minerva-1")
 model = PeftModel.from_pretrained(base, "path/to/lora_ckpt")
 ```
 
-A LOCUS longer than `--max_seq_length` is split into consecutive
-**non-overlapping** blocks of `--max_seq_length` tokens, each kept as its own
-training example (the final short remainder included). Every token is seen
-exactly once: the tail is not dropped (unlike plain truncation) and no region is
-duplicated (unlike the overlapping windows used only for inference-time
-scanning). LOCUS boundaries are always preserved — a block never spans two LOCUS
-records, so the model is never trained on a fabricated junction between
-unrelated loci.
+A LOCUS longer than `--max_seq_length` is split into non-overlapping blocks,
+each its own training example, so every token is seen exactly once — see
+`minerva.finetuning.load_genbank_dataset`.
 
 ## Repo layout
 
@@ -279,3 +292,8 @@ tests/                          # package unit + smoke tests
 If you use Minerva in your work, please cite the paper.
 
 If you use the Jacobian fingerprints, please cite the categorical Jacobian (Zhang et al., PNAS 2024)
+
+## License
+
+Apache 2.0 — see [LICENSE](LICENSE). Minerva-1 is initialized from
+[gLM2 650M](https://github.com/TattaBio/gLM2) (Tatta Bio, Apache 2.0).
