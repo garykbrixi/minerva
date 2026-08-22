@@ -838,43 +838,14 @@ class MinervaForMaskedLM(InteractionHeads, MinervaPreTrainedModel):
         # Compute contact predictions if requested
         contact_predictions = None
         if contact_head_names and extracted_attentions:
-            contact_predictions = {}
-            batch_size = input_ids.shape[0]
-            seq_len = input_ids.shape[1]
+            contact_predictions = self.predict_interactions(
+                extracted_attentions,
+                {n: (interaction_head_to_task.get(n, n) if interaction_head_to_task else n)
+                 for n in contact_head_names},
+                input_ids.shape[0], input_ids.shape[1],
+                default_layers=attention_layers_needed,
+            )
 
-            # Non-APC heads sharing a layer set are contracted together in one
-            # pass over the attention maps (see _contacts_from_attention).
-            fast_groups = {}
-            for head_name in contact_head_names:
-                head = self.linear_heads[head_name]
-
-                output_name = interaction_head_to_task.get(head_name, head_name) if interaction_head_to_task else head_name
-
-                # Handle AttentionHeadExtractor (single attention head)
-                if isinstance(head, AttentionHeadExtractor):
-                    contact_predictions[output_name] = head.predict_from_attention(extracted_attentions)
-                    continue
-
-                # Handle PyTorchLinearHead (sklearn regressor)
-                head_layers = head.layers if head.layers else attention_layers_needed
-
-                if head.apply_apc:
-                    # APC is nonlinear -> keep the original symmetrize/apc-then-matmul route.
-                    concat_features = self._build_head_features(head, extracted_attentions, head_layers)
-                    if concat_features is not None:
-                        with torch.no_grad():
-                            probs = head.predict_proba(concat_features)[:, 1]
-                        contact_predictions[output_name] = probs.reshape(batch_size, seq_len, seq_len)
-                else:
-                    fast_groups.setdefault(tuple(head_layers), []).append((output_name, head))
-
-            for head_layers, group in fast_groups.items():
-                with torch.no_grad():
-                    maps = self._contacts_from_attention(
-                        [h for _, h in group], extracted_attentions, head_layers)
-                for (output_name, _), cmap in zip(group, maps):
-                    contact_predictions[output_name] = cmap
-        
         # Only expose raw attention maps explicitly requested by the caller.
         # Internal layers needed solely for interactions stay internal.
         if output_attentions and extracted_attentions is not None:

@@ -298,6 +298,37 @@ class InteractionHeads:
             logits = logits + logits.transpose(-1, -2)
         return torch.sigmoid(logits + bias[:, None, None, None])
 
+    def predict_interactions(self, attention_maps, head_to_task, batch_size, seq_len,
+                             default_layers=None):
+        """Interaction maps for the selected heads, keyed by public task name."""
+        out = {}
+        fast_groups = {}
+        for head_name, output_name in head_to_task.items():
+            head = self.linear_heads[head_name]
+
+            if isinstance(head, AttentionHeadExtractor):
+                out[output_name] = head.predict_from_attention(attention_maps)
+                continue
+
+            head_layers = head.layers or default_layers or self._default_contact_layers()
+            if head.apply_apc:
+                # APC is nonlinear, so it cannot be folded into the contraction.
+                features = self._build_head_features(head, attention_maps, head_layers)
+                if features is not None:
+                    with torch.no_grad():
+                        probs = head.predict_proba(features)[:, 1]
+                    out[output_name] = probs.reshape(batch_size, seq_len, seq_len)
+            else:
+                fast_groups.setdefault(tuple(head_layers), []).append((output_name, head))
+
+        for head_layers, group in fast_groups.items():
+            with torch.no_grad():
+                maps = self._contacts_from_attention(
+                    [h for _, h in group], attention_maps, head_layers)
+            for (output_name, _), cmap in zip(group, maps):
+                out[output_name] = cmap
+        return out
+
     def _build_head_features(
         self,
         head,
