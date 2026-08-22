@@ -18,7 +18,10 @@ from .interaction_heads import (
     InteractionHeads,
     PyTorchLinearHead,
 )
-from .vendor_rinalmo import RiNALMo
+try:
+    from .vendor_rinalmo import RiNALMo
+except ImportError:                      # flattened layout inside an HF checkpoint
+    from vendor_rinalmo import RiNALMo
 
 # RiNALMo's alphabet: 5 special tokens then the RNA/IUPAC set. U has no token --
 # upstream encode() maps U to T.
@@ -77,6 +80,10 @@ class RiNALMoMinervaConfig(PretrainedConfig):
         self.mask_tkn_prob = mask_tkn_prob
         self.use_flash_attn = use_flash_attn
         self.linear_heads_config = linear_heads_config
+        self.auto_map = {
+            "AutoConfig": "modeling_rinalmo.RiNALMoMinervaConfig",
+            "AutoModelForMaskedLM": "modeling_rinalmo.RiNALMoMinervaForMaskedLM",
+        }
 
     @classmethod
     def for_size(cls, name: str, **kwargs):
