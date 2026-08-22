@@ -9,6 +9,8 @@ from typing import Optional
 from datasets import Dataset, DatasetDict, load_dataset
 from transformers import Trainer
 
+from .backbones import check_token_groups
+from .losses import grouped_mlm_loss
 from .data import extract_and_tokenize_gb
 from .modeling_minerva import MinervaForMaskedLM
 from .sequence_utils import chunk_sequence_with_stride
@@ -153,20 +155,11 @@ class DataTrainingArguments:
 class MinervaTrainer(Trainer):
     """Custom Trainer that uses Minerva MLM loss with optional token-type upweighting."""
 
-    def __init__(self, *args, nuc_tokens=None, aa_tokens=None, ignore_token_id=-100, token_type_upweighting=False, **kwargs):
+    def __init__(self, *args, token_groups=None, ignore_token_id=-100, token_type_upweighting=False, **kwargs):
         super().__init__(*args, **kwargs)
-        # Token IDs for nucleotides (lowercase: a, t, g, c, n)
-        # and amino acids (uppercase: A, C, D, E, F, G, H, I, K, L, M, N, P, Q, R, S, T, V, W, Y)
-        if nuc_tokens is not None:
-            self.nuc_tokens = nuc_tokens
-        else:
-            self.nuc_tokens = torch.tensor([])
-
-        if aa_tokens is not None:
-            self.aa_tokens = aa_tokens
-        else:
-            self.aa_tokens = torch.tensor([])
-
+        self.token_groups = list(token_groups or [])
+        if self.token_groups:
+            check_token_groups(self.token_groups)
         self.ignore_token_id = ignore_token_id
         self.token_type_upweighting = token_type_upweighting
         # Store custom metrics to be logged
@@ -185,58 +178,11 @@ class MinervaTrainer(Trainer):
         outputs = model(**inputs)
         logits = outputs.logits
         target = labels.long()
-        device = labels.device
 
-        if self.token_type_upweighting:
-            # Compute per-token CE loss (no reduction) - single forward pass
-            ce_unreduced = F.cross_entropy(
-                logits.view(-1, logits.size(-1)),
-                target.view(-1),
-                ignore_index=self.ignore_token_id,
-                reduction='none'
-            )
-
-            # Create masks (flattened)
-            nuc_tokens = self.nuc_tokens.to(device)
-            aa_tokens = self.aa_tokens.to(device)
-            target_flat = target.view(-1)
-            valid_mask = target_flat != self.ignore_token_id
-            dna_mask = torch.isin(target_flat, nuc_tokens) & valid_mask
-            aa_mask = torch.isin(target_flat, aa_tokens) & valid_mask
-            other_mask = ~dna_mask & ~aa_mask & valid_mask
-
-            # Counts
-            n_dna = dna_mask.sum()
-            n_aa = aa_mask.sum()
-            n_other = other_mask.sum()
-            n_total = n_dna + n_aa + n_other
-
-            # Sum losses per type
-            dna_loss_raw = ce_unreduced[dna_mask].sum() if n_dna > 0 else torch.tensor(0.0, device=device)
-            aa_loss_raw = ce_unreduced[aa_mask].sum() if n_aa > 0 else torch.tensor(0.0, device=device)
-            other_loss_raw = ce_unreduced[other_mask].sum() if n_other > 0 else torch.tensor(0.0, device=device)
-
-            # Normalize by log(vocab_size) for each type
-            log4 = torch.log(torch.tensor(4.0, device=device))
-            log20 = torch.log(torch.tensor(20.0, device=device))
-
-            # Weighted average: normalize each token's loss, then average across all tokens
-            loss = (dna_loss_raw / log4 + aa_loss_raw / log20 + other_loss_raw / log4) / max(n_total, 1)
-
-            # Store custom metrics for logging (will be picked up by _maybe_log_save_evaluate)
-            self._custom_metrics = {
-                "dna_loss": (dna_loss_raw / log4 / max(n_dna, 1)).item(),
-                "aa_loss": (aa_loss_raw / log20 / max(n_aa, 1)).item(),
-                "other_loss": (other_loss_raw / log4 / max(n_other, 1)).item(),
-                "dna_loss_raw": (dna_loss_raw / max(n_dna, 1)).item(),
-                "aa_loss_raw": (aa_loss_raw / max(n_aa, 1)).item(),
-                "other_loss_raw": (other_loss_raw / max(n_other, 1)).item(),
-                "n_dna_tokens": n_dna.item(),
-                "n_aa_tokens": n_aa.item(),
-                "n_other_tokens": n_other.item(),
-            }
+        if self.token_type_upweighting and self.token_groups:
+            loss, self._custom_metrics = grouped_mlm_loss(
+                logits, target, self.token_groups, self.ignore_token_id)
         else:
-            # Standard unified CE loss over all masked tokens
             loss = F.cross_entropy(
                 logits.view(-1, logits.size(-1)),
                 target.view(-1),
