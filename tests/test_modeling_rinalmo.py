@@ -112,3 +112,44 @@ def test_head_depth_must_be_declared():
     model = _model()
     with pytest.raises(ValueError, match="interaction_layers must be one of"):
         model(_tokens(12), output_interactions=True, interaction_layers=99)
+
+
+def test_tokenizer_ids_match_upstream_alphabet():
+    """Ids must match RiNALMo's ordering or the pretrained embeddings are wrong."""
+    from minerva.modeling_rinalmo import RNA_TOKENS, SPECIAL_TOKENS
+    from minerva.tokenization_rinalmo import build_rinalmo_tokenizer
+
+    vocab = build_rinalmo_tokenizer().get_vocab()
+    expected = {t: i for i, t in enumerate(SPECIAL_TOKENS)}
+    expected.update({t: i + len(SPECIAL_TOKENS) for i, t in enumerate(RNA_TOKENS)})
+    assert vocab == expected
+
+
+def test_tokenizer_folds_u_onto_t_and_ignores_case():
+    """Upstream encode() upper-cases and rewrites U to T; there is no U token."""
+    from minerva.tokenization_rinalmo import build_rinalmo_tokenizer
+
+    tok = build_rinalmo_tokenizer()
+    assert tok("ACGU")["input_ids"] == tok("ACGT")["input_ids"] == tok("acgu")["input_ids"]
+    assert "U" not in tok.get_vocab()
+
+
+def test_tokenizer_wraps_with_cls_eos_one_token_per_base():
+    from minerva.tokenization_rinalmo import build_rinalmo_tokenizer
+
+    tok = build_rinalmo_tokenizer()
+    ids = tok("ACGTACGT")["input_ids"]
+    assert len(ids) == 8 + 2
+    assert ids[0] == tok.cls_token_id and ids[-1] == tok.eos_token_id
+
+
+def test_tokenizer_round_trips_through_the_model():
+    from minerva.tokenization_rinalmo import build_rinalmo_tokenizer
+
+    tok = build_rinalmo_tokenizer()
+    model = _model()
+    ids = torch.tensor([tok("ACGUACGUACGU")["input_ids"]])
+    with torch.no_grad():
+        out = model(ids, output_interactions=True, interaction_layers=2)
+    assert out.logits.shape[1] == ids.shape[1]
+    assert out.interactions["base_pairing"].shape[-1] == ids.shape[1] - 2

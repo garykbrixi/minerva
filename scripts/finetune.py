@@ -201,8 +201,10 @@ def main():
         trust_remote_code=model_args.trust_remote_code,
     )
     
+    backbone = get_backbone(args.backbone)
+
     # Load dataset BEFORE creating TrainingArguments (so we know if validation exists)
-    tokenized_datasets = load_dataset_from_args(data_args, tokenizer)
+    tokenized_datasets = load_dataset_from_args(data_args, tokenizer, backbone)
     has_validation = "validation" in tokenized_datasets
     
     # Setup training arguments (now we can check for validation)
@@ -345,7 +347,6 @@ def main():
         mlm_probability=data_args.mlm_probability,
     )
     
-    backbone = get_backbone(args.backbone)
     token_groups = backbone.token_groups(tokenizer)
     check_token_groups(token_groups)
     for group in token_groups:

@@ -234,6 +234,58 @@ def _split_into_blocks(dataset: Dataset, block_size: int) -> Dataset:
     )
 
 
+def _build_splits(texts, val_texts=None, validation_split_percentage=5, block_size=None):
+    """Train/validation split, then blocking per split.
+
+    Blocking happens after the split so blocks from one record cannot leak
+    across the boundary.
+    """
+    dataset = Dataset.from_dict({"text": texts})
+    if val_texts:
+        result = DatasetDict({"train": dataset,
+                              "validation": Dataset.from_dict({"text": val_texts})})
+    else:
+        min_for_split = max(2, int(100 / validation_split_percentage) + 1)
+        if len(texts) < min_for_split:
+            print(f"Dataset too small to split ({len(texts)} samples); training without validation.")
+            result = DatasetDict({"train": dataset})
+        else:
+            split = dataset.train_test_split(test_size=validation_split_percentage / 100, seed=42)
+            result = DatasetDict({"train": split["train"], "validation": split["test"]})
+
+    if block_size:
+        before = {k: len(v) for k, v in result.items()}
+        result = DatasetDict({k: _split_into_blocks(v, block_size) for k, v in result.items()})
+        print(f"Split into {block_size}-token blocks: {before} -> "
+              f"{ {k: len(v) for k, v in result.items()} }")
+    return result
+
+
+def read_sequences(path: str):
+    """Plain nucleotide sequences from FASTA or GenBank, ignoring annotations."""
+    from Bio import SeqIO
+
+    fmt = "genbank" if path.lower().endswith((".gb", ".gbk", ".genbank")) else "fasta"
+    return [str(record.seq) for record in SeqIO.parse(path, fmt) if len(record.seq)]
+
+
+def load_sequence_dataset(
+    path: str,
+    validation_file: Optional[str] = None,
+    validation_split_percentage: int = 5,
+    block_size: Optional[int] = None,
+) -> DatasetDict:
+    """Nucleotide-only dataset for single-modality backbones.
+
+    GenBank is fine as a source here -- only the sequence is taken, never the
+    CDS translations that the mixed-modality path emits.
+    """
+    texts = read_sequences(path)
+    print(f"Read {len(texts)} sequences from {path}")
+    val_texts = read_sequences(validation_file) if validation_file else None
+    return _build_splits(texts, val_texts, validation_split_percentage, block_size)
+
+
 def load_genbank_dataset(
     genbank_file: str,
     validation_genbank_file: Optional[str] = None,
@@ -267,10 +319,6 @@ def load_genbank_dataset(
     texts = [record["sequence"] for record in tokenized_records if record["sequence"].strip()]
     print(f"Extracted {len(texts)} sequences from {len(tokenized_records)} LOCUS records")
 
-    # Create dataset
-    dataset = Dataset.from_dict({"text": texts})
-
-    # Handle validation set
     if validation_genbank_file:
         print(f"Loading validation GenBank file: {validation_genbank_file}")
         val_records = extract_and_tokenize_gb(
@@ -278,38 +326,32 @@ def load_genbank_dataset(
             use_existing_translations=use_existing_translations,
             translation_table=translation_table,
         )
-        val_texts = [record["sequence"] for record in val_records if record["sequence"].strip()]
-        val_dataset = Dataset.from_dict({"text": val_texts})
-        result = DatasetDict({"train": dataset, "validation": val_dataset})
+        val_texts = [r["sequence"] for r in val_records if r["sequence"].strip()]
     else:
-        # Check if dataset is large enough to split
-        min_samples_for_split = max(2, int(100 / validation_split_percentage) + 1)
-        if len(texts) < min_samples_for_split:
-            print(f"Dataset too small for validation split ({len(texts)} samples). Training without validation.")
-            result = DatasetDict({"train": dataset})
-        else:
-            # Split at the LOCUS level, before blocking
-            split = dataset.train_test_split(test_size=validation_split_percentage / 100, seed=42)
-            result = DatasetDict({"train": split["train"], "validation": split["test"]})
+        val_texts = None
 
-    # Split long LOCUS into non-overlapping blocks (per split, so blocks from
-    # one LOCUS never leak across the train/validation boundary).
-    if block_size:
-        before = {k: len(v) for k, v in result.items()}
-        result = DatasetDict(
-            {k: _split_into_blocks(v, block_size) for k, v in result.items()}
-        )
-        after = {k: len(v) for k, v in result.items()}
-        print(f"Split long LOCUS into {block_size}-token blocks: {before} -> {after} examples")
-
+    result = _build_splits(texts, val_texts, validation_split_percentage, block_size)
     return result
 
 
-def load_dataset_from_args(args: DataTrainingArguments, tokenizer):
-    """Load and preprocess dataset from GenBank, text files, or HuggingFace datasets."""
+def load_dataset_from_args(args: DataTrainingArguments, tokenizer, backbone=None):
+    """Load and preprocess a dataset from GenBank, FASTA, text or the HF hub.
 
+    A nucleotide-only backbone reads sequences directly, skipping the mixed
+    protein+DNA tokenization that GenBank would otherwise produce.
+    """
+    nucleotide_only = backbone is not None and backbone.modality == "nucleotide"
+    source = args.genbank_file or args.train_file
+
+    if nucleotide_only and source is not None:
+        raw_datasets = load_sequence_dataset(
+            source,
+            validation_file=args.validation_genbank_file or args.validation_file,
+            validation_split_percentage=args.validation_split_percentage,
+            block_size=args.max_seq_length,
+        )
     # Option 1: GenBank file
-    if args.genbank_file is not None:
+    elif args.genbank_file is not None:
         # A long LOCUS is split into consecutive non-overlapping blocks (each an
         # independent training example), preserving LOCUS boundaries. Loci are
         # never concatenated together, which would fabricate cross-contig
@@ -370,6 +412,11 @@ def load_dataset_from_args(args: DataTrainingArguments, tokenizer):
     # Tokenize datasets. GenBank input is already split into <= max_seq_length
     # blocks per LOCUS (see load_genbank_dataset); truncation here is only a
     # safety net. Sequences are never concatenated across records.
+    if args.max_seq_length and "text" in raw_datasets["train"].column_names:
+        raw_datasets = DatasetDict(
+            {k: _split_into_blocks(v, args.max_seq_length) for k, v in raw_datasets.items()}
+        )
+
     tokenized_datasets = raw_datasets.map(
         lambda examples: tokenize_function(examples, tokenizer, args.max_seq_length),
         batched=True,
@@ -409,6 +456,11 @@ def build_block_dataset(
         translation_table=translation_table,
         block_size=block_size,
     )
+
+    if args.max_seq_length and "text" in raw_datasets["train"].column_names:
+        raw_datasets = DatasetDict(
+            {k: _split_into_blocks(v, args.max_seq_length) for k, v in raw_datasets.items()}
+        )
 
     tokenized_datasets = raw_datasets.map(
         tokenize_function,

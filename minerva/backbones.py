@@ -36,6 +36,20 @@ class Backbone:
                 groups.append(TokenGroup(group_name, ids, size))
         return groups
 
+    def reject_mixed_modality(self, text: str) -> None:
+        """Refuse mixed protein+DNA text on a nucleotide-only backbone.
+
+        Needed because it would not fail loudly: 15 of the 20 amino-acid letters
+        are valid IUPAC nucleotide codes, so protein encodes as bases with no
+        <unk> spike to notice.
+        """
+        if self.modality == "nucleotide" and ("<+>" in text or "<->" in text):
+            raise ValueError(
+                f"{self.name} is nucleotide-only, but this text carries strand "
+                "markers, so it is mixed protein+DNA. Load the sequence as plain "
+                "nucleotides instead of tokenizing CDS features to amino acids."
+            )
+
     def resolve(self, model, path: tuple):
         for attr in path:
             model = getattr(model, attr)
