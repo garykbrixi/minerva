@@ -861,6 +861,75 @@ class MinervaForMaskedLM(MinervaPreTrainedModel):
             )
         return mapping
 
+    def _contacts_from_attention(
+        self,
+        heads,
+        attention_maps,
+        head_layers,
+    ):
+        """Contact maps for several linear heads straight from the attention maps.
+
+        Equivalent (to floating-point rounding) to ``predict_map`` over
+        ``_build_head_features(..., apply_transforms=False)``, but contracts the
+        channel axis in place instead of materializing it. ``_build_head_features``
+        clones each layer's attention, forces a transposing ``reshape``, and
+        ``cat``s the layers -- three passes over a ``[B, F, R, R]`` tensor (1.34 GB
+        at R=4096, F=40) to set up ~4 GFLOP of matmul, so the head is entirely
+        memory-bound. Here every head that shares ``head_layers`` is contracted in
+        one pass, and the symmetrize is folded in afterwards (it acts on the (i, j)
+        axes, the head on the channel axis, so the two commute).
+
+        Parameters
+        ----------
+        heads : sequence of PyTorchLinearHead
+            All must share ``head_layers`` and have ``apply_apc=False``.
+        attention_maps : dict
+            ``{layer_idx: [B, heads, R, R]}``.
+        head_layers : sequence of int
+            Layers whose attention forms the feature axis, in feature order.
+
+        Returns
+        -------
+        torch.Tensor
+            ``[len(heads), B, R, R]`` sigmoid probabilities.
+        """
+        missing = [l for l in head_layers if l not in attention_maps]
+        if missing:
+            raise ValueError(
+                f"layers {missing} needed by the contact head were not extracted; "
+                f"have {sorted(attention_maps)}. Feature columns are positional, so "
+                "silently dropping a layer would misalign every weight."
+            )
+        for head in heads:
+            if head.apply_apc:
+                raise ValueError("_contacts_from_attention is invalid with apply_apc=True")
+            if head.linear is None:
+                raise ValueError("Linear head not initialized.")
+
+        weight = torch.stack([h.linear.weight[0] for h in heads])          # [K, F]
+        bias = torch.stack([h.linear.bias[0] for h in heads]).float()      # [K]
+
+        logits = None
+        offset = 0
+        for layer_idx in head_layers:
+            attn = attention_maps[layer_idx]
+            if attn.ndim == 3:
+                attn = attn.unsqueeze(0)
+            n_heads = attn.shape[1]
+            w = weight[:, offset:offset + n_heads].to(attn.dtype)          # [K, heads]
+            offset += n_heads
+            part = torch.einsum("bhij,kh->kbij", attn, w).float()
+            logits = part if logits is None else logits + part
+        if offset != weight.shape[1]:
+            raise ValueError(
+                f"feature width mismatch: attention supplied {offset} channels, "
+                f"head expects {weight.shape[1]}"
+            )
+
+        if heads[0].apply_symmetrize:
+            logits = logits + logits.transpose(-1, -2)
+        return torch.sigmoid(logits + bias[:, None, None, None])
+
     def _build_head_features(
         self,
         head,
@@ -1120,7 +1189,9 @@ class MinervaForMaskedLM(MinervaPreTrainedModel):
             batch_size = input_ids.shape[0]
             seq_len = input_ids.shape[1]
 
-            raw_feature_cache = {}  # tuple(head_layers) -> raw (un-symmetrized) features, reused across heads
+            # Non-APC heads sharing a layer set are contracted together in one
+            # pass over the attention maps (see _contacts_from_attention).
+            fast_groups = {}
             for head_name in contact_head_names:
                 head = self.linear_heads[head_name]
 
@@ -1142,17 +1213,14 @@ class MinervaForMaskedLM(MinervaPreTrainedModel):
                             probs = head.predict_proba(concat_features)[:, 1]
                         contact_predictions[output_name] = probs.reshape(batch_size, seq_len, seq_len)
                 else:
-                    # Fast path: build raw features once per layer-set, symmetrize after matmul.
-                    key = tuple(head_layers)
-                    raw = raw_feature_cache.get(key)
-                    if raw is None:
-                        raw = self._build_head_features(
-                            head, extracted_attentions, head_layers, apply_transforms=False,
-                        )
-                        raw_feature_cache[key] = raw
-                    if raw is not None:
-                        with torch.no_grad():
-                            contact_predictions[output_name] = head.predict_map(raw, batch_size, seq_len)
+                    fast_groups.setdefault(tuple(head_layers), []).append((output_name, head))
+
+            for head_layers, group in fast_groups.items():
+                with torch.no_grad():
+                    maps = self._contacts_from_attention(
+                        [h for _, h in group], extracted_attentions, head_layers)
+                for (output_name, _), cmap in zip(group, maps):
+                    contact_predictions[output_name] = cmap
         
         # Only expose raw attention maps explicitly requested by the caller.
         # Internal layers needed solely for interactions stay internal.
