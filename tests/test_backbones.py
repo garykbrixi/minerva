@@ -151,3 +151,17 @@ def test_rna_bases_share_one_scale_end_to_end():
         _, metrics = grouped_mlm_loss(logits, labels, groups)
         per_base.append(metrics["nucleotide_loss"])
     assert len(set(round(v, 9) for v in per_base)) == 1
+
+
+def test_lora_targets_exist_on_the_backbone():
+    """Guessed target names only fail once PEFT runs, well into a training job."""
+    pytest.importorskip("torch")
+    import torch.nn as nn
+
+    from minerva.modeling_rinalmo import RiNALMoMinervaConfig, RiNALMoMinervaForMaskedLM
+
+    model = RiNALMoMinervaForMaskedLM(
+        RiNALMoMinervaConfig(embed_dim=32, num_blocks=1, num_heads=2)
+    )
+    present = {n.split(".")[-1] for n, m in model.named_modules() if isinstance(m, nn.Linear)}
+    assert set(get_backbone("rinalmo").lora_targets) <= present

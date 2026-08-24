@@ -99,7 +99,7 @@ class Backbone:
 MINERVA = Backbone(
     name="minerva",
     modality="mixed",
-    lora_targets=("wqkv", "wo", "w1", "w2", "w3"),
+    lora_targets=("wqkv", "wo", "w1", "w2", "w3", "lm_head.proj_output"),
     _layers_path=("minerva", "encoder", "layers"),
     _embed_path=("minerva", "tok_embeddings"),
     _alphabet=(
@@ -114,7 +114,7 @@ MINERVA = Backbone(
 RINALMO = Backbone(
     name="rinalmo",
     modality="nucleotide",
-    lora_targets=("q_proj", "k_proj", "v_proj", "out_proj", "fc1", "fc2"),
+    lora_targets=("to_q", "to_k", "to_v", "out_proj", "linear_gate", "linear1", "linear2"),
     _layers_path=("rinalmo", "transformer", "blocks"),
     _embed_path=("rinalmo", "embedding"),
     _alphabet=(
