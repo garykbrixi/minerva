@@ -156,10 +156,18 @@ class RiNALMoMinervaForMaskedLM(InteractionHeads, RiNALMoMinervaPreTrainedModel)
                     layers=spec.get("layers"),
                 )
 
+        self.post_init()
+
     # -- HF plumbing --------------------------------------------------------
     @property
     def lm_head(self):
         return self.rinalmo.lm_mask_head
+
+    def get_output_embeddings(self):
+        # The LM head is an MLP, not a tied projection. Left to HF's default this
+        # resolves to lm_head and tie_weights() aliases a .weight onto it, which
+        # forward never reads but safetensors refuses to save.
+        return None
 
     def get_input_embeddings(self):
         return self.rinalmo.embedding
