@@ -64,6 +64,9 @@ class RiNALMoMinervaConfig(PretrainedConfig):
         linear_heads_config: Optional[Dict[str, dict]] = None,
         **kwargs,
     ):
+        # RiNALMo's LM head is a 2-layer MLP, not tied to the embeddings. Left at
+        # the default, HF aliases them and safetensors then refuses to save.
+        kwargs.setdefault("tie_word_embeddings", False)
         super().__init__(**kwargs)
         self.embed_dim = embed_dim
         self.num_blocks = num_blocks

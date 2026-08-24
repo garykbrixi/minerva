@@ -25,6 +25,17 @@ class Backbone:
     _layers_path: tuple    # attribute path to the transformer layer list
     _embed_path: tuple
     _alphabet: tuple       # (chars, alphabet_size) per token group
+    _model: tuple          # (module, class name), imported lazily
+
+    def model_class(self):
+        """Imported on use so backbones.py stays cheap to import."""
+        import importlib
+
+        module, name = self._model
+        return getattr(importlib.import_module(module), name)
+
+    def load(self, path, **kwargs):
+        return self.model_class().from_pretrained(path, **kwargs)
 
     def token_groups(self, tokenizer) -> List[TokenGroup]:
         """Token groups for this vocab. Characters absent from it are skipped."""
@@ -95,6 +106,7 @@ MINERVA = Backbone(
         ("nucleotide", tuple("atgcn"), 4),
         ("protein", tuple(_AA), 20),
     ),
+    _model=("minerva.modeling_minerva", "MinervaForMaskedLM"),
 )
 
 # RiNALMo is nucleotide-only and upper-case, and has no U token -- its alphabet
@@ -103,11 +115,12 @@ RINALMO = Backbone(
     name="rinalmo",
     modality="nucleotide",
     lora_targets=("q_proj", "k_proj", "v_proj", "out_proj", "fc1", "fc2"),
-    _layers_path=("rinalmo", "encoder", "layers"),
-    _embed_path=("rinalmo", "tok_embeddings"),
+    _layers_path=("rinalmo", "transformer", "blocks"),
+    _embed_path=("rinalmo", "embedding"),
     _alphabet=(
         ("nucleotide", tuple("ACGTIRYKMSWBDHVN-"), 4),
     ),
+    _model=("minerva.modeling_rinalmo", "RiNALMoMinervaForMaskedLM"),
 )
 
 _REGISTRY = {b.name: b for b in (MINERVA, RINALMO)}

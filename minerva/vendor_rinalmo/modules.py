@@ -48,20 +48,50 @@ class Transformer(nn.Module):
         )
 
         self.final_layer_norm = nn.LayerNorm(embed_dim)
+        self.gradient_checkpointing = False
+
+    def _warm_rotary_cache(self, x):
+        """Populate every block's rotary cache before checkpointing.
+
+        RotaryPositionEmbedding caches cos/sin lazily, so a cold cache during the
+        forward and a warm one during recomputation save different tensors and
+        checkpointing raises a metadata mismatch.
+        """
+        seq_len = x.shape[1]
+        for block in self.blocks:
+            rotary = getattr(block.mh_attn, "mh_attn", block.mh_attn)
+            rotary = getattr(rotary, "rotary_emb", None)
+            if rotary is not None and hasattr(rotary, "_update_cached"):
+                head_dim = block.mh_attn.mh_attn.c_head
+                probe = x.new_zeros(1, 1, seq_len, head_dim)
+                rotary._update_cached(probe, seq_dim=-2)
 
     def forward(self, x, key_padding_mask=None, need_attn_weights=False):
         attn_weights = None
         if need_attn_weights:
             attn_weights = []
 
+        # Vendored change: upstream always checkpoints. Made opt-in -- it costs
+        # inference nothing to skip, and the rotary cache below is only safe to
+        # recompute once warm.
+        if self.gradient_checkpointing and self.training:
+            self._warm_rotary_cache(x)
+
         for block in self.blocks:
-            x, attn = checkpoint.checkpoint(
-                block, 
-                x,
-                key_padding_mask=key_padding_mask,
-                need_attn_weights=need_attn_weights,
-                use_reentrant=False
-                )
+            if self.gradient_checkpointing and self.training:
+                x, attn = checkpoint.checkpoint(
+                    block,
+                    x,
+                    key_padding_mask=key_padding_mask,
+                    need_attn_weights=need_attn_weights,
+                    use_reentrant=False,
+                    )
+            else:
+                x, attn = block(
+                    x,
+                    key_padding_mask=key_padding_mask,
+                    need_attn_weights=need_attn_weights,
+                    )
 
             if need_attn_weights:
                 attn_weights.append(attn)

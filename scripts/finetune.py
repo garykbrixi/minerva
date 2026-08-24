@@ -144,7 +144,8 @@ def main():
     parser.add_argument("--lora_r", type=int, default=1, help="LoRA rank")
     parser.add_argument("--lora_alpha", type=int, default=2, help="LoRA alpha (scaling factor)")
     parser.add_argument("--lora_dropout", type=float, default=0.05, help="LoRA dropout")
-    parser.add_argument("--lora_target_modules", type=str, default="wqkv,wo,w1,w2,w3,lm_head.proj_output", help="Comma-separated list of modules to apply LoRA to")
+    parser.add_argument("--lora_target_modules", type=str, default=None,
+                        help="Comma-separated modules for LoRA; defaults to the backbone's")
     
     # Loss arguments
     parser.add_argument("--token_type_upweighting", action="store_true", help="Normalize losses by log(vocab_size) for DNA/AA")
@@ -284,7 +285,7 @@ def main():
             model = load_model_from_lightning_ckpt(ckpt_path, config, legacy_module_path=args.legacy_module_path)
         else:
             # Load from HuggingFace format (directory or Hub)
-            model = MinervaForMaskedLM.from_pretrained(
+            model = backbone.load(
                 ckpt_path,
                 cache_dir=model_args.cache_dir,
                 revision=model_args.model_revision,
@@ -326,7 +327,10 @@ def main():
         if not PEFT_AVAILABLE:
             raise ImportError("PEFT is required for LoRA. Install with: pip install peft")
         
-        target_modules = [m.strip() for m in args.lora_target_modules.split(",")]
+        target_modules = (
+            [m.strip() for m in args.lora_target_modules.split(",")]
+            if args.lora_target_modules else list(backbone.lora_targets)
+        )
         print(f"Applying LoRA with r={args.lora_r}, alpha={args.lora_alpha}, target_modules={target_modules}")
         
         lora_config = LoraConfig(
