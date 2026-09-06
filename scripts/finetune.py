@@ -61,6 +61,7 @@ from transformers import (
     DataCollatorForLanguageModeling,
 )
 from transformers.trainer_utils import get_last_checkpoint
+from minerva.backbones import check_token_groups, get_backbone
 from minerva.modeling_minerva import MinervaForMaskedLM, MinervaConfig
 from minerva.finetuning import (
     load_model_from_lightning_ckpt,
@@ -137,11 +138,14 @@ def main():
     parser.add_argument("--run_name", type=str, default=None, help="Name for wandb run")
     
     # LoRA arguments
+    parser.add_argument("--backbone", type=str, default="minerva",
+                        help="Which backbone spec to use (see minerva.backbones)")
     parser.add_argument("--use_lora", action="store_true", help="Use LoRA for parameter-efficient finetuning")
     parser.add_argument("--lora_r", type=int, default=1, help="LoRA rank")
     parser.add_argument("--lora_alpha", type=int, default=2, help="LoRA alpha (scaling factor)")
     parser.add_argument("--lora_dropout", type=float, default=0.05, help="LoRA dropout")
-    parser.add_argument("--lora_target_modules", type=str, default="wqkv,wo,w1,w2,w3,lm_head.proj_output", help="Comma-separated list of modules to apply LoRA to")
+    parser.add_argument("--lora_target_modules", type=str, default=None,
+                        help="Comma-separated modules for LoRA; defaults to the backbone's")
     
     # Loss arguments
     parser.add_argument("--token_type_upweighting", action="store_true", help="Normalize losses by log(vocab_size) for DNA/AA")
@@ -198,8 +202,10 @@ def main():
         trust_remote_code=model_args.trust_remote_code,
     )
     
+    backbone = get_backbone(args.backbone)
+
     # Load dataset BEFORE creating TrainingArguments (so we know if validation exists)
-    tokenized_datasets = load_dataset_from_args(data_args, tokenizer)
+    tokenized_datasets = load_dataset_from_args(data_args, tokenizer, backbone)
     has_validation = "validation" in tokenized_datasets
     
     # Setup training arguments (now we can check for validation)
@@ -279,7 +285,7 @@ def main():
             model = load_model_from_lightning_ckpt(ckpt_path, config, legacy_module_path=args.legacy_module_path)
         else:
             # Load from HuggingFace format (directory or Hub)
-            model = MinervaForMaskedLM.from_pretrained(
+            model = backbone.load(
                 ckpt_path,
                 cache_dir=model_args.cache_dir,
                 revision=model_args.model_revision,
@@ -300,26 +306,9 @@ def main():
     
     # Freeze layers if requested (for partial finetuning)
     if args.freeze_layers_except_last is not None:
-        n_layers = len(model.minerva.encoder.layers)
-        n_trainable = args.freeze_layers_except_last
-        n_frozen = n_layers - n_trainable
-        
-        print(f"Freezing first {n_frozen} of {n_layers} transformer layers (training last {n_trainable})")
-        
-        # Freeze embeddings
-        for param in model.minerva.tok_embeddings.parameters():
-            param.requires_grad = False
-        
-        # Freeze early transformer layers
-        for layer in model.minerva.encoder.layers[:n_frozen]:
-            for param in layer.parameters():
-                param.requires_grad = False
-        
-        # Ensure LM head is always unfrozen (trainable)
-        for param in model.lm_head.parameters():
-            param.requires_grad = True
-        print("  -> LM head explicitly unfrozen")
-        
+        n_frozen, n_layers = backbone.freeze_layers(model, args.freeze_layers_except_last)
+        print(f"Froze first {n_frozen} of {n_layers} layers and the embeddings; LM head left trainable")
+
         # Count trainable params
         trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
         total = sum(p.numel() for p in model.parameters())
@@ -329,19 +318,19 @@ def main():
     # (Trainer's automatic method can fail with custom models or PEFT wrappers)
     if training_args.gradient_checkpointing:
         print("Enabling gradient checkpointing on model")
-        # Manually set gradient_checkpointing on TransformerLayers
-        if hasattr(model, 'minerva') and hasattr(model.minerva, 'encoder'):
-            model.minerva.encoder.gradient_checkpointing = True
+        if backbone.enable_grad_checkpointing(model):
             print("  -> Set gradient_checkpointing=True on encoder")
-        # Disable Trainer's gradient checkpointing since we already enabled it
-        training_args.gradient_checkpointing = False
+            training_args.gradient_checkpointing = False
     
     # Apply LoRA if requested
     if args.use_lora:
         if not PEFT_AVAILABLE:
             raise ImportError("PEFT is required for LoRA. Install with: pip install peft")
         
-        target_modules = [m.strip() for m in args.lora_target_modules.split(",")]
+        target_modules = (
+            [m.strip() for m in args.lora_target_modules.split(",")]
+            if args.lora_target_modules else list(backbone.lora_targets)
+        )
         print(f"Applying LoRA with r={args.lora_r}, alpha={args.lora_alpha}, target_modules={target_modules}")
         
         lora_config = LoraConfig(
@@ -362,25 +351,14 @@ def main():
         mlm_probability=data_args.mlm_probability,
     )
     
-    # Get nucleotide and amino acid token IDs from tokenizer
-    vocab = tokenizer.get_vocab()
-    nuc_chars = ['a', 't', 'g', 'c', 'n']  # lowercase nucleotides
-    aa_chars = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y']
-    
-    nuc_token_ids = [vocab[c] for c in nuc_chars if c in vocab]
-    aa_token_ids = [vocab[c] for c in aa_chars if c in vocab]
-    
-    print(f"Nucleotide tokens: {nuc_chars} -> {nuc_token_ids}")
-    print(f"Amino acid tokens: {aa_chars} -> {aa_token_ids}")
-    
-    nuc_tokens = torch.tensor(nuc_token_ids, dtype=torch.long)
-    aa_tokens = torch.tensor(aa_token_ids, dtype=torch.long)
-    
-    # Initialize trainer
+    token_groups = backbone.token_groups(tokenizer)
+    check_token_groups(token_groups)
+    for group in token_groups:
+        print(f"{group.name}: {len(group.token_ids)} tokens, /log({group.alphabet_size})")
+
     trainer = MinervaTrainer(
         model=model,
-        nuc_tokens=nuc_tokens,
-        aa_tokens=aa_tokens,
+        token_groups=token_groups,
         ignore_token_id=-100,
         token_type_upweighting=args.token_type_upweighting,
         args=training_args,

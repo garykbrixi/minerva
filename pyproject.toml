@@ -43,4 +43,4 @@ where = ["."]
 include = ["minerva*"]
 
 [tool.setuptools.package-data]
-"minerva" = ["py.typed"]
+"minerva" = ["py.typed", "vendor_rinalmo/LICENSE"]

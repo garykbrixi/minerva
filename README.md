@@ -32,7 +32,7 @@ Checkpoints are hosted on Hugging Face:
 | Minerva-MLM   | 4096    | [`gbrixi/minerva-mlm`](https://huggingface.co/gbrixi/minerva-mlm)         |
 | Minerva-MLM-8k   | 8192    | [`gbrixi/minerva-mlm-8k`](https://huggingface.co/gbrixi/minerva-mlm-8k)   |
 
-All checkpoints include three interaction heads and Jacobian fingerprint types:
+Minerva-MLM checkpoints include three interaction heads and Jacobian fingerprint types:
 
 - **base_pairing** — RNA base-pairing contacts
 - **protein** — protein contact prediction
@@ -229,6 +229,13 @@ builders or `--translation_table` on `scripts/finetune.py`.
 
 See [`examples/`](examples/) for runnable, end-to-end walkthroughs.
 
+## Eukaryotic RNA
+
+Minerva-MLM is trained on prokaryotic genomes. For researchers studying
+eukaryotic RNAs, Minerva provides a RiNALMo-based checkpoint with base-pairing
+and repeat interaction heads. See [eukaryotic RNA support](docs/rinalmo.md)
+for usage and finetuning.
+
 ## Finetuning
 
 `scripts/finetune.py` wraps HF `Trainer` + `accelerate` with Minerva's MLM loss.
@@ -254,7 +261,7 @@ accelerate launch --num_processes=8 scripts/finetune.py \
     --bf16
 ```
 
-LoRA checkpoints load with PEFT:
+Minerva-MLM LoRA checkpoints load with PEFT:
 
 ```python
 from peft import PeftModel
@@ -273,11 +280,15 @@ each its own training example, so every token is seen exactly once — see
 ```
 minerva/
   modeling_minerva.py   # MinervaConfig / MinervaForMaskedLM (custom transformer + heads)
+  modeling_rinalmo.py   # RiNALMoMinervaForMaskedLM (RNA backbone + heads)
+  tokenization_rinalmo.py # RiNALMo nucleotide tokenizer
+  backbones.py          # Backbone-specific training configuration
+  interaction_heads.py # Shared interaction heads
   data.py               # GenBank parsing + tokenization
   gene_calling.py       # Pyrodigal gene calling: FASTA/raw DNA -> mixed tokens
   sequence_utils.py     # reverse-complement + external-CDS -> mixed tokens
   masking.py            # DataCollatorForMinervaMLM
-  losses.py             # minerva_mlm_loss
+  losses.py             # grouped_mlm_loss
 scripts/
   finetune.py                  # HF Trainer / accelerate wrapper
 examples/                       # end-to-end tutorials & notebooks

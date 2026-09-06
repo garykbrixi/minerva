@@ -1,58 +1,51 @@
+import math
+from typing import Dict, Sequence, Tuple
+
 import torch
 import torch.nn.functional as F
 
-def _create_token_masks(labels: torch.Tensor, nuc_tokens: torch.Tensor, aa_tokens: torch.Tensor, ignore_token_id: int):
-    labels_exp = labels.unsqueeze(-1)
-    dna_mask = (labels_exp == nuc_tokens.view(1, -1)).any(-1)
-    aa_mask = (labels_exp == aa_tokens.view(1, -1)).any(-1)
-    other_mask = ~dna_mask & ~aa_mask & (labels != ignore_token_id)
-    return dna_mask, aa_mask, other_mask
 
-def _masked_ce(logits, labels, mask, ignore_index):
-    if mask.any():
-        return F.cross_entropy(
-            logits[mask].view(-1, logits.size(-1)),
-            labels[mask],
-            ignore_index=ignore_index,
-        )
-    return torch.tensor(0.0, device=logits.device)
-
-def minerva_mlm_loss(
+def grouped_mlm_loss(
     logits: torch.Tensor,
     labels: torch.Tensor,
-    nuc_tokens: torch.Tensor,
-    aa_tokens: torch.Tensor,
-    ignore_token_id: int,
-    dna_aa_reweighting: bool = False,
-    dna_upweight_factor: float = 1.0,
-    fixed_factor_upweighting: bool = False,
-):
-    # logits: (B, L, V); labels: (B, L)
-    if logits.dim() == 3:
-        loss_input = logits.transpose(1, 2)  # (B, V, L)
-        target = labels.long()
-    else:
-        loss_input = logits
-        target = labels.long().view(-1)
+    groups: Sequence,
+    ignore_index: int = -100,
+) -> Tuple[torch.Tensor, Dict[str, float]]:
+    """CE with each group's loss divided by log(alphabet_size).
 
-    dna_mask, aa_mask, other_mask = _create_token_masks(target, nuc_tokens, aa_tokens, ignore_token_id)
-    dna_loss = _masked_ce(logits, target, dna_mask, ignore_token_id)
-    aa_loss = _masked_ce(logits, target, aa_mask | other_mask, ignore_token_id)
+    Keeps a 20-letter protein alphabet from dominating a 4-letter nucleotide one.
+    Tokens no group claims take the narrowest scale. No groups -> plain CE.
+    """
+    target = labels.long().view(-1)
+    flat_logits = logits.view(-1, logits.size(-1))
+    valid = target != ignore_index
 
-    if fixed_factor_upweighting:
-        dna_loss = dna_loss / torch.log(torch.tensor(4.0, device=logits.device))
-        aa_loss = aa_loss / torch.log(torch.tensor(20.0, device=logits.device))
-        return dna_loss * dna_upweight_factor + aa_loss
+    if not groups:
+        return F.cross_entropy(flat_logits, target, ignore_index=ignore_index), {}
 
-    if dna_aa_reweighting:
-        n_dna = dna_mask.sum().float()
-        n_aa = (aa_mask | other_mask).sum().float()
-        dna_w = n_dna * dna_upweight_factor
-        aa_w = n_aa
-        total = dna_w + aa_w
-        if total > 0:
-            dna_w = dna_w / total
-            aa_w = aa_w / total
-        return dna_loss * dna_w + aa_loss * aa_w
+    ce = F.cross_entropy(flat_logits, target, ignore_index=ignore_index, reduction="none")
+    device = logits.device
+    total = torch.zeros((), device=device)
+    matched = torch.zeros_like(valid)
+    metrics: Dict[str, float] = {}
 
-    return dna_loss + aa_loss
+    for group in groups:
+        ids = torch.tensor(group.token_ids, dtype=target.dtype, device=device)
+        mask = torch.isin(target, ids) & valid
+        matched |= mask
+        n = mask.sum()
+        raw = ce[mask].sum() if n > 0 else torch.zeros((), device=device)
+        scaled = raw / math.log(group.alphabet_size)
+        total = total + scaled
+        metrics[f"{group.name}_loss"] = (scaled / n.clamp(min=1)).item()
+        metrics[f"n_{group.name}_tokens"] = int(n)
+
+    other = valid & ~matched
+    n_other = other.sum()
+    if n_other > 0:
+        scaled = ce[other].sum() / math.log(min(g.alphabet_size for g in groups))
+        total = total + scaled
+        metrics["other_loss"] = (scaled / n_other).item()
+    metrics["n_other_tokens"] = int(n_other)
+
+    return total / valid.sum().clamp(min=1), metrics

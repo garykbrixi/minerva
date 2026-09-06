@@ -9,6 +9,8 @@ from typing import Optional
 from datasets import Dataset, DatasetDict, load_dataset
 from transformers import Trainer
 
+from .backbones import check_token_groups
+from .losses import grouped_mlm_loss
 from .data import extract_and_tokenize_gb
 from .modeling_minerva import MinervaForMaskedLM
 from .sequence_utils import chunk_sequence_with_stride
@@ -153,20 +155,11 @@ class DataTrainingArguments:
 class MinervaTrainer(Trainer):
     """Custom Trainer that uses Minerva MLM loss with optional token-type upweighting."""
 
-    def __init__(self, *args, nuc_tokens=None, aa_tokens=None, ignore_token_id=-100, token_type_upweighting=False, **kwargs):
+    def __init__(self, *args, token_groups=None, ignore_token_id=-100, token_type_upweighting=False, **kwargs):
         super().__init__(*args, **kwargs)
-        # Token IDs for nucleotides (lowercase: a, t, g, c, n)
-        # and amino acids (uppercase: A, C, D, E, F, G, H, I, K, L, M, N, P, Q, R, S, T, V, W, Y)
-        if nuc_tokens is not None:
-            self.nuc_tokens = nuc_tokens
-        else:
-            self.nuc_tokens = torch.tensor([])
-
-        if aa_tokens is not None:
-            self.aa_tokens = aa_tokens
-        else:
-            self.aa_tokens = torch.tensor([])
-
+        self.token_groups = list(token_groups or [])
+        if self.token_groups:
+            check_token_groups(self.token_groups)
         self.ignore_token_id = ignore_token_id
         self.token_type_upweighting = token_type_upweighting
         # Store custom metrics to be logged
@@ -185,58 +178,11 @@ class MinervaTrainer(Trainer):
         outputs = model(**inputs)
         logits = outputs.logits
         target = labels.long()
-        device = labels.device
 
-        if self.token_type_upweighting:
-            # Compute per-token CE loss (no reduction) - single forward pass
-            ce_unreduced = F.cross_entropy(
-                logits.view(-1, logits.size(-1)),
-                target.view(-1),
-                ignore_index=self.ignore_token_id,
-                reduction='none'
-            )
-
-            # Create masks (flattened)
-            nuc_tokens = self.nuc_tokens.to(device)
-            aa_tokens = self.aa_tokens.to(device)
-            target_flat = target.view(-1)
-            valid_mask = target_flat != self.ignore_token_id
-            dna_mask = torch.isin(target_flat, nuc_tokens) & valid_mask
-            aa_mask = torch.isin(target_flat, aa_tokens) & valid_mask
-            other_mask = ~dna_mask & ~aa_mask & valid_mask
-
-            # Counts
-            n_dna = dna_mask.sum()
-            n_aa = aa_mask.sum()
-            n_other = other_mask.sum()
-            n_total = n_dna + n_aa + n_other
-
-            # Sum losses per type
-            dna_loss_raw = ce_unreduced[dna_mask].sum() if n_dna > 0 else torch.tensor(0.0, device=device)
-            aa_loss_raw = ce_unreduced[aa_mask].sum() if n_aa > 0 else torch.tensor(0.0, device=device)
-            other_loss_raw = ce_unreduced[other_mask].sum() if n_other > 0 else torch.tensor(0.0, device=device)
-
-            # Normalize by log(vocab_size) for each type
-            log4 = torch.log(torch.tensor(4.0, device=device))
-            log20 = torch.log(torch.tensor(20.0, device=device))
-
-            # Weighted average: normalize each token's loss, then average across all tokens
-            loss = (dna_loss_raw / log4 + aa_loss_raw / log20 + other_loss_raw / log4) / max(n_total, 1)
-
-            # Store custom metrics for logging (will be picked up by _maybe_log_save_evaluate)
-            self._custom_metrics = {
-                "dna_loss": (dna_loss_raw / log4 / max(n_dna, 1)).item(),
-                "aa_loss": (aa_loss_raw / log20 / max(n_aa, 1)).item(),
-                "other_loss": (other_loss_raw / log4 / max(n_other, 1)).item(),
-                "dna_loss_raw": (dna_loss_raw / max(n_dna, 1)).item(),
-                "aa_loss_raw": (aa_loss_raw / max(n_aa, 1)).item(),
-                "other_loss_raw": (other_loss_raw / max(n_other, 1)).item(),
-                "n_dna_tokens": n_dna.item(),
-                "n_aa_tokens": n_aa.item(),
-                "n_other_tokens": n_other.item(),
-            }
+        if self.token_type_upweighting and self.token_groups:
+            loss, self._custom_metrics = grouped_mlm_loss(
+                logits, target, self.token_groups, self.ignore_token_id)
         else:
-            # Standard unified CE loss over all masked tokens
             loss = F.cross_entropy(
                 logits.view(-1, logits.size(-1)),
                 target.view(-1),
@@ -288,6 +234,58 @@ def _split_into_blocks(dataset: Dataset, block_size: int) -> Dataset:
     )
 
 
+def _build_splits(texts, val_texts=None, validation_split_percentage=5, block_size=None):
+    """Train/validation split, then blocking per split.
+
+    Blocking happens after the split so blocks from one record cannot leak
+    across the boundary.
+    """
+    dataset = Dataset.from_dict({"text": texts})
+    if val_texts:
+        result = DatasetDict({"train": dataset,
+                              "validation": Dataset.from_dict({"text": val_texts})})
+    else:
+        min_for_split = max(2, int(100 / validation_split_percentage) + 1)
+        if len(texts) < min_for_split:
+            print(f"Dataset too small to split ({len(texts)} samples); training without validation.")
+            result = DatasetDict({"train": dataset})
+        else:
+            split = dataset.train_test_split(test_size=validation_split_percentage / 100, seed=42)
+            result = DatasetDict({"train": split["train"], "validation": split["test"]})
+
+    if block_size:
+        before = {k: len(v) for k, v in result.items()}
+        result = DatasetDict({k: _split_into_blocks(v, block_size) for k, v in result.items()})
+        print(f"Split into {block_size}-token blocks: {before} -> "
+              f"{ {k: len(v) for k, v in result.items()} }")
+    return result
+
+
+def read_sequences(path: str):
+    """Plain nucleotide sequences from FASTA or GenBank, ignoring annotations."""
+    from Bio import SeqIO
+
+    fmt = "genbank" if path.lower().endswith((".gb", ".gbk", ".genbank")) else "fasta"
+    return [str(record.seq) for record in SeqIO.parse(path, fmt) if len(record.seq)]
+
+
+def load_sequence_dataset(
+    path: str,
+    validation_file: Optional[str] = None,
+    validation_split_percentage: int = 5,
+    block_size: Optional[int] = None,
+) -> DatasetDict:
+    """Nucleotide-only dataset for single-modality backbones.
+
+    GenBank is fine as a source here -- only the sequence is taken, never the
+    CDS translations that the mixed-modality path emits.
+    """
+    texts = read_sequences(path)
+    print(f"Read {len(texts)} sequences from {path}")
+    val_texts = read_sequences(validation_file) if validation_file else None
+    return _build_splits(texts, val_texts, validation_split_percentage, block_size)
+
+
 def load_genbank_dataset(
     genbank_file: str,
     validation_genbank_file: Optional[str] = None,
@@ -321,10 +319,6 @@ def load_genbank_dataset(
     texts = [record["sequence"] for record in tokenized_records if record["sequence"].strip()]
     print(f"Extracted {len(texts)} sequences from {len(tokenized_records)} LOCUS records")
 
-    # Create dataset
-    dataset = Dataset.from_dict({"text": texts})
-
-    # Handle validation set
     if validation_genbank_file:
         print(f"Loading validation GenBank file: {validation_genbank_file}")
         val_records = extract_and_tokenize_gb(
@@ -332,38 +326,32 @@ def load_genbank_dataset(
             use_existing_translations=use_existing_translations,
             translation_table=translation_table,
         )
-        val_texts = [record["sequence"] for record in val_records if record["sequence"].strip()]
-        val_dataset = Dataset.from_dict({"text": val_texts})
-        result = DatasetDict({"train": dataset, "validation": val_dataset})
+        val_texts = [r["sequence"] for r in val_records if r["sequence"].strip()]
     else:
-        # Check if dataset is large enough to split
-        min_samples_for_split = max(2, int(100 / validation_split_percentage) + 1)
-        if len(texts) < min_samples_for_split:
-            print(f"Dataset too small for validation split ({len(texts)} samples). Training without validation.")
-            result = DatasetDict({"train": dataset})
-        else:
-            # Split at the LOCUS level, before blocking
-            split = dataset.train_test_split(test_size=validation_split_percentage / 100, seed=42)
-            result = DatasetDict({"train": split["train"], "validation": split["test"]})
+        val_texts = None
 
-    # Split long LOCUS into non-overlapping blocks (per split, so blocks from
-    # one LOCUS never leak across the train/validation boundary).
-    if block_size:
-        before = {k: len(v) for k, v in result.items()}
-        result = DatasetDict(
-            {k: _split_into_blocks(v, block_size) for k, v in result.items()}
-        )
-        after = {k: len(v) for k, v in result.items()}
-        print(f"Split long LOCUS into {block_size}-token blocks: {before} -> {after} examples")
-
+    result = _build_splits(texts, val_texts, validation_split_percentage, block_size)
     return result
 
 
-def load_dataset_from_args(args: DataTrainingArguments, tokenizer):
-    """Load and preprocess dataset from GenBank, text files, or HuggingFace datasets."""
+def load_dataset_from_args(args: DataTrainingArguments, tokenizer, backbone=None):
+    """Load and preprocess a dataset from GenBank, FASTA, text or the HF hub.
 
+    A nucleotide-only backbone reads sequences directly, skipping the mixed
+    protein+DNA tokenization that GenBank would otherwise produce.
+    """
+    nucleotide_only = backbone is not None and backbone.modality == "nucleotide"
+    source = args.genbank_file or args.train_file
+
+    if nucleotide_only and source is not None:
+        raw_datasets = load_sequence_dataset(
+            source,
+            validation_file=args.validation_genbank_file or args.validation_file,
+            validation_split_percentage=args.validation_split_percentage,
+            block_size=args.max_seq_length,
+        )
     # Option 1: GenBank file
-    if args.genbank_file is not None:
+    elif args.genbank_file is not None:
         # A long LOCUS is split into consecutive non-overlapping blocks (each an
         # independent training example), preserving LOCUS boundaries. Loci are
         # never concatenated together, which would fabricate cross-contig
@@ -424,6 +412,11 @@ def load_dataset_from_args(args: DataTrainingArguments, tokenizer):
     # Tokenize datasets. GenBank input is already split into <= max_seq_length
     # blocks per LOCUS (see load_genbank_dataset); truncation here is only a
     # safety net. Sequences are never concatenated across records.
+    if args.max_seq_length and "text" in raw_datasets["train"].column_names:
+        raw_datasets = DatasetDict(
+            {k: _split_into_blocks(v, args.max_seq_length) for k, v in raw_datasets.items()}
+        )
+
     tokenized_datasets = raw_datasets.map(
         lambda examples: tokenize_function(examples, tokenizer, args.max_seq_length),
         batched=True,
