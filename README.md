@@ -3,12 +3,12 @@
 
 [![tests](https://github.com/garykbrixi/minerva/actions/workflows/tests.yml/badge.svg)](https://github.com/garykbrixi/minerva/actions/workflows/tests.yml)
 [![python](https://img.shields.io/badge/python-3.11%2B-blue)](https://github.com/garykbrixi/minerva)
-[![model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Minerva--1-yellow)](https://huggingface.co/gbrixi/minerva-1)
+[![model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Minerva--MLM-yellow)](https://huggingface.co/gbrixi/minerva-mlm)
 [![license](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
 
 **Coevolutionary discovery using genome language models**
 
-Minerva predicts coevolution using genome language models. Powered by Minerva-1, it delivers database-scale, alignment-free, interaction-specific predictions across prokaryotic genomes. Through adaptation on homologous loci, Minerva can discover additional interactions.
+Minerva predicts coevolution using genome language models. Powered by Minerva-MLM, it delivers database-scale, alignment-free, interaction-specific predictions across prokaryotic genomes. Through adaptation on homologous loci, Minerva can discover additional interactions.
 
 ## Install
 
@@ -23,14 +23,14 @@ back to PyTorch SDPA. Please install flash attention first for faster inference.
 
 ## Pretrained Checkpoints
 
-Minerva-1 is a 650M parameter transformer trained for over 1.3 trillion tokens (~3.4 Terabases). Minerva-1 is initialized from [gLM2 650M](https://github.com/TattaBio/gLM2) and adopts the mixed-modality tokenization, and was trained at 4096 and 8192 context lengths.
+Minerva-MLM is a 650M parameter transformer trained for over 1.3 trillion tokens (~3.4 Terabases). Minerva-MLM is initialized from [gLM2 650M](https://github.com/TattaBio/gLM2) and adopts the mixed-modality tokenization, and was trained at 4096 and 8192 context lengths.
 
 Checkpoints are hosted on Hugging Face:
 
 | Model       | Context | Hugging Face repo                                   |
 | ----------- | ------- | --------------------------------------------------- |
-| Minerva-1   | 4096    | [`gbrixi/minerva-1`](https://huggingface.co/gbrixi/minerva-1)         |
-| Minerva-1-8k   | 8192    | [`gbrixi/minerva-1-8k`](https://huggingface.co/gbrixi/minerva-1-8k)   |
+| Minerva-MLM   | 4096    | [`gbrixi/minerva-mlm`](https://huggingface.co/gbrixi/minerva-mlm)         |
+| Minerva-MLM-8k   | 8192    | [`gbrixi/minerva-mlm-8k`](https://huggingface.co/gbrixi/minerva-mlm-8k)   |
 
 All checkpoints include three interaction heads and Jacobian fingerprint types:
 
@@ -46,9 +46,9 @@ from minerva import MinervaForMaskedLM
 import torch
 
 model = MinervaForMaskedLM.from_pretrained(
-    "gbrixi/minerva-1", torch_dtype=torch.bfloat16,
+    "gbrixi/minerva-mlm", torch_dtype=torch.bfloat16,
 ).cuda().eval()
-tokenizer = AutoTokenizer.from_pretrained("gbrixi/minerva-1")
+tokenizer = AutoTokenizer.from_pretrained("gbrixi/minerva-mlm")
 
 tokens = tokenizer(
     "<+>cgcggggtggagcagcctggtagctcgtcgggctcataacccgaagatcgtcggttcaaatccggcccccgcaacca",
@@ -206,8 +206,8 @@ genome position.
 
 ### Context length & capping
 
-Minerva's context is 4096 (`gbrixi/minerva-1`) or 8192 tokens
-(`gbrixi/minerva-1-8k`). One token is one amino acid, one nucleotide, or one
+Minerva's context is 4096 (`gbrixi/minerva-mlm`) or 8192 tokens
+(`gbrixi/minerva-mlm-8k`). One token is one amino acid, one nucleotide, or one
 strand marker, so a typical (~88 % coding) bacterial genome packs to ~10 kb per
 4096 tokens (~20 kb for the 8k model).
 
@@ -239,8 +239,8 @@ It supports full finetuning and LoRA, and ingests GenBank files directly.
 accelerate launch --num_processes=8 scripts/finetune.py \
     --output_dir ./output \
     --genbank_file genome.gb \
-    --tokenizer_name gbrixi/minerva-1 \
-    --model_name_or_path gbrixi/minerva-1 \
+    --tokenizer_name gbrixi/minerva-mlm \
+    --model_name_or_path gbrixi/minerva-mlm \
     --use_lora --lora_r 1 --lora_alpha 2 \
     --learning_rate 1e-4 --bf16
 
@@ -248,8 +248,8 @@ accelerate launch --num_processes=8 scripts/finetune.py \
 accelerate launch --num_processes=8 scripts/finetune.py \
     --output_dir ./output \
     --genbank_file genome.gb \
-    --tokenizer_name gbrixi/minerva-1 \
-    --model_name_or_path gbrixi/minerva-1 \
+    --tokenizer_name gbrixi/minerva-mlm \
+    --model_name_or_path gbrixi/minerva-mlm \
     --per_device_train_batch_size 4 \
     --bf16
 ```
@@ -260,7 +260,7 @@ LoRA checkpoints load with PEFT:
 from peft import PeftModel
 from minerva import MinervaForMaskedLM
 
-base = MinervaForMaskedLM.from_pretrained("gbrixi/minerva-1")
+base = MinervaForMaskedLM.from_pretrained("gbrixi/minerva-mlm")
 model = PeftModel.from_pretrained(base, "path/to/lora_ckpt")
 ```
 
@@ -295,5 +295,5 @@ If you use the Jacobian fingerprints, please cite the categorical Jacobian (Zhan
 
 ## License
 
-Apache 2.0 — see [LICENSE](LICENSE). Minerva-1 is initialized from
+Apache 2.0 — see [LICENSE](LICENSE). Minerva-MLM is initialized from
 [gLM2 650M](https://github.com/TattaBio/gLM2) (Tatta Bio, Apache 2.0).

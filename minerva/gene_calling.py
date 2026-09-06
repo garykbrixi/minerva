@@ -122,7 +122,7 @@ def build_minerva_input(
     (``token_string`` plus genome<->token coordinate maps).
 
     Pass ``max_tokens`` (e.g. the checkpoint's context: 4096 for
-    ``gbrixi/minerva-1``, 8192 for ``gbrixi/minerva-1-8k``) to cap the output at a
+    ``gbrixi/minerva-mlm``, 8192 for ``gbrixi/minerva-mlm-8k``) to cap the output at a
     gene boundary so it fits the model context. See
     :func:`minerva.sequence_utils.build_prodigal_mixed_sequence` for the exact
     capping semantics.

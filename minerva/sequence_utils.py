@@ -167,8 +167,8 @@ def build_prodigal_mixed_sequence(
         emitted as a bare dangling marker, so the result is always a valid,
         self-consistent mixed-token string whose ``token_string`` tokenizes to
         ``<= max_tokens`` tokens. Truncation keeps the left (5') end. Use the
-        checkpoint's context here (e.g. 4096 for ``gbrixi/minerva-1``, 8192 for
-        ``gbrixi/minerva-1-8k``). Defaults to None (no cap).
+        checkpoint's context here (e.g. 4096 for ``gbrixi/minerva-mlm``, 8192 for
+        ``gbrixi/minerva-mlm-8k``). Defaults to None (no cap).
 
     Returns
     -------
