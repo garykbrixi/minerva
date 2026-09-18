@@ -1,9 +1,30 @@
 """GenBank -> Minerva-ready mixed DNA+AA token sequences. Self-contained (Biopython + numpy)."""
 
+from importlib import resources
+
 from Bio import SeqIO
 from Bio.Seq import Seq
 import numpy as np
 import re
+
+
+# ---------------------------------------------------------------------------
+# Bundled example loci
+# ---------------------------------------------------------------------------
+
+EXAMPLES = {
+    "ug27": "UG27_systems.gb",
+    "twoayggay": "TwoAYGGAY_Pseudomonas_fluorescens_SBW25.gb",
+}
+
+
+def example_path(name: str) -> str:
+    """Path to a GenBank example shipped with the package (see ``EXAMPLES``)."""
+    try:
+        filename = EXAMPLES[name.lower()]
+    except KeyError:
+        raise ValueError(f"Unknown example {name!r}. Choose from {sorted(EXAMPLES)}") from None
+    return str(resources.files("minerva") / "example_data" / filename)
 
 
 # ---------------------------------------------------------------------------

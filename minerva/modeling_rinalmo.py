@@ -131,7 +131,7 @@ class RiNALMoMinervaPreTrainedModel(PreTrainedModel):
 
 class RiNALMoMinervaForMaskedLM(InteractionHeads, RiNALMoMinervaPreTrainedModel):
     # RiNALMo is RNA-only, so no protein head. Its heads are trained on layers
-    # 27-32 (see the covarval regression grid), giving a single depth.
+    # 27-32, giving a single depth.
     interaction_tasks = ("base_pairing", "repeat")
     head_depths = {6: ""}
 

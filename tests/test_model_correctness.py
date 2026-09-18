@@ -94,8 +94,14 @@ def path_case(request):
     name = request.param
     cfg = CONFIGS[name]
 
-    if cfg["device"] == "cuda" and not torch.cuda.is_available():
-        pytest.skip("CUDA not available for the bf16/flash-attn path")
+    if cfg["device"] == "cuda":
+        if not torch.cuda.is_available():
+            pytest.skip("CUDA not available for the bf16/flash-attn path")
+        # The bf16 golden was captured with flash-attn; the SDPA fallback
+        # differs from it by more than the tolerance.
+        from minerva import modeling_minerva
+        if not modeling_minerva._HAS_FLASH:
+            pytest.skip("flash-attn not installed for the bf16/flash-attn path")
 
     reference_path = DATA_DIR / cfg["reference"]
     if not reference_path.exists():

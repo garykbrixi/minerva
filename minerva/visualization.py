@@ -1054,7 +1054,8 @@ def bokeh_contact_viewer(
 
     Args:
         channels: dict with any of ``base_pairing`` / ``repeat`` / ``protein``
-            -> (L, L) contact-probability arrays.
+            -> (L, L) contact-probability arrays. Fingerprint channel names
+            (``basepairing``) are accepted too; other keys are ignored.
         tokens: length-L token list; draws the protein/nucleotide/special
             per-position tracks and enables token hover. Optional.
         genome_offset: added to position labels in hover.
@@ -1072,6 +1073,11 @@ def bokeh_contact_viewer(
                               Legend, LegendItem, Range1d, WheelZoomTool, Div)
     from bokeh.layouts import gridplot, column, row
 
+    # Accept Jacobian-fingerprint channel names (``basepairing``) as well as
+    # head names, so ``fingerprints.channels`` can be passed straight in.
+    channels = {_overlay_channel_name(k): v for k, v in channels.items()}
+    if isinstance(vmax, dict):
+        vmax = {_overlay_channel_name(k): v for k, v in vmax.items()}
     order = [c for c in OVERLAY_CHANNELS if c in channels]
     if not order:
         raise ValueError("channels must include one of base_pairing/repeat/protein")

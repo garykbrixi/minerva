@@ -107,7 +107,7 @@ def main():
     parser.add_argument("--validation_genbank_file", type=str, default=None, help="Validation GenBank file")
     parser.add_argument("--use_existing_translations", action="store_true", help="Use existing protein translations from GenBank")
     parser.add_argument("--translation_table", type=int, default=11, help="Default NCBI genetic-code table for CDS lacking a /transl_table qualifier (11 = bacterial/archaeal/plant plastid). Per-feature /transl_table always wins.")
-    parser.add_argument("--max_seq_length", type=int, default=8192)
+    parser.add_argument("--max_seq_length", type=int, default=4096)
     parser.add_argument("--overwrite_cache", action="store_true", default=False)
     parser.add_argument("--validation_split_percentage", type=int, default=5)
     parser.add_argument("--preprocessing_num_workers", type=int, default=None)
@@ -134,7 +134,7 @@ def main():
     parser.add_argument("--report_to", type=str, default="none", help="Reporting integration (wandb, tensorboard, etc.)")
     parser.add_argument("--resume_from_checkpoint", type=str, default=None)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--overwrite_output_dir", action="store_true", help="Overwrite the output directory")
+    parser.add_argument("--overwrite_output_dir", action="store_true", help="Start fresh instead of resuming from the last checkpoint in --output_dir")
     parser.add_argument("--run_name", type=str, default=None, help="Name for wandb run")
     
     # LoRA arguments
@@ -231,7 +231,6 @@ def main():
         report_to=args.report_to,
         resume_from_checkpoint=args.resume_from_checkpoint,
         seed=args.seed,
-        overwrite_output_dir=args.overwrite_output_dir,
         eval_strategy="steps" if has_validation else "no",
         load_best_model_at_end=has_validation,
         save_strategy="steps",
@@ -371,7 +370,9 @@ def main():
     checkpoint = None
     if training_args.resume_from_checkpoint is not None:
         checkpoint = training_args.resume_from_checkpoint
-    elif os.path.isdir(training_args.output_dir):
+    elif os.path.isdir(training_args.output_dir) and not args.overwrite_output_dir:
+        # TrainingArguments dropped overwrite_output_dir in transformers 5, so the
+        # flag is handled here: start fresh instead of resuming.
         checkpoint = get_last_checkpoint(training_args.output_dir)
     
     # Train

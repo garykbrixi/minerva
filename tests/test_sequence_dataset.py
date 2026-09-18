@@ -10,9 +10,10 @@ import pytest
 pytest.importorskip("datasets")
 
 from minerva.backbones import get_backbone  # noqa: E402
+from minerva.data import example_path  # noqa: E402
 from minerva.finetuning import load_sequence_dataset, read_sequences  # noqa: E402
 
-GENBANK = os.path.join(os.path.dirname(__file__), "..", "examples", "data", "UG27_systems.gb")
+GENBANK = example_path("ug27")
 
 
 def _fasta(tmp, records):

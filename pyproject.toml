@@ -34,8 +34,15 @@ Source = "https://github.com/garykbrixi/minerva"
 flash = [
   "flash-attn>=2.5.8",
 ]
+viz = [
+  "bokeh>=3,<4",   # interactive contact viewer (minerva.visualization.bokeh_contact_viewer)
+]
 dev = [
   "pytest>=7,<10",
+  # executing examples/notebooks (tests/test_notebooks.py)
+  "nbclient>=0.8,<1",
+  "ipykernel>=6,<8",
+  "ipywidgets>=8,<9",
 ]
 
 [tool.setuptools.packages.find]
@@ -43,4 +50,4 @@ where = ["."]
 include = ["minerva*"]
 
 [tool.setuptools.package-data]
-"minerva" = ["py.typed", "vendor_rinalmo/LICENSE"]
+"minerva" = ["py.typed", "vendor_rinalmo/LICENSE", "example_data/*.gb"]

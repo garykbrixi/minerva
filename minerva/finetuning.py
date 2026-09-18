@@ -131,7 +131,7 @@ class DataTrainingArguments:
                           "always takes precedence."}
     )
     max_seq_length: Optional[int] = field(
-        default=8192,
+        default=4096,
         metadata={"help": "The maximum total input sequence length after tokenization."}
     )
     overwrite_cache: bool = field(
@@ -431,7 +431,7 @@ def load_dataset_from_args(args: DataTrainingArguments, tokenizer, backbone=None
 def build_block_dataset(
     genbank_file,
     tokenizer,
-    block_size=1024,
+    block_size=4096,
     validation_split_percentage=5,
     use_existing_translations=True,
     num_proc=1,

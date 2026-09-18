@@ -8,7 +8,7 @@ includes base-pairing and repeat interaction heads.
 
 ## Loading
 
-Install `minerva-dna` following the [installation instructions](../README.md#install).
+Install `minerva-dna` following the [installation instructions](../../README.md#install).
 Use plain nucleotide sequences without Minerva's strand markers or protein
 tokens. DNA-alphabet sequences (A/C/G/T) are accepted directly. The tokenizer
 normalizes case and maps U to T, so equivalent RNA- and DNA-alphabet sequences
@@ -43,7 +43,7 @@ prokaryotic genomic context. Interaction heads are specific to this backbone.
 
 ## Finetuning
 
-Run the shared [finetuning script](../scripts/finetune.py) from the repository
+Run the shared [finetuning script](../../scripts/finetune.py) from the repository
 root with `--backbone rinalmo` and RNA FASTA or GenBank input. GenBank records
 are read as nucleotides, without translating CDS features. LoRA targets and
 token loss groups are selected for the chosen backbone.
@@ -70,4 +70,26 @@ model = PeftModel.from_pretrained(base, "path/to/lora_ckpt")
 ## License
 
 The RiNALMo backbone code is vendored under the
-[Apache 2.0 license](../minerva/vendor_rinalmo/LICENSE).
+[Apache 2.0 license](../../minerva/vendor_rinalmo/LICENSE).
+
+## Citation
+
+If you use Minerva in your work, please cite the paper.
+
+If you use the RiNALMo-based checkpoint, please also cite RiNALMo:
+
+> Penić, R.J., Vlašić, T., Huber, R.G. *et al.* RiNALMo: general-purpose RNA language models can
+> generalize well on structure prediction tasks. *Nat Commun* **16**, 5671 (2025).
+> https://doi.org/10.1038/s41467-025-60872-5
+
+```bibtex
+@article{penic2025rinalmo,
+  title   = {{RiNALMo}: general-purpose {RNA} language models can generalize well on structure prediction tasks},
+  author  = {Peni{\'c}, Rafael Josip and Vla{\v{s}}i{\'c}, Tin and Huber, Roland G. and others},
+  journal = {Nature Communications},
+  volume  = {16},
+  pages   = {5671},
+  year    = {2025},
+  doi     = {10.1038/s41467-025-60872-5}
+}
+```

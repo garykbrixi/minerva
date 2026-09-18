@@ -28,11 +28,11 @@ from minerva.rna_structure import (
 README_TRNA = ("cgcggggtggagcagcctggtagctcgtcgggctcataacccgaagatcgtcggttcaaat"
                "ccggcccccgcaacca")
 
-# A real tRNA and its real structure: Rfam RF00005 record X61068.1/760-831,
-# taken from the covarval Rfam evaluation set. The dot-bracket below is what
-# this module recovers from that record's `inferred_contacts` ground-truth
-# matrix, and every one of its 21 pairs is Watson-Crick or G-U wobble -- so it
-# doubles as a check that pair calling and notation agree with curated Rfam.
+# A real tRNA and its real structure: Rfam RF00005 record X61068.1/760-831.
+# The dot-bracket below is what this module recovers from that record's
+# `inferred_contacts` ground-truth matrix, and every one of its 21 pairs is
+# Watson-Crick or G-U wobble -- so it doubles as a check that pair calling and
+# notation agree with curated Rfam.
 CLOVERLEAF_SEQ = ("GGGGCUUUAGCUCAGCUGGGAGAGCGCCUGCCUUGCACGCAGGAGG"
                   "UCAGCGGUUCGAUCCGCUAAGCUCCA")
 CLOVERLEAF = "(((((((..((((........)))).(((((.......))))).....(((((......))))))))))))."
