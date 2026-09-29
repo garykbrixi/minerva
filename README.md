@@ -1,16 +1,17 @@
 
-<h1><img src="assets/minerva_owl.png" alt="" height="46" valign="middle"> Minerva</h1>
+<h1><img src="https://raw.githubusercontent.com/garykbrixi/minerva/main/assets/minerva_owl.png" alt="" height="46" valign="middle"> Minerva</h1>
 
 [![tests](https://github.com/garykbrixi/minerva/actions/workflows/tests.yml/badge.svg)](https://github.com/garykbrixi/minerva/actions/workflows/tests.yml)
+[![pypi](https://img.shields.io/pypi/v/minerva-dna)](https://pypi.org/project/minerva-dna/)
 [![python](https://img.shields.io/badge/python-3.11%2B-blue)](https://github.com/garykbrixi/minerva)
 [![model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Minerva--MLM-yellow)](https://huggingface.co/gbrixi/minerva-mlm)
-[![license](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
+[![license](https://img.shields.io/badge/license-Apache--2.0-green)](https://github.com/garykbrixi/minerva/blob/main/LICENSE)
 
 **Coevolutionary discovery using genome language models**
 
 Minerva predicts coevolution using genome language models. Powered by Minerva-MLM, it delivers database-scale, alignment-free, interaction-specific predictions across prokaryotic genomes. Through adaptation on homologous loci, Minerva can discover additional interactions.
 
-[Install](#install) · [Checkpoints](#pretrained-checkpoints) · [Quick start](#quick-start) · [Preparing inputs](#preparing-inputs) · [Interaction heads](#interaction-heads) · [Jacobian fingerprinting](#jacobian-fingerprinting) · [RNA structure](#rna-secondary-structure) · [Eukaryotic RNA](#eukaryotic-rna) · [Finetuning](#finetuning) · [Examples](examples/) · [Citation](#citation)
+[Install](#install) · [Checkpoints](#pretrained-checkpoints) · [Quick start](#quick-start) · [Preparing inputs](#preparing-inputs) · [Interaction heads](#interaction-heads) · [Jacobian fingerprinting](#jacobian-fingerprinting) · [RNA structure](#rna-secondary-structure) · [Eukaryotic RNA](#eukaryotic-rna) · [Finetuning](#finetuning) · [Examples](https://github.com/garykbrixi/minerva/tree/main/examples/) · [Citation](#citation)
 
 ## Install
 
@@ -132,7 +133,7 @@ CDS translate with NCBI table 11 by default, but a GenBank feature's own
 `/transl_table` takes precedence. Override with `translation_table=` on the
 builders or `--translation_table` on `scripts/finetune.py`.
 
-See [`examples/`](examples/) for runnable, end-to-end walkthroughs.
+See [`examples/`](https://github.com/garykbrixi/minerva/tree/main/examples/) for runnable, end-to-end walkthroughs.
 
 ## Using the model
 
@@ -144,11 +145,16 @@ These continue from the [quick start](#quick-start), with `model`, `tokenizer`, 
 To plot the interaction-head outputs:
 
 ```python
-from minerva.visualization import plot_interactions
+from minerva.visualization import plot_contacts
 
 token_list = tokenizer.convert_ids_to_tokens(tokens["input_ids"][0].tolist())
-plot_interactions(outputs.interactions, tokens=token_list)
+plot_contacts(outputs, tokens=token_list, track=True)   # track=True adds a CDS / intergenic strip
 ```
+
+`plot_contacts` takes the model outputs, a dict of head maps, or a Jacobian
+`FingerprintResult` (below), and renders them all in the same palette. For a
+zoomable view with hover values, `plot_contacts_interactive` takes the same
+arguments and returns a Bokeh layout (`pip install "minerva-dna[viz]"`).
 
 Set `interaction_layers=6` to use the six-layer interaction heads:
 
@@ -193,9 +199,9 @@ repeat = fp["repeat"]                # [L, L]
 To plot the result:
 
 ```python
-from minerva.visualization import plot_fingerprints
+from minerva.visualization import plot_contacts
 
-plot_fingerprints(fp, title="Minerva multimodal fingerprint")
+plot_contacts(fp, tokens=fp.tokens, title="Minerva multimodal fingerprint")
 ```
 
 ### RNA secondary structure
@@ -222,11 +228,11 @@ structures = call_structures(outputs.interactions["base_pairing"], token_list)
 ```
 
 An interactive viewer is in
-[`examples/notebooks/rna_structure.ipynb`](examples/notebooks/rna_structure.ipynb).
+[`examples/notebooks/rna_structure.ipynb`](https://github.com/garykbrixi/minerva/blob/main/examples/notebooks/rna_structure.ipynb).
 
 ## Eukaryotic RNA
 
-For researchers studying eukaryotic RNAs, Minerva provides a RiNALMo-based checkpoint with base-pairing and repeat interaction heads. See [eukaryotic RNA support](examples/eukaryotic_rna/) for usage and finetuning.
+For researchers studying eukaryotic RNAs, Minerva provides a RiNALMo-based checkpoint with base-pairing and repeat interaction heads. See [eukaryotic RNA support](https://github.com/garykbrixi/minerva/tree/main/examples/eukaryotic_rna/) for usage and finetuning.
 
 ## Finetuning
 
@@ -315,5 +321,5 @@ If you use the Jacobian fingerprints, please also cite the categorical Jacobian:
 
 ## License
 
-Apache 2.0 — see [LICENSE](LICENSE). Minerva-MLM is initialized from
+Apache 2.0 — see [LICENSE](https://github.com/garykbrixi/minerva/blob/main/LICENSE). Minerva-MLM is initialized from
 [gLM2 650M](https://github.com/TattaBio/gLM2) (Tatta Bio, Apache 2.0).

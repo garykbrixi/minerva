@@ -17,6 +17,8 @@ from typing import Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 
+from .visualization import PALETTE
+
 __all__ = [
     "RnaStructure",
     "DotBracket",
@@ -35,8 +37,8 @@ __all__ = [
 
 Pair = Tuple[int, int, float]
 
-# Colors, matching minerva.visualization.COLORS
-BASE_PAIR_COLOR = "#F25560"     # coral, matches COLORS["base_pairing"]
+# Colors. The base-pair color is the shared Minerva palette (minerva.visualization.PALETTE).
+BASE_PAIR_COLOR = PALETTE["base_pairing"]
 LETTER_COLOR = "#E8232A"        # paired/unpaired nucleotide letters
 PAIR_BOX_COLOR = "#FBD9D9"      # shading behind paired bases
 RUNG_COLOR = "#111111"          # the bar joining a pair

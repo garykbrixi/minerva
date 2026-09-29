@@ -27,3 +27,6 @@ logs/
 *.ckpt
 *.pt
 *.pth
+
+# local plot surveys
+example_maps/

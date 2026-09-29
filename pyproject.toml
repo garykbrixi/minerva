@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "minerva-dna"
 version = "0.1.0"
 description = "Minerva: genomic language models for coevolutionary mining"
+authors = [{ name = "Gary Brixi" }]
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
@@ -20,7 +21,6 @@ dependencies = [
   "safetensors>=0.4.0,<1",
   "matplotlib>=3.7,<4",
   "ViennaRNA>=2.6,<3",   # RNA structure layout geometry only; never used to fold
-  "plotly>=5.0,<7",
   "datasets>=2.16,<5",
   "accelerate>=0.26,<2",
   "peft>=0.10.0,<1",
@@ -29,6 +29,7 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/garykbrixi/minerva"
 Source = "https://github.com/garykbrixi/minerva"
+Model = "https://huggingface.co/gbrixi/minerva-mlm"
 
 [project.optional-dependencies]
 flash = [
