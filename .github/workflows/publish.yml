@@ -1,0 +1,48 @@
+# Publish minerva-dna to PyPI on a version tag (v0.1.0, v0.2.0, ...).
+#
+# Uses PyPI trusted publishing, so no API token is stored. One-time setup on
+# PyPI: add a pending publisher for project "minerva-dna" with owner
+# "garykbrixi", repository "minerva", workflow "publish.yml", environment "pypi".
+name: publish
+
+# Run manually (Actions -> publish -> Run workflow, or `gh workflow run publish.yml`)
+# to exercise the build and checks without publishing. Only a v* tag publishes.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check that the tag matches pyproject version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          version=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          test "v$version" = "${GITHUB_REF_NAME}" || { echo "tag ${GITHUB_REF_NAME} != v$version"; exit 1; }
+      - run: python -m pip install --upgrade build twine
+      - run: python -m build
+      - run: python -m twine check dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
