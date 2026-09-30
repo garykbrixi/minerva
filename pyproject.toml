@@ -30,6 +30,7 @@ dependencies = [
 Homepage = "https://github.com/garykbrixi/minerva"
 Source = "https://github.com/garykbrixi/minerva"
 Model = "https://huggingface.co/gbrixi/minerva-mlm"
+Demo = "https://huggingface.co/spaces/gbrixi/minerva"
 
 [project.optional-dependencies]
 flash = [

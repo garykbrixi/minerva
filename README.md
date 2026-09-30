@@ -5,13 +5,16 @@
 [![pypi](https://img.shields.io/pypi/v/minerva-dna)](https://pypi.org/project/minerva-dna/)
 [![python](https://img.shields.io/badge/python-3.11%2B-blue)](https://github.com/garykbrixi/minerva)
 [![model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Minerva--MLM-yellow)](https://huggingface.co/gbrixi/minerva-mlm)
+[![demo](https://img.shields.io/badge/%F0%9F%A4%97%20Spaces-Demo-yellow)](https://huggingface.co/spaces/gbrixi/minerva)
 [![license](https://img.shields.io/badge/license-Apache--2.0-green)](https://github.com/garykbrixi/minerva/blob/main/LICENSE)
 
 **Coevolutionary discovery using genome language models**
 
 Minerva predicts coevolution using genome language models. Powered by Minerva-MLM, it delivers database-scale, alignment-free, interaction-specific predictions across prokaryotic genomes. Through adaptation on homologous loci, Minerva can discover additional interactions.
 
-[Install](#install) · [Checkpoints](#pretrained-checkpoints) · [Quick start](#quick-start) · [Preparing inputs](#preparing-inputs) · [Interaction heads](#interaction-heads) · [Jacobian fingerprinting](#jacobian-fingerprinting) · [RNA structure](#rna-secondary-structure) · [Eukaryotic RNA](#eukaryotic-rna) · [Finetuning](#finetuning) · [Examples](https://github.com/garykbrixi/minerva/tree/main/examples/) · [Citation](#citation)
+Try it in the browser, no install needed: **[Minerva on Hugging Face Spaces](https://huggingface.co/spaces/gbrixi/minerva)**.
+
+[Demo](https://huggingface.co/spaces/gbrixi/minerva) · [Install](#install) · [Checkpoints](#pretrained-checkpoints) · [Quick start](#quick-start) · [Preparing inputs](#preparing-inputs) · [Interaction heads](#interaction-heads) · [Jacobian fingerprinting](#jacobian-fingerprinting) · [RNA structure](#rna-secondary-structure) · [Eukaryotic RNA](#eukaryotic-rna) · [Finetuning](#finetuning) · [Examples](https://github.com/garykbrixi/minerva/tree/main/examples/) · [Citation](#citation)
 
 ## Install
 
@@ -298,12 +301,7 @@ tests/                          # package unit + smoke tests
 
 ## Citation
 
-If you use Minerva in your work, please cite the paper:
-
-> Li, D.B., Brixi, G., Kim, A.S., Fiamenghi, M.B., Driscoll, C.L., Evans, S.A., Gao, A., Ivanova, N.N.,
-> Kyrpides, N.C., Deisseroth, K., Wilkinson, M.E., Fischbach, M.A. & Hie, B.L. Coevolutionary mining of
-> prokaryotic non-coding elements with a genome language model. *bioRxiv* (2026).
-> https://doi.org/10.64898/2026.09.22.753630
+If you use Minerva, please cite [Li et al., *bioRxiv* 2026](https://doi.org/10.64898/2026.09.22.753630):
 
 ```bibtex
 @article{li2026minerva,
@@ -317,11 +315,7 @@ If you use Minerva in your work, please cite the paper:
 }
 ```
 
-If you use the Jacobian fingerprints, please also cite the categorical Jacobian:
-
-> Zhang, Z., Wayment-Steele, H.K., Brixi, G., Wang, H., Kern, D. & Ovchinnikov, S. Protein language
-> models learn evolutionary statistics of interacting sequence motifs. *Proc. Natl. Acad. Sci. U.S.A.*
-> **121** (45), e2406285121 (2024). https://doi.org/10.1073/pnas.2406285121
+If you use the Jacobian fingerprints, please also cite the original categorical Jacobian, [Zhang et al., *PNAS* 2024](https://doi.org/10.1073/pnas.2406285121):
 
 ```bibtex
 @article{zhang2024categoricaljacobian,
