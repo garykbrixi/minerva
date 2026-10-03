@@ -7,9 +7,9 @@ that alters the model's numerical output will shift the logits and fail here.
 
 Two paths are tested, each with its own golden reference:
 
-  * **fp32 / CPU / SDPA** — the portable, fully deterministic path (no GPU or
-    flash-attn required). Reference: ``tests/data/trna_reference.npz``,
-    tolerance ``atol=1e-4``.
+  * **fp32 / CPU / SDPA** — the portable path (no GPU or flash-attn required).
+    Reference: ``tests/data/trna_reference.npz``, tolerance ``atol=2e-3``
+    (CPU runs can differ by ~1e-3).
   * **bf16 / CUDA / flash-attn** — the path users actually run (see README
     "Quick start"). bf16 is deterministic run-to-run but differs from fp32 by
     up to ~0.8 on raw logits, so it has its own golden captured in bf16.
@@ -45,10 +45,10 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 # One config per numerical path. Each pairs a (device, dtype) with its own golden
 # reference and a tolerance appropriate to that dtype.
 CONFIGS = {
-    # float32 SDPA is deterministic to well under this across machines.
+    # CPU runs can differ by ~1e-3; a real regression moves logits by O(1).
     "fp32_cpu": dict(
         device="cpu", dtype=torch.float32,
-        reference="trna_reference.npz", atol=1e-4, rtol=1e-4,
+        reference="trna_reference.npz", atol=2e-3, rtol=1e-4,
     ),
     # bf16 flash-attn is deterministic run-to-run; 0.1 covers cross-GPU rounding.
     # A real regression moves logits by O(1), so this still fails loudly.

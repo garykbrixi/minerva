@@ -71,6 +71,9 @@ repeat = outputs.interactions["repeat"]              # [batch, L, L]
 
 > Importing the class directly needs no `trust_remote_code`. Without the package
 > installed, use `AutoModelForMaskedLM.from_pretrained(repo, trust_remote_code=True)`.
+>
+> On Mac use `.to("mps")` instead of `.cuda()`. Keeping the model in float32 is
+> compatible with more systems.
 
 ## Preparing inputs
 
@@ -109,9 +112,9 @@ inputs = fasta_to_minerva_inputs("contigs.fasta")
 
 Pyrodigal needs ≥ 20 kb to estimate gene-scoring statistics from a sequence;
 shorter contigs use its pre-trained profiles, which `meta=True` forces
-for metagenomic assemblies. A CDS token is one amino acid and an intergenic
-token one base, so `token_to_genome` / `genome_to_token` map token index to
-genome position.
+for metagenomic assemblies. `token_to_genome` / `genome_to_token` map character
+index in `token_string` to genome position; for token index, use
+`minerva.sequence_utils.build_token_to_genome_map`.
 
 ### Context length & capping
 
@@ -120,8 +123,7 @@ Minerva's context is 4096 (`gbrixi/minerva-mlm`) or 8192 tokens
 strand marker, so a typical (~88 % coding) bacterial genome packs to ~10 kb per
 4096 tokens (~20 kb for the 8k model).
 
-Pass `max_tokens` to the builders to cap a sequence. It truncates at a gene
-boundary, keeps the 5′ end, and keeps the coordinate maps consistent.
+Pass `max_tokens` to the builders to cap a sequence.
 
 ```python
 out = build_minerva_input(sequence, max_tokens=4096)   # <= 4096 tokens
@@ -301,7 +303,7 @@ tests/                          # package unit + smoke tests
 
 ## Citation
 
-If you use Minerva, please cite [Li et al., *bioRxiv* 2026](https://doi.org/10.64898/2026.09.22.753630):
+If you use Minerva, please cite [Li & Brixi et al., *bioRxiv* 2026](https://doi.org/10.64898/2026.09.22.753630):
 
 ```bibtex
 @article{li2026minerva,
@@ -315,7 +317,7 @@ If you use Minerva, please cite [Li et al., *bioRxiv* 2026](https://doi.org/10.6
 }
 ```
 
-If you use the Jacobian fingerprints, please also cite the original categorical Jacobian, [Zhang et al., *PNAS* 2024](https://doi.org/10.1073/pnas.2406285121):
+If you use the Jacobian fingerprints, please also cite the original categorical Jacobian, [Zhang & Wayment-Steele et al., *PNAS* 2024](https://doi.org/10.1073/pnas.2406285121):
 
 ```bibtex
 @article{zhang2024categoricaljacobian,

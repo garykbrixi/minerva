@@ -136,7 +136,7 @@ try:
     _HAS_FLASH = True
 except Exception:
     try:
-        from flash_attn import flash_attn_qkvpacked_func, flash_attn_varlen_qkvpacked_func
+        from flash_attn import flash_attn_qkvpacked_func, flash_attn_varlen_func
         _FLASH_ATTENTION_VERSION = 2
         _HAS_FLASH = True
     except Exception:
@@ -295,6 +295,18 @@ class RotaryEmbedding(nn.Module):
             )
         return q, k
 
+    def rotate_qk(self, qk: torch.Tensor, cu_seqlens: torch.Tensor, max_seqlen: int) -> torch.Tensor:
+        """Rotate q and k, packed as [total, 2 * heads, head_dim], in one launch.
+
+        Use the return value: flash-attn rotates in place without telling autograd.
+        """
+        assert self.scale_base is None, "with scale_base, q and k use different cos/sin"
+        self._update_cos_sin_cache(max_seqlen, device=qk.device, dtype=qk.dtype)
+        return apply_rotary_emb_func(
+            qk, self._cos_cached, self._sin_cached, interleaved=self.interleaved,
+            inplace=True, cu_seqlens=cu_seqlens, max_seqlen=max_seqlen,
+        )
+
     @staticmethod
     def _rotate_half(x):
         x1, x2 = x.chunk(2, dim=-1)
@@ -348,20 +360,20 @@ class Attention(nn.Module):
         if self.qk_norm:
             q = self.q_norm(q)
             k = self.k_norm(k)
-        q, k = self.rotary_emb(q, k, cu_seqlens=cu_seqlens, max_seqlen=max_seq_len)
-        if _FLASH_ATTENTION_VERSION == 3:
-            output = flash_attn_varlen_func(
-                q, k, v, cu_seqlens, cu_seqlens, max_seq_len, max_seq_len, dropout_p=0.0, causal=False
-            )
+        if self.qk_norm or not _HAS_FLASH_ROTARY:
+            q, k = self.rotary_emb(q, k, cu_seqlens=cu_seqlens, max_seqlen=max_seq_len)
         else:
-            qkv = torch.stack([q, k, v], dim=1)
-            output = flash_attn_varlen_qkvpacked_func(
-                qkv, cu_seqlens=cu_seqlens, max_seqlen=max_seq_len, dropout_p=0.0, causal=False
-            )
+            # q and k are adjacent in qkv: rotate both in one launch.
+            qk = qkv[:, : 2 * self.n_heads * self.head_dim].view(total_seqlen, 2 * self.n_heads, self.head_dim)
+            q, k = self.rotary_emb.rotate_qk(qk, cu_seqlens, max_seq_len).chunk(2, dim=1)
+        # q, k, v are views into qkv: no copy.
+        output = flash_attn_varlen_func(
+            q, k, v, cu_seqlens, cu_seqlens, max_seq_len, max_seq_len, dropout_p=0.0, causal=False
+        )
         output = output.view(total_seqlen, h_size)
         return self.wo(output)
 
-    def _forward_sdpa(self, x: torch.Tensor) -> torch.Tensor:
+    def _forward_sdpa(self, x: torch.Tensor, attention_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
         """Torch-SDPA attention for unpacked [B, S, dim] input (no flash-attn)."""
         bsz, seqlen, _ = x.shape
         qkv = self.wqkv(x)
@@ -375,7 +387,8 @@ class Attention(nn.Module):
         q, k = self.rotary_emb.apply_torch(q, k)
         # [B, S, H, D] -> [B, H, S, D] for SDPA
         q, k, v = (t.transpose(1, 2) for t in (q, k, v))
-        out = torch.nn.functional.scaled_dot_product_attention(q, k, v, is_causal=False)
+        key_mask = None if attention_mask is None else attention_mask.bool()[:, None, None, :]
+        out = torch.nn.functional.scaled_dot_product_attention(q, k, v, attn_mask=key_mask, is_causal=False)
         out = out.transpose(1, 2).reshape(bsz, seqlen, self.n_heads * self.head_dim)
         return self.wo(out)
 
@@ -489,7 +502,8 @@ class TransformerLayers(nn.Module):
                     "Without it, run one sequence at a time or use uniform-length batches."
                 )
             if should_unpad:
-                x, indices, cu_seqlens, max_seq_len, _ = unpad_input(x, attention_mask)
+                # flash-attn >= 2.7 returns a fifth value
+                x, indices, cu_seqlens, max_seq_len = unpad_input(x, attention_mask)[:4]
             else:
                 indices = None
             x = self._run_layers(x, cu_seqlens, max_seq_len, return_all_hiddens, hidden_layers_set, hiddens)
@@ -785,7 +799,8 @@ class MinervaForMaskedLM(InteractionHeads, MinervaPreTrainedModel):
         # forward, so reuse its hidden state for logits/hidden states instead of
         # running the encoder twice. Packed attention-map extraction is rejected
         # above because it cannot satisfy the one-forward-pass contract.
-        can_single_pass = attention_layers_needed
+        # It runs under no_grad, so it is skipped when gradients are needed.
+        can_single_pass = attention_layers_needed and not torch.is_grad_enabled()
 
         if can_single_pass:
             attention_result = self.get_attention_maps(
@@ -1295,7 +1310,6 @@ class MinervaForMaskedLM(InteractionHeads, MinervaPreTrainedModel):
             or (attention_dict, hidden_state, hidden_states) when
             output_hidden_states is requested.
         """
-        self.eval()
         device = next(self.parameters()).device
         input_ids = input_ids.to(device)
         
@@ -1386,29 +1400,65 @@ class MinervaForMaskedLM(InteractionHeads, MinervaPreTrainedModel):
 
             return forward_with_scores
         
+        def make_masked_attn_forward(attn_module, batch_attention_mask):
+            """Create a forward function that masks padded keys and stores nothing."""
+
+            def forward_masked(x, cu_seqlens=None, max_seq_len=None):
+                return attn_module._forward_sdpa(x, batch_attention_mask)
+
+            return forward_masked
+
         # Patch the layers
         for layer_idx in layers_to_patch:
             attn_module = all_layers[layer_idx].attention
             original_forwards[layer_idx] = attn_module.forward
             attn_module.forward = make_attn_forward_with_scores(attn_module, layer_idx, extracted_maps, batch_attention_mask=attention_mask)
         
+        # The other layers must ignore padding too: unpad with flash-attn, else masked SDPA.
+        has_padding = attention_mask is not None and not attention_mask.all()
+        unpad = has_padding and _HAS_FLASH and device.type == "cuda" and unpad_input is not None and pad_input is not None
+        if has_padding and not unpad:
+            for layer_idx in range(num_layers):
+                if layer_idx not in original_forwards:
+                    attn_module = all_layers[layer_idx].attention
+                    original_forwards[layer_idx] = attn_module.forward
+                    attn_module.forward = make_masked_attn_forward(attn_module, attention_mask)
+
         need_all_hidden_states = output_hidden_states is True
         hidden_layers_set = set(output_hidden_states) if isinstance(output_hidden_states, list) else set()
         hidden_states = [] if need_all_hidden_states else ({} if hidden_layers_set else None)
 
+        # Extract in eval mode, then restore the caller's mode.
+        was_training = self.training
+        self.eval()
         try:
             # Forward pass
             h = self.minerva.tok_embeddings(input_ids)
+            if unpad:
+                # Unpatched layers run on the real tokens only, as in TransformerLayers.
+                h, indices, cu_seqlens, max_seq_len = unpad_input(h, attention_mask)[:4]
+
+            def padded(t):  # [total, dim] -> [B, S, dim]; [B, S, dim] passes through
+                return pad_input(t, indices, batch_size, seq_len) if t.dim() == 2 else t
+
             for layer_idx, layer in enumerate(self.minerva.encoder.layers):
-                h = layer(h)
+                if unpad and layer_idx not in original_forwards:
+                    if h.dim() == 3:  # coming out of a patched layer
+                        h = h.flatten(0, 1)[indices]
+                    h = layer(h, cu_seqlens=cu_seqlens, max_seq_len=max_seq_len)
+                else:
+                    h = layer(padded(h))
                 if need_all_hidden_states:
-                    hidden_states.append(h)
+                    hidden_states.append(padded(h))
                 elif layer_idx in hidden_layers_set:
-                    hidden_states[layer_idx] = h
+                    hidden_states[layer_idx] = padded(h)
+            h = padded(h)
         finally:
             # Restore original forward methods
             for layer_idx, original_fwd in original_forwards.items():
                 all_layers[layer_idx].attention.forward = original_fwd
+            if was_training:
+                self.train()
 
         # Verify we got all requested layers
         missing_layers = set(layers_to_patch) - set(extracted_maps.keys())

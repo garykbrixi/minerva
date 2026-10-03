@@ -14,6 +14,7 @@ from minerva.sequence_utils import (
     _parse_segments,
     build_fwd_rc_permutation,
     build_prodigal_mixed_sequence,
+    build_token_to_genome_map,
     chunk_sequence_with_stride,
     map_features_to_genome,
     mixed_token_length,
@@ -375,6 +376,29 @@ class TestMapFeaturesToGenome:
         # All 9 positions should be covered
         assert mapped.shape == (9, 1)
         assert np.all(counts > 0)
+
+
+class TestBuildTokenToGenomeMap:
+    def test_maps_tokens_not_characters(self, tokenizer):
+        """token_to_genome indexes characters; build_token_to_genome_map indexes tokens."""
+        seq = "aaa" + "ATGGCTCAG" + "ccc" + "ATGATGCAG" + "ggg"
+        cds = [
+            {"start": 3, "end": 12, "strand": 1},
+            {"start": 15, "end": 24, "strand": 1},
+        ]
+        out = build_prodigal_mixed_sequence(seq, cds)
+        assert out["token_string"] == "<+>aaa<+>MAQ<+>ccc<+>MMQ<+>ggg"
+
+        ids, tok_to_genome = build_token_to_genome_map(
+            out["token_string"], out["token_to_genome"], tokenizer
+        )
+        assert len(ids) == len(tok_to_genome) == mixed_token_length(out["token_string"]) == 20
+
+        # Genome position 24, the first base of the last run, follows 5 markers
+        assert out["genome_to_token"][24] == 27  # character index
+        assert tok_to_genome[17] == (24, 25)     # token index
+        assert tok_to_genome[5] == (3, 6)        # an amino acid spans its codon
+        assert tok_to_genome[16] == (-1, -1)     # a marker spans nothing
 
 
 # ---------------------------------------------------------------------------
@@ -1019,6 +1043,12 @@ class TestBuildProdigalCapping:
         # coord maps of the capped output are a prefix of the uncapped ones
         n = len(capped["token_to_genome"])
         assert capped["token_to_genome"] == full["token_to_genome"][:n]
+
+    def test_cap_can_cut_mid_gene(self):
+        """The cap is a token budget, not a gene boundary."""
+        seq, cds = self._cds()
+        out = build_prodigal_mixed_sequence(seq, cds, max_tokens=10)
+        assert out["token_string"] == "<+>MKRKRKRKR"  # 9 of the gene's 41 residues
 
     def test_cap_larger_than_content_is_noop(self):
         seq, cds = self._cds()

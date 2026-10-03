@@ -20,7 +20,7 @@ import sys
 
 from minerva.gene_calling import build_minerva_input, call_genes, read_fasta
 
-# A short demo contig (two toy ORFs on opposite strands separated by an
+# A short demo contig (two toy ORFs on the + strand separated by an
 # intergenic spacer). Replace by passing a FASTA path on the command line.
 DEMO_SEQUENCE = (
     "ATG" + "GCTGCAAAACGTGAAGCACTGAGCGATCTGGAA" * 6 + "TAA"
@@ -48,7 +48,7 @@ def main(fasta_path: str | None = None) -> None:
 
         # 2. Build Minerva's mixed protein + DNA token string.
         #    Pass max_tokens=<context> (4096 for gbrixi/minerva-mlm, 8192 for the
-        #    8k model) to cap the output at a gene boundary so it fits the model
+        #    8k model) to cap the output so it fits the model
         #    context. Omit it to get the whole sequence.
         out = build_minerva_input(sequence, max_tokens=4096)
         token_string = out["token_string"]
@@ -73,7 +73,7 @@ def main(fasta_path: str | None = None) -> None:
         #    with torch.no_grad():
         #        outputs = model(**tokens, output_interactions=True)
         #    # outputs.interactions["protein"] is [batch, L, L] over token positions;
-        #    # use out['token_to_genome'] to relate positions back to the genome.
+        #    # minerva.sequence_utils.build_token_to_genome_map maps them to the genome.
 
 
 if __name__ == "__main__":

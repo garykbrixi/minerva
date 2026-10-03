@@ -122,8 +122,8 @@ def build_minerva_input(
     (``token_string`` plus genome<->token coordinate maps).
 
     Pass ``max_tokens`` (e.g. the checkpoint's context: 4096 for
-    ``gbrixi/minerva-mlm``, 8192 for ``gbrixi/minerva-mlm-8k``) to cap the output at a
-    gene boundary so it fits the model context. See
+    ``gbrixi/minerva-mlm``, 8192 for ``gbrixi/minerva-mlm-8k``) to cap the output so
+    it fits the model context. See
     :func:`minerva.sequence_utils.build_prodigal_mixed_sequence` for the exact
     capping semantics.
     """
@@ -156,7 +156,7 @@ def fasta_to_minerva_inputs(
     Returns one result dict per FASTA record (the output of
     :func:`build_minerva_input`), each augmented with an ``id`` key holding the
     FASTA record id. Pass ``max_tokens`` to cap each record at the model
-    context (records longer than the cap are truncated at a gene boundary; for
+    context (records longer than the cap are truncated; for
     full-genome tiling see the note in the README).
     """
     results: list[dict] = []
