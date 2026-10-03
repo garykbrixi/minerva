@@ -1,12 +1,10 @@
 
 <h1><img src="https://raw.githubusercontent.com/garykbrixi/minerva/main/assets/minerva_owl.png" alt="" height="46" valign="middle"> Minerva</h1>
 
-[![tests](https://github.com/garykbrixi/minerva/actions/workflows/tests.yml/badge.svg)](https://github.com/garykbrixi/minerva/actions/workflows/tests.yml)
-[![pypi](https://img.shields.io/pypi/v/minerva-dna)](https://pypi.org/project/minerva-dna/)
-[![python](https://img.shields.io/badge/python-3.11%2B-blue)](https://github.com/garykbrixi/minerva)
+[![bioRxiv](https://img.shields.io/badge/bioRxiv-paper-b31b1b)](https://doi.org/10.64898/2026.09.22.753630)
 [![model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Minerva--MLM-yellow)](https://huggingface.co/gbrixi/minerva-mlm)
-[![demo](https://img.shields.io/badge/%F0%9F%A4%97%20Spaces-Demo-yellow)](https://huggingface.co/spaces/gbrixi/minerva)
-[![license](https://img.shields.io/badge/license-Apache--2.0-green)](https://github.com/garykbrixi/minerva/blob/main/LICENSE)
+[![pypi](https://img.shields.io/pypi/v/minerva-dna)](https://pypi.org/project/minerva-dna/)
+[![tests](https://github.com/garykbrixi/minerva/actions/workflows/tests.yml/badge.svg)](https://github.com/garykbrixi/minerva/actions/workflows/tests.yml)
 
 **Coevolutionary discovery using genome language models**
 
