@@ -1,8 +1,8 @@
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/garykbrixi/minerva/9d03422de81a589d9e0644d1ea5131af035386b3/assets/minerva_banner_dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/garykbrixi/minerva/9d03422de81a589d9e0644d1ea5131af035386b3/assets/minerva_banner_light.png">
-  <img alt="Minerva: coevolutionary discovery using genome language models" src="https://raw.githubusercontent.com/garykbrixi/minerva/9d03422de81a589d9e0644d1ea5131af035386b3/assets/minerva_banner_light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/garykbrixi/minerva/main/assets/minerva_banner_dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/garykbrixi/minerva/main/assets/minerva_banner_light.png">
+  <img alt="Minerva: coevolutionary discovery using genome language models" src="https://raw.githubusercontent.com/garykbrixi/minerva/main/assets/minerva_banner_light.png">
 </picture>
 
 [Preprint](https://doi.org/10.64898/2026.09.22.753630) · [Model](https://huggingface.co/gbrixi/minerva-mlm) · [Demo](https://huggingface.co/spaces/gbrixi/minerva) · [PyPI](https://pypi.org/project/minerva-dna/)
