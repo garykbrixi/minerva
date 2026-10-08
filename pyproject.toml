@@ -4,9 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "minerva-dna"
-version = "0.2.1"
+version = "0.2.2"
 description = "Minerva: genomic language models for coevolutionary mining"
-authors = [{ name = "Gary Brixi" }]
+authors = [{ name = "Garyk Brixi" }]
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
