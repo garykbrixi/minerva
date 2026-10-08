@@ -1062,6 +1062,35 @@ class TestChunkSequenceWithStride:
         s = "<+>MKLV"
         assert chunk_sequence_with_stride(s, 100, 50) == [s]
 
+    @pytest.mark.parametrize("stride", [1, 2, 5, 10])
+    def test_short_sequence_single_chunk_small_stride(self, stride):
+        # Regression: a small stride must not produce trailing suffix windows
+        # of a sequence that already fits in one chunk.
+        s = "<+>acgt"
+        assert chunk_sequence_with_stride(s, 10, stride) == [s]
+
+    def test_exact_chunk_size_single_chunk(self):
+        s = "<+>" + "M" * 9  # exactly 10 tokens
+        assert chunk_sequence_with_stride(s, 10, 3) == [s]
+
+    def test_no_redundant_tail_windows(self):
+        # Once a window reaches the end, no further (shorter) windows follow.
+        s = "<+>" + "M" * 200  # 201 tokens
+        chunks = chunk_sequence_with_stride(s, 50, 25)
+        # starts 0, 25, ..., 175; the window at 175 reaches token 201
+        assert len(chunks) == 8
+        assert mixed_token_length(chunks[-1]) == 26
+        assert all(mixed_token_length(c) == 50 for c in chunks[:-1])
+
+    def test_empty_sequence(self):
+        assert chunk_sequence_with_stride("", 10, 5) == []
+
+    def test_stride_larger_than_chunk_rejected(self):
+        with pytest.raises(ValueError, match="must not exceed chunk_size"):
+            chunk_sequence_with_stride("<+>" + "M" * 20, 5, 6)
+        # equality is the non-overlapping tiling case and stays allowed
+        assert "".join(chunk_sequence_with_stride("M" * 20, 5, 5)) == "M" * 20
+
     def test_windows_within_chunk_size(self):
         s = "<+>" + "M" * 100 + "<->" + "acgt" * 50 + "<+>" + "K" * 80
         for c in chunk_sequence_with_stride(s, 100, 50):

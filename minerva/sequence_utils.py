@@ -359,12 +359,20 @@ def chunk_sequence_with_stride(
         Step between window starts in tokens. ``stride < chunk_size`` gives
         overlapping windows (e.g. ``stride = chunk_size // 2`` for 50% overlap),
         so features straddling a boundary still appear whole in some window.
+        Must satisfy ``stride <= chunk_size``.
 
     Returns
     -------
     list[str]
         Windows, in order. A sequence of ``<= chunk_size`` tokens returns a
-        single element (the whole sequence).
+        single element (the whole sequence), and the last window always
+        reaches the end of the sequence.
+
+    Raises
+    ------
+    ValueError
+        If ``chunk_size`` or ``stride`` is not positive, or if
+        ``stride > chunk_size`` (which would leave tokens uncovered).
     """
     if not isinstance(chunk_size, int) or not isinstance(stride, int):
         raise TypeError("chunk_size and stride must be integers")
@@ -372,6 +380,11 @@ def chunk_sequence_with_stride(
         raise ValueError("chunk_size must be positive")
     if stride <= 0:
         raise ValueError("stride must be positive")
+    if stride > chunk_size:
+        raise ValueError(
+            f"stride ({stride}) must not exceed chunk_size ({chunk_size}); "
+            "a larger stride would leave tokens uncovered"
+        )
 
     # Collapse each strand marker to a single sentinel char so slicing counts
     # markers as one token, then restore them on the way out.
@@ -380,10 +393,16 @@ def chunk_sequence_with_stride(
     for marker, placeholder in placeholders.items():
         modified = modified.replace(marker, placeholder)
 
-    chunks = [
-        modified[i : i + chunk_size]
-        for i in range(0, len(modified), stride)
-    ]
+    # Stop at the first window that reaches the end: any later start would
+    # only yield a suffix already contained in that window. This also makes a
+    # sequence of <= chunk_size tokens return exactly one chunk regardless of
+    # stride, and keeps the short remainder as its own block when
+    # stride == chunk_size.
+    chunks = []
+    for i in range(0, len(modified), stride):
+        chunks.append(modified[i : i + chunk_size])
+        if i + chunk_size >= len(modified):
+            break
 
     restored = []
     for chunk in chunks:
